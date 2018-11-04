@@ -1,4 +1,4 @@
-package com.example.dinhh.soundscape.presentation.screens
+package com.example.dinhh.soundscape.presentation.screens.login
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -7,9 +7,9 @@ import com.example.dinhh.soundscape.data.entity.Token
 import com.example.dinhh.soundscape.domain.LoginUseCase
 import io.reactivex.disposables.CompositeDisposable
 
-//private val loginUseCase: LoginUseCase
-
-class LoginViewModel(private val loginUseCase: LoginUseCase): ViewModel() {
+class LoginViewModel(
+    private val loginUseCase: LoginUseCase
+): ViewModel() {
     private val disposibles = CompositeDisposable()
     private val _viewState = MutableLiveData<LoginViewState>()
     val viewState : LiveData<LoginViewState> = _viewState
@@ -21,9 +21,11 @@ class LoginViewModel(private val loginUseCase: LoginUseCase): ViewModel() {
                     _viewState.value = LoginViewState.Loading
                 }
                 .subscribe({
-                    _viewState.value = LoginViewState.Success(it)
+                    _viewState.value =
+                            LoginViewState.Success(it)
                 },{
-                    _viewState.value = LoginViewState.Failure(it)
+                    _viewState.value =
+                            LoginViewState.Failure(it)
                 })
         )
     }
@@ -37,6 +39,6 @@ class LoginViewModel(private val loginUseCase: LoginUseCase): ViewModel() {
 
 sealed class LoginViewState {
     object Loading : LoginViewState()
-    data class Success(val token: Token) : LoginViewState()
+    data class Success(val token: String) : LoginViewState()
     data class Failure(val throwable: Throwable) : LoginViewState()
 }

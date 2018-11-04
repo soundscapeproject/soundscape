@@ -1,4 +1,4 @@
-package com.example.dinhh.soundscape.presentation.screens
+package com.example.dinhh.soundscape.presentation.screens.login
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.show
+import com.example.dinhh.soundscape.presentation.screens.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -59,6 +60,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun gotoMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 }

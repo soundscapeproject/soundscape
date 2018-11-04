@@ -8,11 +8,9 @@ import io.reactivex.Single
 
 interface UserRepository {
 
-    fun login(username: String, password: String): Single<Token>
+    fun login(username: String, password: String): Single<String>
 
-    fun setLoginState(): Completable
-
-    fun getLoginState(): Single<Boolean>
+    fun getToken(): Single<String>
 
     fun clearLoginData(): Completable
 }
@@ -21,13 +19,22 @@ class UserRepositoryImpl(
     private val sharedPref: SharedPref,
     private val soundscapeRemoteData: SoundscapeRemoteData): UserRepository {
 
-    override fun login(username: String, password: String): Single<Token> {
+    override fun login(username: String, password: String): Single<String> {
         return soundscapeRemoteData.login(username, password)
+            .flatMap {
+                val token = it.apiKey
+                if (token.equals("Incorrect credentials! Try again.")) {
+                     Single.error(Throwable("Username or password is not correct"))
+                } else {
+                     Single.just(token)
+                }
+            }
+            .doOnSuccess {
+                sharedPref.setToken(it)
+            }
     }
 
-    override fun setLoginState(): Completable = sharedPref.setLogInState()
-
-    override fun getLoginState(): Single<Boolean> = sharedPref.getLoginState()
+    override fun getToken(): Single<String> = sharedPref.getToken()
 
     override fun clearLoginData(): Completable = sharedPref.clearLoginData()
 }

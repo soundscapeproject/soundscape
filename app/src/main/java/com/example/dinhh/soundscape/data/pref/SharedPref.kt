@@ -7,11 +7,11 @@ import io.reactivex.Single
 
 interface SharedPref {
 
-    fun setLogInState(): Completable
-
-    fun getLoginState(): Single<Boolean>
+    fun getToken(): Single<String>
 
     fun clearLoginData(): Completable
+
+    fun setToken(token: String): Completable
 }
 
 class SharedPrefImpl(private val context: Context): SharedPref {
@@ -24,16 +24,16 @@ class SharedPrefImpl(private val context: Context): SharedPref {
         preferences = context.getSharedPreferences(USER_PREFERENCES, Context.MODE_PRIVATE)
     }
 
-    override fun setLogInState(): Completable {
+    override fun setToken(token: String): Completable {
         preferences.edit()
-            .putBoolean(KEY_LOG_IN, true)
+            .putString(KEY_LOG_IN, token)
             .apply()
         return Completable.complete()
     }
 
-    override fun getLoginState(): Single<Boolean> {
-        val loginState = preferences.getBoolean(KEY_LOG_IN, false)
-        return Single.just(loginState)
+    override fun getToken(): Single<String> {
+        val token = preferences.getString(KEY_LOG_IN, "")
+        return Single.just(token)
     }
 
     override fun clearLoginData(): Completable {
