@@ -12,6 +12,9 @@ import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.widget.Toast
+import com.example.dinhh.soundscape.common.invisible
+import com.example.dinhh.soundscape.common.isVisible
+import com.example.dinhh.soundscape.common.visible
 import kotlinx.android.synthetic.main.activity_record.*
 import java.io.File
 import java.io.IOException
@@ -19,32 +22,32 @@ import java.io.IOException
 class RecordActivity : AppCompatActivity() {
 
     private val RECORD_AUDIO_REQUEST_CODE = 101
-    private var fileName: String? = null
-    private var mPlayer: MediaPlayer? = null
-    private var myAudioRecorder: MediaRecorder? = null
+    private lateinit var fileName: String
+    private lateinit var mPlayer: MediaPlayer
+    private lateinit var myAudioRecorder: MediaRecorder
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
-        btnStopRecording.visibility = View.INVISIBLE
-        btnPlay.visibility = View.INVISIBLE
+        btnStopRecording.invisible()
+        btnPlay.invisible()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getPermissionToRecordAudio()
         }
 
         btnStartRecording.setOnClickListener {
-            btnStartRecording.visibility = View.INVISIBLE
-            btnStopRecording.visibility = View.VISIBLE
+            btnStartRecording.invisible()
+            btnStopRecording.visible()
             startRecording()
         }
 
         btnStopRecording.setOnClickListener {
-            btnStartRecording.visibility = View.VISIBLE
-            btnStopRecording.visibility = View.INVISIBLE
-            if (btnPlay.visibility == View.INVISIBLE){
-                btnPlay.visibility = View.VISIBLE
+            btnStartRecording.visible()
+            btnStopRecording.invisible()
+            if (!btnPlay.isVisible()){
+                btnPlay.visible()
             }
             stopRecording()
         }
@@ -54,7 +57,7 @@ class RecordActivity : AppCompatActivity() {
         }
     }
 
-    private fun initRecorder() {
+    private fun startRecording(){
         myAudioRecorder = MediaRecorder()
         myAudioRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
         myAudioRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
@@ -69,10 +72,6 @@ class RecordActivity : AppCompatActivity() {
         Log.d("filename", fileName)
         myAudioRecorder!!.setOutputFile(fileName)
         myAudioRecorder!!.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
-    }
-
-    private fun startRecording(){
-        initRecorder()
         try {
             myAudioRecorder!!.prepare()
             myAudioRecorder!!.start()
@@ -89,7 +88,6 @@ class RecordActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        myAudioRecorder = null
     }
 
     private fun playAudio(){
