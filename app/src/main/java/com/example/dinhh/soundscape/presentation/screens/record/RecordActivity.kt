@@ -59,8 +59,8 @@ class RecordActivity : AppCompatActivity() {
 
     private fun startRecording(){
         myAudioRecorder = MediaRecorder()
-        myAudioRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
-        myAudioRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
+        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
 
         val root = android.os.Environment.getExternalStorageDirectory()
         val file = File(root.absolutePath + "/Soundscape/Audios")
@@ -70,11 +70,11 @@ class RecordActivity : AppCompatActivity() {
 
         fileName = root.absolutePath + "/Soundscape/Audios/" + (System.currentTimeMillis().toString() + ".mp3")
         Log.d("filename", fileName)
-        myAudioRecorder!!.setOutputFile(fileName)
-        myAudioRecorder!!.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
+        myAudioRecorder.setOutputFile(fileName)
+        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
         try {
-            myAudioRecorder!!.prepare()
-            myAudioRecorder!!.start()
+            myAudioRecorder.prepare()
+            myAudioRecorder.start()
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -83,8 +83,8 @@ class RecordActivity : AppCompatActivity() {
 
     private fun stopRecording(){
         try {
-            myAudioRecorder!!.stop()
-            myAudioRecorder!!.release()
+            myAudioRecorder.stop()
+            myAudioRecorder.release()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -93,9 +93,9 @@ class RecordActivity : AppCompatActivity() {
     private fun playAudio(){
         mPlayer = MediaPlayer()
         try {
-            mPlayer!!.setDataSource(fileName)
-            mPlayer!!.prepare()
-            mPlayer!!.start()
+            mPlayer.setDataSource(fileName)
+            mPlayer.prepare()
+            mPlayer.start()
         } catch (e: IOException) {
             Log.e("LOG_TAG", "prepare() failed")
         }
