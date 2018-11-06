@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
+import com.example.dinhh.soundscape.presentation.screens.record.RecordActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -21,6 +22,11 @@ class MainActivity : AppCompatActivity() {
 
         btnLogout.setOnClickListener {
             mainViewModel.logout()
+        }
+
+        btnRecord.setOnClickListener {
+            val intent = Intent(this, RecordActivity::class.java)
+            startActivity(intent)
         }
 
         mainViewModel.viewState.observe(this, Observer {
