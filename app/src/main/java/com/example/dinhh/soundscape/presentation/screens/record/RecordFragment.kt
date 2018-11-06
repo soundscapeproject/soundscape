@@ -1,41 +1,47 @@
 package com.example.dinhh.soundscape.presentation.screens.record
 
-import android.Manifest
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import com.example.dinhh.soundscape.R
-import android.content.pm.PackageManager
+
 import android.media.MediaPlayer
 import android.media.MediaRecorder
-import android.os.Build
-import android.support.v4.content.ContextCompat
+import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.util.Log
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.isVisible
 import com.example.dinhh.soundscape.common.visible
-import kotlinx.android.synthetic.main.activity_record.*
+import kotlinx.android.synthetic.main.fragment_record.*
 import java.io.File
 import java.io.IOException
 
-class RecordActivity : AppCompatActivity() {
+class RecordFragment : Fragment() {
 
-    private val RECORD_AUDIO_REQUEST_CODE = 101
     private lateinit var fileName: String
     private lateinit var mPlayer: MediaPlayer
     private lateinit var myAudioRecorder: MediaRecorder
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_record, container, false)
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_record)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupView()
+        handleButtonClicked()
+    }
+
+    private fun setupView() {
         btnStopRecording.invisible()
         btnPlay.invisible()
+    }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getPermissionToRecordAudio()
-        }
-
+    private fun handleButtonClicked() {
         btnStartRecording.setOnClickListener {
             btnStartRecording.invisible()
             btnStopRecording.visible()
@@ -100,21 +106,8 @@ class RecordActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPermissionToRecordAudio() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE), RECORD_AUDIO_REQUEST_CODE)
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == RECORD_AUDIO_REQUEST_CODE) {
-            if (grantResults.size == 3 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
-            } else {
-                Toast.makeText(this, "You must give permissions to use this app. App is exiting.", Toast.LENGTH_SHORT).show()
-                finishAffinity()
-            }
-        }
+    companion object {
+        @JvmStatic
+        fun newInstance() = RecordFragment()
     }
 }
