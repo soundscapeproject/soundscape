@@ -3,7 +3,6 @@ package com.example.dinhh.soundscape.presentation.screens.record
 import android.Manifest
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.example.dinhh.soundscape.R
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
