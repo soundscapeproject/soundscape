@@ -4,6 +4,7 @@ package com.example.dinhh.soundscape.presentation.screens.record
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -39,18 +40,24 @@ class RecordFragment : Fragment() {
     private fun setupView() {
         btnStopRecording.invisible()
         btnPlay.invisible()
+        recordingTextView.invisible()
     }
 
     private fun handleButtonClicked() {
         btnStartRecording.setOnClickListener {
             btnStartRecording.invisible()
             btnStopRecording.visible()
+            recordingTextView.visible()
+            chronometer.base = SystemClock.elapsedRealtime()
+            chronometer.start()
             startRecording()
         }
 
         btnStopRecording.setOnClickListener {
             btnStartRecording.visible()
             btnStopRecording.invisible()
+            recordingTextView.invisible()
+            chronometer.stop()
             if (!btnPlay.isVisible()){
                 btnPlay.visible()
             }

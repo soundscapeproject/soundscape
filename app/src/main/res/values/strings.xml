@@ -5,4 +5,8 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="record">record</string>
+    <string name="recording_audio">Recording audio</string>
+    <string name="stop_recording">stop recording</string>
+    <string name="play">play</string>
 </resources>
