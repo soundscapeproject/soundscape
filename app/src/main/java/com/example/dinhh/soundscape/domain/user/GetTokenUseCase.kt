@@ -1,4 +1,4 @@
-package com.example.dinhh.soundscape.domain
+package com.example.dinhh.soundscape.domain.user
 
 import com.example.dinhh.soundscape.common.SchedulerProvider
 import com.example.dinhh.soundscape.data.repository.UserRepository

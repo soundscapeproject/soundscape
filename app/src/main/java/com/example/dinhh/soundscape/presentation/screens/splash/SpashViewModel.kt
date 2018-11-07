@@ -3,11 +3,12 @@ package com.example.dinhh.soundscape.presentation.screens.splash
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.example.dinhh.soundscape.domain.GetTokenUseCase
+import com.example.dinhh.soundscape.domain.user.GetTokenUseCase
 import io.reactivex.disposables.CompositeDisposable
 
 class SplashViewModel(
-    private val getLoginStateUseCase: GetTokenUseCase): ViewModel() {
+    private val getLoginStateUseCase: GetTokenUseCase
+): ViewModel() {
     private val disposibles = CompositeDisposable()
     private val _viewState = MutableLiveData<SplashViewState>()
     val viewState : LiveData<SplashViewState> = _viewState
