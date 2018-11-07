@@ -2,7 +2,6 @@ package com.example.dinhh.soundscape.device
 
 import android.media.MediaPlayer
 import android.media.MediaRecorder
-import android.util.Log
 import io.reactivex.Completable
 import java.io.File
 import java.io.IOException
