@@ -7,8 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.common.gone
-import com.example.dinhh.soundscape.common.show
+import com.example.dinhh.soundscape.common.*
 import com.example.dinhh.soundscape.presentation.screens.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -28,10 +27,17 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.viewState.observe(this, Observer {
             it?.run(this@LoginActivity::handleView)
         })
+
+        txt_appName.translateX(getWidth().toFloat(), 500)
+        txt_hello.translateX(getWidth().toFloat(), 500)
+        txt_welcome.translateX(getWidth().toFloat(), 800)
+        usernameEditText.translateX(getWidth().toFloat(), 800)
+        passwordEditText.translateY(getHeight().toFloat(), 500)
+        btnLogin.translateY(getHeight().toFloat(), 800)
     }
 
     fun handleBtnLoginClicked() {
-        val username = usernnameEditText.text.toString()
+        val username = usernameEditText.text.toString()
         val password = passwordEditText.text.toString()
 
         if (username.isEmpty() || password.isEmpty()) {
