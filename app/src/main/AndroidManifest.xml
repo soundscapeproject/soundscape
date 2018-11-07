@@ -25,7 +25,8 @@
         </activity>
         <activity android:name=".presentation.screens.main.MainActivity">
         </activity>
-        <activity android:name=".presentation.screens.login.LoginActivity">
+        <activity android:name=".presentation.screens.login.LoginActivity"
+        android:theme="@style/LoginTheme">
         </activity>
         <activity android:name=".presentation.screens.record.RecordActivity">
         </activity>

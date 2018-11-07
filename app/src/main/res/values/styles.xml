@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorBackground">@color/colorText</item>
+        <item name="colorPrimary">@color/colorText</item>
+        <item name="colorPrimaryDark">@color/colorText</item>
+    </style>
+
 </resources>
