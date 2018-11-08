@@ -1,6 +1,5 @@
 package com.example.dinhh.soundscape.data.repository
 
-import com.example.dinhh.soundscape.data.entity.Token
 import com.example.dinhh.soundscape.data.pref.SharedPref
 import com.example.dinhh.soundscape.data.remote.SoundscapeRemoteData
 import io.reactivex.Completable
