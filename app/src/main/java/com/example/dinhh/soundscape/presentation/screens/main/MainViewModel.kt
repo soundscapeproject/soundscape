@@ -3,7 +3,7 @@ package com.example.dinhh.soundscape.presentation.screens.main
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.example.dinhh.soundscape.domain.LogoutUseCase
+import com.example.dinhh.soundscape.domain.user.LogoutUseCase
 import io.reactivex.disposables.CompositeDisposable
 
 class MainViewModel(

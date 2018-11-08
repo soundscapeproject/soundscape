@@ -3,8 +3,7 @@ package com.example.dinhh.soundscape.presentation.screens.login
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.example.dinhh.soundscape.data.entity.Token
-import com.example.dinhh.soundscape.domain.LoginUseCase
+import com.example.dinhh.soundscape.domain.user.LoginUseCase
 import io.reactivex.disposables.CompositeDisposable
 
 class LoginViewModel(
