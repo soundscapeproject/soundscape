@@ -3,6 +3,7 @@ package com.example.dinhh.soundscape.presentation.screens.record
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import com.example.dinhh.soundscape.domain.record.PlayRecordUseCase
 import com.example.dinhh.soundscape.domain.record.StartRecordUseCase
 import com.example.dinhh.soundscape.domain.record.StopRecordUseCase

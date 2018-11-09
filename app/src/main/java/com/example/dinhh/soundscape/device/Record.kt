@@ -2,6 +2,7 @@ package com.example.dinhh.soundscape.device
 
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.util.Log
 import io.reactivex.Completable
 import java.io.File
 import java.io.IOException
@@ -16,21 +17,17 @@ interface Record {
 
 class RecordImpl: Record {
 
-    private var mPlayer: MediaPlayer
-    private var myAudioRecorder: MediaRecorder
+    private lateinit var mPlayer: MediaPlayer
+    private lateinit var myAudioRecorder: MediaRecorder
     private var fileName: String? = null
 
     private val PATH = "/Soundscape/Audios"
     private val AUDIOEXTENSION = ".mp3"
 
-    constructor() {
-        mPlayer = MediaPlayer()
-        myAudioRecorder = MediaRecorder()
-    }
-
     override fun startRecording(): Completable {
         return Completable.create {
 
+            myAudioRecorder = MediaRecorder()
             myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
             myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
 
@@ -69,6 +66,7 @@ class RecordImpl: Record {
     override fun playAudio(): Completable {
         return Completable.create {
             try {
+                mPlayer = MediaPlayer()
                 mPlayer.setDataSource(fileName)
                 mPlayer.prepare()
                 mPlayer.start()
