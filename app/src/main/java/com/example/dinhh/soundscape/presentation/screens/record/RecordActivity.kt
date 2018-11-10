@@ -9,8 +9,8 @@ import kotlinx.android.synthetic.main.activity_record.*
 
 class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
 
-    override fun onSaveDialogPositiveClick(recordName: String) {
-        logD("SAVE DIALOG: ${recordName}")
+    override fun onSaveDialogPositiveClick(recordName: String, category: String) {
+        logD("SAVE DIALOG: ${recordName} : ${category}")
     }
 
     override fun onSaveDialogNegativeClick(dialog: SaveDialog) {
@@ -22,11 +22,14 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         setContentView(R.layout.activity_record)
 
         btnSave.setOnClickListener {
-
-            val saveDialog = SaveDialog.newInstance("Save Record")
-
-            saveDialog.show(supportFragmentManager, "SAVE_DIALOG")
+            showSaveDialog()
         }
+    }
 
+    private fun showSaveDialog() {
+
+        val saveDialog = SaveDialog.newInstance("Save Record")
+
+        saveDialog.show(supportFragmentManager, "SAVE_DIALOG")
     }
 }
