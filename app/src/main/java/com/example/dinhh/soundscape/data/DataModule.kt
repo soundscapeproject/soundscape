@@ -10,6 +10,8 @@ import com.example.dinhh.soundscape.data.pref.SharedPrefImpl
 import com.example.dinhh.soundscape.data.remote.SoundscapeApi
 import com.example.dinhh.soundscape.data.remote.SoundscapeRemoteData
 import com.example.dinhh.soundscape.data.remote.SoundscapeRemoteDataImpl
+import com.example.dinhh.soundscape.data.repository.RecordRepository
+import com.example.dinhh.soundscape.data.repository.RecordRepositoryImpl
 import com.example.dinhh.soundscape.data.repository.UserRepository
 import com.example.dinhh.soundscape.data.repository.UserRepositoryImpl
 import okhttp3.OkHttpClient
@@ -23,6 +25,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 val dataModule = module {
     factory<UserRepository> {
         UserRepositoryImpl(get(), get())
+    }
+
+    factory<RecordRepository> {
+        RecordRepositoryImpl(get())
     }
 
     //Remote
@@ -61,7 +67,7 @@ val dataModule = module {
 
     factory { get<Database>().recordDao() }
 
-    single {
+    single<Database> {
         Room.databaseBuilder(
             androidContext(),
             Database::class.java,

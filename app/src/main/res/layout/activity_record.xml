@@ -73,5 +73,13 @@
             android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/btnSave" android:layout_marginBottom="8dp"/>
+    <Button
+            android:text="Get Records"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnGetRecords" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@+id/btnPlay"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/btnSave"
+            android:layout_marginEnd="8dp"/>
 
 </android.support.constraint.ConstraintLayout>

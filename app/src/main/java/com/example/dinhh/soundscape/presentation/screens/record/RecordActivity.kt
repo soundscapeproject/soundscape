@@ -51,6 +51,14 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         is RecordViewState.Failure -> {
             Toast.makeText(this, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
         }
+
+        is RecordViewState.SaveRecordSuccess -> {
+            logD("SAVE RECORD SUCCESS")
+        }
+
+        is RecordViewState.GetRecordsSuccess -> {
+            logD("GET RECORDs SUCCESS: ${viewState.localRecords.toString()}")
+        }
     }
 
     private fun handleButtonClicked() {
@@ -83,6 +91,10 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
             val intent = Intent(this, RecordActivity::class.java)
             startActivity(intent)
         }
+
+        btnGetRecords.setOnClickListener {
+            recordViewModel.getRecords()
+        }
     }
 
     private fun showSaveDialog() {
@@ -94,6 +106,7 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
 
     override fun onSaveDialogPositiveClick(recordName: String, category: String) {
         logD("SAVE DIALOG: ${recordName} : ${category}")
+        recordViewModel.saveRecord()
     }
 
     override fun onSaveDialogNegativeClick(dialog: SaveDialog) {
