@@ -3,9 +3,9 @@
           package="com.example.dinhh.soundscape">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
             android:name=".presentation.SoundscapeApplication"
@@ -25,8 +25,9 @@
         </activity>
         <activity android:name=".presentation.screens.main.MainActivity">
         </activity>
-        <activity android:name=".presentation.screens.login.LoginActivity"
-        android:theme="@style/LoginTheme">
+        <activity
+                android:name=".presentation.screens.login.LoginActivity"
+                android:theme="@style/LoginTheme">
         </activity>
         <activity android:name=".presentation.screens.record.RecordActivity">
         </activity>

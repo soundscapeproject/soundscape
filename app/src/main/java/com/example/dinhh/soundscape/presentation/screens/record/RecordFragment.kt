@@ -2,6 +2,7 @@ package com.example.dinhh.soundscape.presentation.screens.record
 
 
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.support.v4.app.Fragment
@@ -77,7 +78,13 @@ class RecordFragment : Fragment() {
         btnPlay.setOnClickListener{
             recordViewModel.playRecord()
         }
+
+        btnSave.setOnClickListener {
+            val intent = Intent(activity, RecordActivity::class.java)
+            startActivity(intent)
+        }
     }
+
 
     companion object {
         @JvmStatic

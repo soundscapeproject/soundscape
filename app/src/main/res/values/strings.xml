@@ -9,4 +9,13 @@
     <string name="recording_audio">Recording audio</string>
     <string name="stop_recording">stop recording</string>
     <string name="play">play</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="record_name">Record name</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="done">Done</string>
+    <string name="close">Close</string>
+    <string name="title_activity_record">RecordActivity</string>
 </resources>
