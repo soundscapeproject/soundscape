@@ -28,8 +28,6 @@
         <activity android:name=".presentation.screens.login.LoginActivity"
         android:theme="@style/LoginTheme">
         </activity>
-        <activity android:name=".presentation.screens.record.RecordActivity">
-        </activity>
     </application>
 
 </manifest>
