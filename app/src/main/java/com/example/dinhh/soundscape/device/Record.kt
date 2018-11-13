@@ -5,13 +5,14 @@ import android.media.MediaRecorder
 import android.util.Log
 import com.example.dinhh.soundscape.common.logD
 import io.reactivex.Completable
+import io.reactivex.Single
 import java.io.File
 import java.io.IOException
 
 interface Record {
     fun startRecording(): Completable
 
-    fun stopRecording(): Completable
+    fun stopRecording(): Single<String>
 
     fun playAudio(): Completable
 
@@ -59,12 +60,13 @@ class RecordImpl: Record {
         })
     }
 
-    override fun stopRecording(): Completable {
-        return Completable.create {
+    override fun stopRecording(): Single<String> {
+
+        return Single.create {
             try {
                 myAudioRecorder.stop()
                 myAudioRecorder.release()
-                it.onComplete()
+                it.onSuccess(containFolderPath + fileName)
             } catch (e: Exception) {
                 it.onError(e)
             }

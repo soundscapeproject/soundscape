@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 enum class SoundType(val description: String) {
 
     @SerializedName("soundscapes")
-    NATURE("Soundscapes"),
+    SOUNDSCAPE("Soundscapes"),
 
     @SerializedName("ambience")
-    HUMAN("Ambience"),
+    AMBIENCE("Ambience"),
 
     @SerializedName("effects")
-    MACHINE("Effects");
+    EFFECTS("Effects");
 
     companion object {
         fun getTypeByName(name: String) = valueOf(name.toUpperCase())

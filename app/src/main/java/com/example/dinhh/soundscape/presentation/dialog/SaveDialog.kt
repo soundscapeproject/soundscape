@@ -9,8 +9,13 @@ import android.support.v7.app.AppCompatDialogFragment
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.ProgressBar
 import com.example.dinhh.soundscape.R
+import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.SoundCategory
+import kotlinx.android.synthetic.main.dialog_save_record.*
 import kotlinx.android.synthetic.main.dialog_save_record.view.*
 
 private const val ARG_TITLE = "title"
@@ -28,21 +33,23 @@ class SaveDialog: AppCompatDialogFragment() {
     private var listener: SaveDialogListener? = null
     private var category = categoryList[0]
 
+    private lateinit var progressBar: ProgressBar
+
    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val view = it.layoutInflater.inflate(R.layout.dialog_save_record, null)
 
-            val recordName = view.recordName
             setupCategorySpinner(view)
+            progressBar = view.progressBar
 
            builder
                 .setView(view)
                 .setTitle(title)
                 .setPositiveButton("Yes",
                     DialogInterface.OnClickListener { dialog, id ->
-                        listener?.onSaveDialogPositiveClick(recordName.text.toString(), category)
+                        listener?.onSaveDialogPositiveClick(view.recordName.text.toString(), category)
                     })
                 .setNegativeButton(R.string.cancel,
                     DialogInterface.OnClickListener { dialog, id ->
@@ -87,6 +94,14 @@ class SaveDialog: AppCompatDialogFragment() {
                 category = categoryList[p2]
             }
         }
+    }
+
+    fun showLoading() {
+        progressBar.visible()
+    }
+
+    fun hideLoading() {
+        progressBar.gone()
     }
 
     companion object {

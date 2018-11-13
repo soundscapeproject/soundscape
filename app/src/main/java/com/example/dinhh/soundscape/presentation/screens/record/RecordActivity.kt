@@ -11,6 +11,8 @@ import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.isVisible
 import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
+import com.example.dinhh.soundscape.data.entity.LocalRecord
+import com.example.dinhh.soundscape.data.entity.SoundType
 import com.example.dinhh.soundscape.presentation.dialog.SaveDialog
 import kotlinx.android.synthetic.main.activity_record.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -18,6 +20,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
 
     private val recordViewModel: RecordViewModel by viewModel()
+
+    private lateinit var saveDialog: SaveDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +34,6 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         setupView()
 
         handleButtonClicked()
-
-        btnSave.setOnClickListener {
-            showSaveDialog()
-        }
     }
 
     private fun setupView() {
@@ -41,19 +41,30 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         btnPlay.invisible()
         recordingTextView.invisible()
         btnSave.invisible()
+
+        saveDialog = SaveDialog.newInstance("Save Record")
     }
 
     private fun handleView(viewState: RecordViewState) = when (viewState) {
-        is RecordViewState.Success -> {
-            //Success State
-        }
+        is RecordViewState.Success -> {}
 
         is RecordViewState.Failure -> {
             Toast.makeText(this, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
         }
 
+        is RecordViewState.SaveRecordLoading -> {
+            saveDialog.showLoading()
+        }
+
         is RecordViewState.SaveRecordSuccess -> {
-            logD("SAVE RECORD SUCCESS")
+            saveDialog.hideLoading()
+            dismissSaveDialog()
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+        }
+
+        is RecordViewState.SaveRecordFailure -> {
+            saveDialog.hideLoading()
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
         }
 
         is RecordViewState.GetRecordsSuccess -> {
@@ -63,33 +74,19 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
 
     private fun handleButtonClicked() {
         btnStartRecording.setOnClickListener {
-            btnStartRecording.invisible()
-            btnStopRecording.visible()
-            recordingTextView.visible()
-            chronometer.base = SystemClock.elapsedRealtime()
-            chronometer.start()
-            recordViewModel.startRecording()
+            onStartBtnClicked()
         }
 
         btnStopRecording.setOnClickListener {
-            btnStartRecording.visible()
-            btnStopRecording.invisible()
-            recordingTextView.invisible()
-            chronometer.stop()
-            if (!btnPlay.isVisible()) {
-                btnPlay.visible()
-                btnSave.visible()
-            }
-            recordViewModel.stopRecording()
+            onStopBtnclicked()
+        }
+
+        btnSave.setOnClickListener {
+            showSaveDialog()
         }
 
         btnPlay.setOnClickListener {
             recordViewModel.playRecord()
-        }
-
-        btnSave.setOnClickListener {
-            val intent = Intent(this, RecordActivity::class.java)
-            startActivity(intent)
         }
 
         btnGetRecords.setOnClickListener {
@@ -97,16 +94,47 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         }
     }
 
+    private fun onStartBtnClicked() {
+        btnStartRecording.invisible()
+        btnStopRecording.visible()
+        recordingTextView.visible()
+        chronometer.base = SystemClock.elapsedRealtime()
+        chronometer.start()
+        recordViewModel.startRecording()
+    }
+
+    private fun onStopBtnclicked() {
+        btnStartRecording.visible()
+        btnStopRecording.invisible()
+        recordingTextView.invisible()
+        chronometer.stop()
+        recordViewModel.recordLength = (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000
+        if (!btnPlay.isVisible()) {
+            btnPlay.visible()
+            btnSave.visible()
+        }
+        recordViewModel.stopRecording()
+    }
+
     private fun showSaveDialog() {
-
-        val saveDialog = SaveDialog.newInstance("Save Record")
-
         saveDialog.show(supportFragmentManager, "SAVE_DIALOG")
     }
 
+    private fun dismissSaveDialog() {
+        saveDialog.dismiss()
+    }
+
     override fun onSaveDialogPositiveClick(recordName: String, category: String) {
-        logD("SAVE DIALOG: ${recordName} : ${category}")
-        recordViewModel.saveRecord()
+
+        val localRecord = LocalRecord(
+            null,
+            recordName,
+            category,
+            SoundType.SOUNDSCAPE.description,
+            recordViewModel.fileUrl!!,
+            recordViewModel.recordLength!!
+        )
+        recordViewModel.saveRecord(localRecord)
     }
 
     override fun onSaveDialogNegativeClick(dialog: SaveDialog) {

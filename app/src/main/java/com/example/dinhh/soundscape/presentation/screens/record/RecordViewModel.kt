@@ -19,6 +19,8 @@ class RecordViewModel(
     private val disposibles = CompositeDisposable()
     private val _viewState = MutableLiveData<RecordViewState>()
     val viewState : LiveData<RecordViewState> = _viewState
+    var fileUrl: String? = null
+    var recordLength: Long? = null
 
     fun startRecording() {
         disposibles.add(
@@ -35,7 +37,7 @@ class RecordViewModel(
         disposibles.add(
             stopRecordUseCase.execute()
                 .subscribe({
-                    _viewState.value = RecordViewState.Success
+                    fileUrl = it
                 }, {
                     _viewState.value = RecordViewState.Failure(it)
                 })
@@ -53,14 +55,14 @@ class RecordViewModel(
         )
     }
 
-    fun saveRecord() {
-        val localRecord = LocalRecord(null, "Test title", "Test Category")
+    fun saveRecord(localRecord: LocalRecord) {
+        _viewState.value = RecordViewState.SaveRecordLoading
         disposibles.add(
             saveRecordUseCase.execute(localRecord)
                 .subscribe({
                     _viewState.value = RecordViewState.SaveRecordSuccess
                 }, {
-                    _viewState.value = RecordViewState.Failure(it)
+                    _viewState.value = RecordViewState.SaveRecordFailure(it)
                 })
         )
     }
@@ -90,10 +92,14 @@ class RecordViewModel(
 }
 
 sealed class RecordViewState {
+    // Common
     object Success : RecordViewState()
     data class Failure(val throwable: Throwable) : RecordViewState()
 
+    //Save
+    object SaveRecordLoading : RecordViewState()
     object SaveRecordSuccess : RecordViewState()
+    data class SaveRecordFailure(val throwable: Throwable) : RecordViewState()
 
     data class GetRecordsSuccess(val localRecords: List<LocalRecord>) : RecordViewState()
 }
