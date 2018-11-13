@@ -10,16 +10,16 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.dinhh.soundscape.R
+import com.example.dinhh.soundscape.data.entity.SoundCategory
 import kotlinx.android.synthetic.main.dialog_save_record.view.*
 
 private const val ARG_TITLE = "title"
 
 private val categoryList = listOf(
-    "Nature",
-    "Human",
-    "Machine",
-    "Story",
-    "Unknown"
+    SoundCategory.NATURE.description,
+    SoundCategory.HUMAN.description,
+    SoundCategory.MACHINE.description,
+    SoundCategory.STORY.description
 )
 
 class SaveDialog: AppCompatDialogFragment() {
