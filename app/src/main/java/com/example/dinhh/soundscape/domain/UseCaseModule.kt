@@ -42,4 +42,8 @@ val useCaseModule = module {
     factory {
         GetRecordsUseCase(get(), get())
     }
+
+    factory {
+        DeleteTempRecordUseCase(get(), get())
+    }
 }

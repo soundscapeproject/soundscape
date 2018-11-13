@@ -13,7 +13,8 @@ class RecordViewModel(
     private val stopRecordUseCase: StopRecordUseCase,
     private val playRecordUseCase: PlayRecordUseCase,
     private val saveRecordUseCase: SaveRecordUseCase,
-    private val getRecordsUseCase: GetRecordsUseCase
+    private val getRecordsUseCase: GetRecordsUseCase,
+    private val deleteTempRecordUseCase: DeleteTempRecordUseCase
 ): ViewModel() {
     private val disposibles = CompositeDisposable()
     private val _viewState = MutableLiveData<RecordViewState>()
@@ -72,6 +73,13 @@ class RecordViewModel(
                 },{
                     _viewState.value = RecordViewState.Failure(it)
                 })
+        )
+    }
+
+    fun deleteTempRecord() {
+        disposibles.add(
+            deleteTempRecordUseCase.execute()
+                .subscribe({}, {})
         )
     }
 

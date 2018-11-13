@@ -112,4 +112,9 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
     override fun onSaveDialogNegativeClick(dialog: SaveDialog) {
         logD("CANCEL DIALOG")
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        recordViewModel.deleteTempRecord()
+    }
 }
