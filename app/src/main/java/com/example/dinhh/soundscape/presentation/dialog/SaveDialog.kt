@@ -47,11 +47,11 @@ class SaveDialog: AppCompatDialogFragment() {
            builder
                 .setView(view)
                 .setTitle(title)
-                .setPositiveButton("Yes",
+                .setPositiveButton(getString(R.string.save),
                     DialogInterface.OnClickListener { dialog, id ->
                         listener?.onSaveDialogPositiveClick(view.recordName.text.toString(), category)
                     })
-                .setNegativeButton(R.string.cancel,
+                .setNegativeButton(getString(R.string.cancel),
                     DialogInterface.OnClickListener { dialog, id ->
                         listener?.onSaveDialogNegativeClick(this)
                     })

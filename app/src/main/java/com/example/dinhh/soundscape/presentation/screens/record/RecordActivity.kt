@@ -42,7 +42,7 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         recordingTextView.invisible()
         btnSave.invisible()
 
-        saveDialog = SaveDialog.newInstance("Save Record")
+        saveDialog = SaveDialog.newInstance(getString(R.string.title_save_record_dialog))
     }
 
     private fun handleView(viewState: RecordViewState) = when (viewState) {
@@ -59,12 +59,12 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         is RecordViewState.SaveRecordSuccess -> {
             saveDialog.hideLoading()
             dismissSaveDialog()
-            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
         }
 
         is RecordViewState.SaveRecordFailure -> {
             saveDialog.hideLoading()
-            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
         }
 
         is RecordViewState.GetRecordsSuccess -> {

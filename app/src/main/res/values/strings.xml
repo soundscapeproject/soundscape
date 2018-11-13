@@ -12,10 +12,9 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="record_name">Record name</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="done">Done</string>
     <string name="close">Close</string>
+    <string name="saved">Saved</string>
     <string name="title_activity_record">RecordActivity</string>
+    <string name="title_save_record_dialog">Save Record</string>
 </resources>
