@@ -1,9 +1,13 @@
 package com.example.dinhh.soundscape.device
 
+import android.content.Context
 import android.util.Log
 import com.example.dinhh.soundscape.data.Model
+import com.example.dinhh.soundscape.data.pref.SharedPref
+import com.example.dinhh.soundscape.data.pref.SharedPrefImpl
 import com.example.dinhh.soundscape.data.remote.SoundscapeApi
 import com.example.dinhh.soundscape.presentation.ListItem
+import com.example.dinhh.soundscape.presentation.screens.library.LibraryFragment
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -14,21 +18,17 @@ interface Library {
     fun beginSearch(selectedCategory: String): Completable
 }
 
-class LibraryImpl: Library{
+class LibraryImpl(private val sharedPref: SharedPref): Library{
     override fun beginSearch(selectedCategory: String): Completable {
         return Completable.create {
             Model.sounds.clear()
-            val apiKey =
-                "jFBaDxPcNzYZGu-gNMZ2L9-TjP1JjWl8OHFhdJV54gL82_M0cZi8oGEg-fB7gw3EpYvN0IHrHFP-Ic5sULo-iAWTl0k_y0t3CwrCQPpbYJkVIjmCV1Zzo0NB52ZLanwN"
+            val apiKey = sharedPref.getToken()
             try {
                 disposable =
                         wikiApiServe.getSounds(
-                            key = apiKey,
+                            key = apiKey.blockingGet(),
                             category = selectedCategory
-                        )
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
+                        ).subscribe(
                                 { result ->
                                     for (i in result.indices) {
                                         Model.sounds.add(ListItem(result[i][0].Title))

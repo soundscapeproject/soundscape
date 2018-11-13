@@ -16,8 +16,6 @@ class SoundsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        //Log.d("List: ", Model.sounds.toString())
         val view: View = inflater.inflate(R.layout.fragment_sounds, container, false)
         val listView = view.findViewById<ListView>(R.id.listView)
 

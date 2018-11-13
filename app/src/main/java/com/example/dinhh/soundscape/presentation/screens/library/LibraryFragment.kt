@@ -45,10 +45,11 @@ class LibraryFragment : Fragment() {
 
     private fun handleView(viewState: LibraryViewState) = when (viewState) {
         is LibraryViewState.Success -> {
-            if (isClicked) {
+            isClicked = if (isClicked) {
                 goToSoundsFragment()
-                isClicked = false
+                false
             }else{
+                false
             }
         }
         is LibraryViewState.Failure -> {

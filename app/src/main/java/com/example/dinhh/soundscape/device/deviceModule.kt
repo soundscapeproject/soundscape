@@ -9,7 +9,7 @@ val deviceModule = module {
     }
 
     single<Library> {
-        LibraryImpl()
+        LibraryImpl(get())
     }
 }
 

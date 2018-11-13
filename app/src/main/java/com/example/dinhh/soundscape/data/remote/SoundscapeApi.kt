@@ -20,7 +20,7 @@ interface SoundscapeApi {
     @GET("api_audio_search/index.php/?")
     fun getSounds(@Query("key") key: String,
                   @Query("category") category: String):
-            Observable<List<List<SoundNetworkModel.Response>>>
+            Single<List<List<SoundNetworkModel.Response>>>
 
     companion object {
         fun create(): SoundscapeApi {

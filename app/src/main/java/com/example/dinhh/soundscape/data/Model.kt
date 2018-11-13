@@ -3,8 +3,8 @@ package com.example.dinhh.soundscape.data
 import com.example.dinhh.soundscape.presentation.ListItem
 
 object Model {
-    val category: kotlin.collections.MutableList<ListItem> = java.util.ArrayList()
-    val sounds: kotlin.collections.MutableList<ListItem> = java.util.ArrayList()
+    val category: MutableList<ListItem> = mutableListOf()
+    val sounds:  MutableList<ListItem> = mutableListOf()
 
 
     init {
