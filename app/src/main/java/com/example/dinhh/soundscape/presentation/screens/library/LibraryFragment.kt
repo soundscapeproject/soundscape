@@ -1,19 +1,14 @@
 package com.example.dinhh.soundscape.presentation.screens.library
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.ListAdapter
-import com.example.dinhh.soundscape.presentation.ListItem
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
 import kotlinx.android.synthetic.main.fragment_sounds.*
-import org.koin.android.viewmodel.ext.android.viewModel
 
 private val categoryList = mutableListOf(
     "Nature", "Human", "Machine", "Story"
