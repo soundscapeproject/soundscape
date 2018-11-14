@@ -7,19 +7,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.data.Model
 import com.example.dinhh.soundscape.presentation.ListAdapter
 import com.example.dinhh.soundscape.presentation.ListItem
-import com.example.dinhh.soundscape.presentation.screens.sounds.SoundsFragment
+import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
+import kotlinx.android.synthetic.main.fragment_sounds.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class LibraryFragment : Fragment() {
+private val categoryList = mutableListOf(
+    "Nature", "Human", "Machine", "Story"
+)
 
-    private val libraryViewModel: LibraryViewModel by viewModel()
-    private var isClicked = false
+class LibraryFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,45 +30,21 @@ class LibraryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupListView()
+    }
 
-        val listView = view.findViewById<ListView>(R.id.listView)
-        listView.adapter = ListAdapter(context!!, Model.category)
+    private fun setupListView() {
+        listView.adapter = ListAdapter(context!!, categoryList)
         listView.setOnItemClickListener{ _, _, position, _ ->
-            isClicked = true
-            val selectedCategory = listView.getItemAtPosition(position) as ListItem
-            libraryViewModel.beginSearch(selectedCategory.toString())
-        }
-
-        libraryViewModel.viewState.observe(this, Observer {
-            it?.run(this@LibraryFragment::handleView)
-        })
-    }
-
-    private fun handleView(viewState: LibraryViewState) = when (viewState) {
-        is LibraryViewState.Success -> {
-
-            Log.d("Eero", "LIST SOUND: ${viewState.listSound}" )
-
-            //Receive the data. Then you can use this data to display on the screen
-
-    /*
-            isClicked = if (isClicked) {
-                goToSoundsFragment()
-                false
-            }else{
-                false
-            }
-            */
-        }
-        is LibraryViewState.Failure -> {
-            Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
+            val selectedCategory = listView.getItemAtPosition(position) as String
+            goToSoundsFragment(selectedCategory)
         }
     }
 
-    fun goToSoundsFragment(){
+    fun goToSoundsFragment(category: String){
         val fragManager = fragmentManager
         val fragmentTransaction = fragManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.container, SoundsFragment())
+        fragmentTransaction?.replace(R.id.container, SoundFragment.newInstance(category))
         fragmentTransaction?.addToBackStack(null)?.commit()
     }
 

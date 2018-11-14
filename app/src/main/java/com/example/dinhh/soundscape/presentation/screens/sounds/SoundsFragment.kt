@@ -10,7 +10,7 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.ListAdapter
 import com.example.dinhh.soundscape.data.Model
 
-
+/*
 class SoundsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,3 +23,4 @@ class SoundsFragment : Fragment() {
         return view
     }
 }
+        */

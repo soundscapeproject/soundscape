@@ -8,12 +8,11 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.dinhh.soundscape.R
 
-class ListAdapter (context: Context, private val listItems: MutableList<ListItem>): BaseAdapter() {
+class ListAdapter (context: Context, private val listItems: MutableList<String>): BaseAdapter() {
 
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-    // How many rows
     override fun getCount(): Int {
         return listItems.size
     }
@@ -29,10 +28,9 @@ class ListAdapter (context: Context, private val listItems: MutableList<ListItem
 
     override fun getView(position: Int, p1: View?, p2: ViewGroup?): View {
         val rowView = inflater.inflate(R.layout.item_library, p2, false)
-        val thisCategory = listItems[position]
 
         val tv = rowView.findViewById(R.id.categoryTextView) as TextView
-        tv.text = thisCategory.name
+        tv.text = listItems[position]
 
         return rowView
     }
