@@ -3,6 +3,7 @@ package com.example.dinhh.soundscape.presentation.screens.library
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,12 +46,19 @@ class LibraryFragment : Fragment() {
 
     private fun handleView(viewState: LibraryViewState) = when (viewState) {
         is LibraryViewState.Success -> {
+
+            Log.d("Eero", "LIST SOUND: ${viewState.listSound}" )
+
+            //Receive the data. Then you can use this data to display on the screen
+
+    /*
             isClicked = if (isClicked) {
                 goToSoundsFragment()
                 false
             }else{
                 false
             }
+            */
         }
         is LibraryViewState.Failure -> {
             Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()

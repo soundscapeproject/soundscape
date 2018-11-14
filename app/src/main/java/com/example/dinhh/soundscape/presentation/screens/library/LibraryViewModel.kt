@@ -3,6 +3,7 @@ package com.example.dinhh.soundscape.presentation.screens.library
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.example.dinhh.soundscape.data.entity.Sound
 import com.example.dinhh.soundscape.domain.library.BeginSearchUseCase
 import io.reactivex.disposables.CompositeDisposable
 
@@ -17,7 +18,7 @@ class LibraryViewModel(
         disposibles.add(
             beginSearchUseCase.execute(selectedCategory)
                 .subscribe({
-                    _viewState.value = LibraryViewState.Success
+                    _viewState.value = LibraryViewState.Success(it)
                 }, {
                     _viewState.value = LibraryViewState.Failure(it)
                 })
@@ -31,6 +32,6 @@ class LibraryViewModel(
 }
 sealed class LibraryViewState {
 
-    object Success : LibraryViewState()
+    data class Success(val listSound: List<List<Sound>>) : LibraryViewState()
     data class Failure(val throwable: Throwable) : LibraryViewState()
 }

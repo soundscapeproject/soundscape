@@ -38,7 +38,10 @@ val useCaseModule = module {
         StopRecordUseCase(get(), get())
     }
 
+    //Library
+
     factory {
         BeginSearchUseCase(get(), get())
     }
+
 }

@@ -5,6 +5,8 @@ import com.example.dinhh.soundscape.data.pref.SharedPrefImpl
 import com.example.dinhh.soundscape.data.remote.SoundscapeApi
 import com.example.dinhh.soundscape.data.remote.SoundscapeRemoteData
 import com.example.dinhh.soundscape.data.remote.SoundscapeRemoteDataImpl
+import com.example.dinhh.soundscape.data.repository.SoundscapeRepository
+import com.example.dinhh.soundscape.data.repository.SoundscapeRepositoryImpl
 import com.example.dinhh.soundscape.data.repository.UserRepository
 import com.example.dinhh.soundscape.data.repository.UserRepositoryImpl
 import okhttp3.OkHttpClient
@@ -17,6 +19,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 val dataModule = module {
     factory<UserRepository> {
         UserRepositoryImpl(get(), get())
+    }
+
+    factory<SoundscapeRepository> {
+        SoundscapeRepositoryImpl(get(), get())
     }
 
     //SharedPref

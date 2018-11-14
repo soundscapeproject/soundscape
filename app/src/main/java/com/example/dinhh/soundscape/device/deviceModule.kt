@@ -7,9 +7,5 @@ val deviceModule = module {
     single<Record> {
         RecordImpl()
     }
-
-    single<Library> {
-        LibraryImpl(get())
-    }
 }
 
