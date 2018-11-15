@@ -2,12 +2,12 @@ package com.example.dinhh.soundscape.domain.record
 
 import com.example.dinhh.soundscape.common.SchedulerProvider
 import com.example.dinhh.soundscape.device.Record
-import io.reactivex.Single
+import io.reactivex.Completable
 
-class StopRecordUseCase(private val record: Record, private val schedulerProvider: SchedulerProvider) {
+class DeleteTempRecordUseCase(private val record: Record, private val schedulerProvider: SchedulerProvider) {
 
-    fun execute(): Single<String> {
-        return record.stopRecording()
+    fun execute(): Completable {
+        return record.deleteTempFile()
             .subscribeOn(schedulerProvider.getIOScheduler())
             .observeOn(schedulerProvider.getUIScheduler())
     }

@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -51,9 +53,8 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation "android.arch.persistence.room:rxjava2:$room_version"
     implementation "android.arch.persistence.room:runtime:$room_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
-    kapt "android.arch.lifecycle:compiler:1.1.1"
-    kapt "android.arch.persistence.room:compiler:1.1.1"
+    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
 
     //Koin
     implementation 'org.koin:koin-android-viewmodel:1.0.1'
