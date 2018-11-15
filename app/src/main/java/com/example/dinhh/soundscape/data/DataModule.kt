@@ -10,6 +10,8 @@ import com.example.dinhh.soundscape.data.pref.SharedPrefImpl
 import com.example.dinhh.soundscape.data.remote.SoundscapeApi
 import com.example.dinhh.soundscape.data.remote.SoundscapeRemoteData
 import com.example.dinhh.soundscape.data.remote.SoundscapeRemoteDataImpl
+import com.example.dinhh.soundscape.data.repository.SoundscapeRepository
+import com.example.dinhh.soundscape.data.repository.SoundscapeRepositoryImpl
 import com.example.dinhh.soundscape.data.repository.RecordRepository
 import com.example.dinhh.soundscape.data.repository.RecordRepositoryImpl
 import com.example.dinhh.soundscape.data.repository.UserRepository
@@ -27,8 +29,19 @@ val dataModule = module {
         UserRepositoryImpl(get(), get())
     }
 
+
+    factory<SoundscapeRepository> {
+        SoundscapeRepositoryImpl(get(), get())
+    }
+
+    /*SharedPref
+    factory<SharedPref> {
+        SharedPrefImpl(get())
+    }*/
+
     factory<RecordRepository> {
         RecordRepositoryImpl(get())
+
     }
 
     //Remote

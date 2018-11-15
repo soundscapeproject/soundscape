@@ -1,5 +1,10 @@
 package com.example.dinhh.soundscape.domain
 
+
+import com.example.dinhh.soundscape.domain.library.BeginSearchUseCase
+import com.example.dinhh.soundscape.domain.record.PlayRecordUseCase
+import com.example.dinhh.soundscape.domain.record.StartRecordUseCase
+import com.example.dinhh.soundscape.domain.record.StopRecordUseCase
 import com.example.dinhh.soundscape.domain.record.*
 import com.example.dinhh.soundscape.domain.user.GetTokenUseCase
 import com.example.dinhh.soundscape.domain.user.LoginUseCase
@@ -45,5 +50,12 @@ val useCaseModule = module {
 
     factory {
         DeleteTempRecordUseCase(get(), get())
+    }
+
+
+    //Library
+
+    factory {
+        BeginSearchUseCase(get(), get())
     }
 }

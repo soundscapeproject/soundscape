@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             getPermissionToRecordAudio()
         }
 
-//        btnLogout.setOnClickListener {
+//       btnLogout.setOnClickListener {
 //            mainViewModel.logout()
 //        }
 //
