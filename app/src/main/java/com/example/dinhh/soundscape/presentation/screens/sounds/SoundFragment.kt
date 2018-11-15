@@ -4,7 +4,8 @@ package com.example.dinhh.soundscape.presentation.screens.sounds
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
+import com.example.dinhh.soundscape.data.Model
 import kotlinx.android.synthetic.main.fragment_sound.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -22,6 +24,8 @@ class SoundFragment : Fragment() {
     private val soundViewModel: SoundViewModel by viewModel()
     // TODO: Rename and change types of parameters
     private var category: String? = null
+    lateinit var soundView: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,7 @@ class SoundFragment : Fragment() {
             category = it.getString(ARG_CATEGORY)
         }
 
-        soundViewModel.viewState.observe(this, Observer {
+            soundViewModel.viewState.observe(this, Observer {
             it?.run(this@SoundFragment::handleView)
         })
 
@@ -43,6 +47,8 @@ class SoundFragment : Fragment() {
         // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_sound, container, false)
+        soundView = view.findViewById(R.id.soundList) as RecyclerView
+
 
         return view
     }
@@ -51,21 +57,23 @@ class SoundFragment : Fragment() {
 
         SoundViewState.Loading -> {
             progressBar.visible()
-            Log.d("Booyah!", "LOADING SHOW")
         }
 
         is SoundViewState.Success -> {
             progressBar.gone()
-            Log.d("Booyah!", "LOADING HIDE")
-            Log.d("Booyah!", "SUCCESS LIST SONGS: ${viewState.listSound}")
+            Model.sounds = viewState.listSound
+            setupListView()
         }
 
         is SoundViewState.Failure -> {
             progressBar.gone()
-            Log.d("Booyah!", "LOADING HIDE")
-            Log.d("Booyah!", "ERROR: ${viewState.throwable.localizedMessage}")
             Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setupListView() {
+        soundList.layoutManager = LinearLayoutManager(this.context!!)
+        soundList.adapter = SoundAdapter(Model.sounds)
     }
 
 

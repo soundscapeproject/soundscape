@@ -1,10 +1,11 @@
 package com.example.dinhh.soundscape.data
 
+import com.example.dinhh.soundscape.data.entity.Sound
 import com.example.dinhh.soundscape.presentation.ListItem
 
 object Model {
     val category: MutableList<ListItem> = mutableListOf()
-    val sounds:  MutableList<ListItem> = mutableListOf()
+    var sounds:  List<List<Sound>> = mutableListOf()
 
 
     init {
