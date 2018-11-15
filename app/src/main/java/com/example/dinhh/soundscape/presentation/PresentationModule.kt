@@ -23,7 +23,7 @@ val presentationModule = module {
     }
 
     viewModel {
-        RecordViewModel(get(), get(), get())
+        RecordViewModel(get(), get(), get(), get(), get(), get())
     }
 
     viewModel {
