@@ -69,11 +69,14 @@ class SoundFragment : Fragment() {
             progressBar.gone()
             Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
         }
+        is SoundViewState.PlaySuccess -> {
+            progressBar.gone()
+        }
     }
 
     private fun setupListView() {
         soundList.layoutManager = LinearLayoutManager(this.context!!)
-        soundList.adapter = SoundAdapter(Model.sounds)
+        soundList.adapter = SoundAdapter(Model.sounds, soundViewModel)
     }
 
 

@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.data.entity.Sound
 import kotlinx.android.synthetic.main.item_sound.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class SoundAdapter(val items: List<List<Sound>>): RecyclerView.Adapter<ViewHolder>(){
+class SoundAdapter(val items: List<List<Sound>>, private val soundViewModel: SoundViewModel): RecyclerView.Adapter<ViewHolder>(){
 
     override fun getItemCount(): Int {
         return items.size
@@ -28,6 +29,8 @@ class SoundAdapter(val items: List<List<Sound>>): RecyclerView.Adapter<ViewHolde
 
         holder.itemView.itemSoundPlayBtn.setOnClickListener{
             Log.d("Clicked position :", position.toString())
+            soundViewModel.playSound(list.downloadLink)
+
         }
     }
 }

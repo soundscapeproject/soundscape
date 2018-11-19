@@ -27,6 +27,6 @@ val presentationModule = module {
     }
 
     viewModel {
-        SoundViewModel(get())
+        SoundViewModel(get(), get())
     }
 }
