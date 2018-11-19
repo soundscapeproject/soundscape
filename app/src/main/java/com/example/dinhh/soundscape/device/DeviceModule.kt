@@ -11,5 +11,9 @@ val deviceModule = module {
     single<PlaySound> {
         PlaySoundImpl()
     }
+
+    single<StopSound> {
+        StopSoundImpl()
+    }
 }
 
