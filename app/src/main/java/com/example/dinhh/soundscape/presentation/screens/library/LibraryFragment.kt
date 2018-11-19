@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.ListAdapter
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
-import kotlinx.android.synthetic.main.fragment_sounds.*
+import kotlinx.android.synthetic.main.fragment_library.*
 
 private val categoryList = mutableListOf(
     "Nature", "Human", "Machine", "Story"

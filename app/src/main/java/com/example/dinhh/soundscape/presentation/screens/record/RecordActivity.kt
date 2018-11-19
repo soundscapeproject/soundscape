@@ -132,7 +132,9 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
             category,
             SoundType.SOUNDSCAPE.description,
             recordViewModel.fileUrl!!,
-            recordViewModel.recordLength!!
+            recordViewModel.recordLength!!,
+            false,
+            false
         )
         recordViewModel.saveRecord(localRecord)
     }
