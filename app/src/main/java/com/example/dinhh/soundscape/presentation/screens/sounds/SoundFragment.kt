@@ -48,8 +48,6 @@ class SoundFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_sound, container, false)
         soundView = view.findViewById(R.id.soundList) as RecyclerView
-
-
         return view
     }
 
@@ -69,11 +67,17 @@ class SoundFragment : Fragment() {
             progressBar.gone()
             Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
         }
+        is SoundViewState.PlaySuccess -> {
+            progressBar.gone()
+        }
+        is SoundViewState.StopSuccess -> {
+            progressBar.gone()
+        }
     }
 
     private fun setupListView() {
         soundList.layoutManager = LinearLayoutManager(this.context!!)
-        soundList.adapter = SoundAdapter(Model.sounds)
+        soundList.adapter = SoundAdapter(Model.sounds, soundViewModel)
     }
 
 

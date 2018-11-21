@@ -7,5 +7,9 @@ val deviceModule = module {
     single<Record> {
         RecordImpl()
     }
+
+    single<Player> {
+        PlayerImpl()
+    }
 }
 

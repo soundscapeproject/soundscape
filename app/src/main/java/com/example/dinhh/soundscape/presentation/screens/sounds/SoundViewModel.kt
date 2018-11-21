@@ -5,10 +5,14 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.example.dinhh.soundscape.data.entity.Sound
 import com.example.dinhh.soundscape.domain.library.BeginSearchUseCase
+import com.example.dinhh.soundscape.domain.library.PlaySoundUseCase
+import com.example.dinhh.soundscape.domain.library.StopSoundUseCase
 import io.reactivex.disposables.CompositeDisposable
 
 class SoundViewModel(
-    private val beginSearchUseCase: BeginSearchUseCase
+    private val beginSearchUseCase: BeginSearchUseCase,
+    private val playSoundUseCase: PlaySoundUseCase,
+    private val stopSoundUseCase: StopSoundUseCase
 ): ViewModel() {
     private val disposibles = CompositeDisposable()
     private val _viewState = MutableLiveData<SoundViewState>()
@@ -29,6 +33,32 @@ class SoundViewModel(
         )
     }
 
+    fun playSound(selectedSound: String) {
+        _viewState.value =
+                SoundViewState.Loading
+        disposibles.add(
+           playSoundUseCase.execute(selectedSound)
+                .subscribe({
+                    _viewState.value =
+                            SoundViewState.PlaySuccess
+                }, {
+                    _viewState.value =
+                            SoundViewState.Failure(it)
+                })
+        )
+    }
+
+    fun stopSound() {
+        disposibles.add(
+            stopSoundUseCase.execute()
+                .subscribe({
+                    _viewState.value = SoundViewState.StopSuccess
+                }, {
+                    _viewState.value = SoundViewState.Failure(it)
+                })
+        )
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposibles.clear()
@@ -37,6 +67,8 @@ class SoundViewModel(
 sealed class SoundViewState {
 
     object Loading: SoundViewState()
+    object PlaySuccess : SoundViewState()
+    object StopSuccess : SoundViewState()
     data class Success(val listSound: List<List<Sound>>) : SoundViewState()
     data class Failure(val throwable: Throwable) : SoundViewState()
 }
