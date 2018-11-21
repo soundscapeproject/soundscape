@@ -1,6 +1,5 @@
 package com.example.dinhh.soundscape.presentation.screens.sounds
 
-import android.os.CountDownTimer
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -12,10 +11,6 @@ import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.Sound
 import kotlinx.android.synthetic.main.item_sound.view.*
-import org.koin.android.viewmodel.ext.android.viewModel
-import kotlin.concurrent.timer
-import android.support.v4.os.HandlerCompat.postDelayed
-
 
 
 class SoundAdapter(val items: List<List<Sound>>, private val soundViewModel: SoundViewModel): RecyclerView.Adapter<ViewHolder>(){
@@ -36,25 +31,35 @@ class SoundAdapter(val items: List<List<Sound>>, private val soundViewModel: Sou
         holder.itemView.titleTextView.text = list.title
         holder.itemView.lengthTextView.text = list.length + " sec"
 
+        //Play button
         holder.itemView.itemSoundPlayBtn.setOnClickListener{
 
             Log.d("Clicked position :", position.toString())
-            holder.itemView.itemSoundPlayBtn.invisible()
-            holder.itemView.itemSoundStopBtn.visible()
+            hidePlay(holder)
             soundViewModel.playSound(list.downloadLink)
 
+            //Change the button back to play button when sound has been played
             Handler().postDelayed(({
-                holder.itemView.itemSoundStopBtn.invisible()
-                holder.itemView.itemSoundPlayBtn.visible()
+                showPlay(holder)
             }), list.length.toLong() * 1000)
         }
 
+        //Stop button
         holder.itemView.itemSoundStopBtn.setOnClickListener{
             Log.d("Clicked position :", position.toString())
-            holder.itemView.itemSoundStopBtn
-            holder.itemView.itemSoundPlayBtn.visible()
+            showPlay(holder)
             soundViewModel.stopSound()
         }
+    }
+
+    private fun hidePlay(holder: ViewHolder){
+        holder.itemView.itemSoundPlayBtn.invisible()
+        holder.itemView.itemSoundStopBtn.visible()
+    }
+
+    private fun showPlay(holder: ViewHolder){
+        holder.itemView.itemSoundPlayBtn.visible()
+        holder.itemView.itemSoundStopBtn.invisible()
     }
 }
 

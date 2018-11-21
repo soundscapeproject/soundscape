@@ -4,24 +4,17 @@ import android.media.MediaPlayer
 import io.reactivex.Completable
 import java.io.IOException
 
-interface PlaySound {
-    fun playSound(selectedSound: String): Completable
-}
 
-interface StopSound {
+interface Player {
+
+    fun playSound(selectedSound: String): Completable
+
     fun stopSound(): Completable
 }
 
-object MediaPlayerImpl {
-    private var mp: MediaPlayer = MediaPlayer()
-    val instance: MediaPlayer
-        get() {
-            return mp
-        }
-}
+class PlayerImpl: Player {
 
-class PlaySoundImpl: PlaySound {
-    val mp = MediaPlayerImpl.instance
+    private var mp: MediaPlayer = MediaPlayer()
 
     override fun playSound(selectedSound: String): Completable {
         return Completable.create {
@@ -37,10 +30,6 @@ class PlaySoundImpl: PlaySound {
             }
         }
     }
-}
-
-class StopSoundImpl: StopSound {
-    val mp = MediaPlayerImpl.instance
 
     override fun stopSound(): Completable {
         return Completable.create {
@@ -54,3 +43,4 @@ class StopSoundImpl: StopSound {
         }
     }
 }
+

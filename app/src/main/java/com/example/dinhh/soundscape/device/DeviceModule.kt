@@ -8,12 +8,8 @@ val deviceModule = module {
         RecordImpl()
     }
 
-    single<PlaySound> {
-        PlaySoundImpl()
-    }
-
-    single<StopSound> {
-        StopSoundImpl()
+    single<Player> {
+        PlayerImpl()
     }
 }
 
