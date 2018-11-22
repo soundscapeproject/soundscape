@@ -1,14 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".presentation.screens.home.HomeFragment">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gradient"
+        tools:context=".presentation.screens.home.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <EditText
+            android:layout_width="325dp"
+            android:layout_height="45dp"
+            android:inputType="textPersonName"
+            android:hint="Names, categories or records"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.571"
+            app:layout_constraintVertical_bias="0.143"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:drawableLeft="@drawable/ic_search_ic"
+            android:drawablePadding="10dp"
+            android:background="@drawable/edittext"/>
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Home Fragment"/>
+            android:text="Library's categories"
+            android:layout_width="322dp"
+            android:layout_height="26dp"
+            android:id="@+id/textViewCategories" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintVertical_bias="0.264"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite" app:layout_constraintHorizontal_bias="0.608"/>
 
-</FrameLayout>
+    <TextView
+            android:text="Your choice"
+            android:layout_width="326dp"
+            android:layout_height="43dp"
+            android:id="@+id/textViewYourChoice" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.642"
+            app:layout_constraintVertical_bias="0.811"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"/>
+
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="341dp"
+            android:layout_height="225dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.733" app:layout_constraintVertical_bias="0.506"
+            android:id="@+id/constraintLayout">
+
+
+        <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="159dp"
+                android:layout_height="92dp"
+                android:orientation="vertical"
+                android:background="@drawable/category_background_nature"
+                android:id="@+id/natureBtn"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintVertical_bias="0.0">
+            <TextView
+                    android:fontFamily="@font/roboto_black"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NATURE"
+                    android:layout_gravity="end"
+                    android:padding="8dp"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_category_ic_white"
+                    android:layout_gravity="end"/>
+        </LinearLayout>
+
+        <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="159dp"
+                android:layout_height="92dp"
+                android:orientation="vertical"
+                android:background="@drawable/category_background_human"
+                android:id="@+id/humanBtn"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintVertical_bias="0.0">
+            <TextView
+                    android:fontFamily="@font/roboto_black"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HUMAN"
+                    android:layout_gravity="end"
+                    android:padding="8dp"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_category_ic_white"
+                    android:layout_gravity="end"/>
+        </LinearLayout>
+
+        <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="159dp"
+                android:layout_height="92dp"
+                android:orientation="vertical"
+                android:background="@drawable/category_background_machine"
+                android:id="@+id/machineBtn"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintVertical_bias="0.854">
+            <TextView
+                    android:fontFamily="@font/roboto_black"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MACHINE"
+                    android:layout_gravity="end"
+                    android:padding="8dp"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_category_ic_white"
+                    android:layout_gravity="end"/>
+        </LinearLayout>
+
+        <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="159dp"
+                android:layout_height="92dp"
+                android:orientation="vertical"
+                android:background="@drawable/category_background_story"
+                android:id="@+id/storyBtn"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintVertical_bias="0.854">
+            <TextView
+                    android:fontFamily="@font/roboto_black"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STORY"
+                    android:layout_gravity="end"
+                    android:padding="8dp"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_category_ic_white"
+                    android:layout_gravity="end"/>
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <TextView
+            android:fontFamily="@font/roboto_black"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/randomBtn"
+            android:textSize="18sp"
+            android:layout_width="327dp"
+            android:layout_height="71dp"
+            android:gravity="center"
+            android:text="Random Sounds"
+            android:background="@drawable/background_random"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.682"
+            app:layout_constraintVertical_bias="0.931"/>
+
+
+</android.support.constraint.ConstraintLayout>
