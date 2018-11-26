@@ -24,4 +24,7 @@
     <string name="no_records">No records</string>
     <string name="name_required">Name should not be empty</string>
 
+    <string name="save_soundscapes">Saved Soundscapes</string>
+    <string name="recorded_tracks">Recorded Tracks</string>
+    <string name="favorite_sounds">Favourite Sounds</string>
 </resources>

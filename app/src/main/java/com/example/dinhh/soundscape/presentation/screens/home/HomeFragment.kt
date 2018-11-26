@@ -13,17 +13,12 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
 import com.example.dinhh.soundscape.presentation.screens.savedrecord.SavedRecord
 
-val myLibraryTitle = listOf(
-    "Saved Soundscapes",
-    "Recorded Tracks",
-    "Favourite Sounds"
-)
-
 class HomeFragment : Fragment() {
 
     private lateinit var adapter: LibararyAdapter
     private lateinit var rvLibrary: RecyclerView
 
+    private lateinit var myLibraryTitle: List<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +27,12 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         rvLibrary = view.findViewById(R.id.rvLibrary) as RecyclerView
+
+        myLibraryTitle = listOf(
+            getString(R.string.save_soundscapes),
+            getString(R.string.recorded_tracks),
+            getString(R.string.favorite_sounds)
+        )
 
         setupViews()
 
