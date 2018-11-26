@@ -13,7 +13,6 @@ class RecordViewModel(
     private val stopRecordUseCase: StopRecordUseCase,
     private val playRecordUseCase: PlayRecordUseCase,
     private val saveRecordUseCase: SaveRecordUseCase,
-    private val getRecordsUseCase: GetRecordsUseCase,
     private val deleteTempRecordUseCase: DeleteTempRecordUseCase
 ): ViewModel() {
     private val disposibles = CompositeDisposable()
@@ -67,17 +66,6 @@ class RecordViewModel(
         )
     }
 
-    fun getRecords() {
-        disposibles.add(
-            getRecordsUseCase.execute()
-                .subscribe({
-                    _viewState.value = RecordViewState.GetRecordsSuccess(it)
-                },{
-                    _viewState.value = RecordViewState.Failure(it)
-                })
-        )
-    }
-
     fun deleteTempRecord() {
         disposibles.add(
             deleteTempRecordUseCase.execute()
@@ -100,6 +88,4 @@ sealed class RecordViewState {
     object SaveRecordLoading : RecordViewState()
     object SaveRecordSuccess : RecordViewState()
     data class SaveRecordFailure(val throwable: Throwable) : RecordViewState()
-
-    data class GetRecordsSuccess(val localRecords: List<LocalRecord>) : RecordViewState()
 }
