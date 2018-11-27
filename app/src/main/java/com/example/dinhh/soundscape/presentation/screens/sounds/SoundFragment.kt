@@ -1,6 +1,5 @@
 package com.example.dinhh.soundscape.presentation.screens.sounds
 
-
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.os.Handler
@@ -26,7 +25,7 @@ class SoundFragment : Fragment() {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private var category: String? = null
-    lateinit var soundView: RecyclerView
+    private lateinit var soundView: RecyclerView
     private val handler = Handler()
 
 
@@ -35,11 +34,9 @@ class SoundFragment : Fragment() {
         arguments?.let {
             category = it.getString(ARG_CATEGORY)
         }
-
             soundViewModel.viewState.observe(this, Observer {
             it?.run(this@SoundFragment::handleView)
         })
-
         soundViewModel.beginSearch(category!!)
     }
 
@@ -47,8 +44,8 @@ class SoundFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
+        // Inflates the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_sound, container, false)
         soundView = view.findViewById(R.id.soundList) as RecyclerView
         return view
@@ -56,23 +53,19 @@ class SoundFragment : Fragment() {
 
     private fun handleView(viewState: SoundViewState) = when (viewState) {
 
+        // View state behaviors for loading the list of sounds
         SoundViewState.Loading -> {
             progressBar.visible()
         }
-
-        SoundViewState.PlayLoading -> {
-            progressBar.visible()
-        }
-
         is SoundViewState.Success -> {
             progressBar.gone()
             Model.sounds = viewState.listSound
             setupListView()
         }
 
-        is SoundViewState.Failure -> {
-            progressBar.gone()
-            Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
+        // View state behaviors for playing the selected sound
+        SoundViewState.PlayLoading -> {
+            progressBar.visible()
         }
         is SoundViewState.PlaySuccess -> {
             progressBar.gone()
@@ -81,27 +74,33 @@ class SoundFragment : Fragment() {
         is SoundViewState.StopSuccess -> {
             showPlay(viewState.holder)
         }
+
+        // View state behaviors in case of failure
+        is SoundViewState.Failure -> {
+            progressBar.gone()
+            Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
+        }
     }
 
+    // Sets up the list of the sounds
     private fun setupListView() {
         soundList.layoutManager = LinearLayoutManager(this.context!!)
         soundList.adapter = SoundAdapter(Model.sounds, soundViewModel)
     }
 
+    // Changes play button to stop button for the duration of the sound
     private fun showStop(holder: ViewHolder, length: Long){
-
         holder.itemView.itemSoundPlayBtn.invisible()
         holder.itemView.itemSoundStopBtn.visible()
-
-        handler.removeCallbacks { showPlay(holder) }
         handler.postDelayed({ showPlay(holder) },length * 1000)
     }
 
+    // Changes stop button to play button and clears the possible remaining time from the handler
     private fun showPlay(holder: ViewHolder){
                 holder.itemView.itemSoundPlayBtn.visible()
                 holder.itemView.itemSoundStopBtn.invisible()
+                handler.removeCallbacksAndMessages(null)
     }
-
 
     companion object {
         @JvmStatic

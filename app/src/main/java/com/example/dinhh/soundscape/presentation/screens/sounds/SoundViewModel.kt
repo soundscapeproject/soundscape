@@ -14,14 +14,14 @@ class SoundViewModel(
     private val playSoundUseCase: PlaySoundUseCase,
     private val stopSoundUseCase: StopSoundUseCase
 ): ViewModel() {
-    private val disposibles = CompositeDisposable()
+    private val disposables = CompositeDisposable()
     private val _viewState = MutableLiveData<SoundViewState>()
     val viewState : LiveData<SoundViewState> = _viewState
 
     fun beginSearch(selectedCategory: String) {
         _viewState.value =
                 SoundViewState.Loading
-        disposibles.add(
+        disposables.add(
             beginSearchUseCase.execute(selectedCategory)
                 .subscribe({
                     _viewState.value =
@@ -36,7 +36,7 @@ class SoundViewModel(
     fun playSound(selectedSound: String, selectedPosition: Int, holder: ViewHolder, length: Long) {
         _viewState.value =
                 SoundViewState.PlayLoading
-        disposibles.add(
+        disposables.add(
            playSoundUseCase.execute(selectedSound, selectedPosition)
                 .subscribe({
                     _viewState.value =
@@ -49,7 +49,7 @@ class SoundViewModel(
     }
 
     fun stopSound(selectedPosition: Int, holder: ViewHolder) {
-        disposibles.add(
+        disposables.add(
             stopSoundUseCase.execute(selectedPosition)
                 .subscribe({
                     _viewState.value = SoundViewState.StopSuccess(holder)
@@ -61,7 +61,7 @@ class SoundViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        disposibles.clear()
+        disposables.clear()
     }
 }
 sealed class SoundViewState {
