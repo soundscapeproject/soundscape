@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.screens.main.MainActivity">
+        <activity android:name=".presentation.screens.main.MainActivity"
+                  android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".presentation.screens.login.LoginActivity"

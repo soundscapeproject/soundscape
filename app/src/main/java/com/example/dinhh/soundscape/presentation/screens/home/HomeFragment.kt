@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun goToSoundsFragment(category: String){
+    private fun goToSoundsFragment(category: String){
         val fragManager = fragmentManager
         val fragmentTransaction = fragManager?.beginTransaction()
         fragmentTransaction?.replace(R.id.container, SoundFragment.newInstance(category))
