@@ -1,6 +1,5 @@
 package com.example.dinhh.soundscape.presentation.screens.sounds
 
-import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +13,7 @@ import kotlinx.android.synthetic.main.item_sound.view.*
 
 
 class SoundAdapter(val items: List<List<Sound>>, private val soundViewModel: SoundViewModel): RecyclerView.Adapter<ViewHolder>(){
+    val sf = SoundFragment()
 
     override fun getItemCount(): Int {
         return items.size
@@ -33,34 +33,17 @@ class SoundAdapter(val items: List<List<Sound>>, private val soundViewModel: Sou
 
         //Play button
         holder.itemView.itemSoundPlayBtn.setOnClickListener{
-
             Log.d("Clicked position :", position.toString())
-            hidePlay(holder)
-            soundViewModel.playSound(list.downloadLink)
-
-            //Change the button back to play button when sound has been played
-            Handler().postDelayed(({
-                showPlay(holder)
-            }), list.length.toLong() * 1000)
+            soundViewModel.playSound(list.downloadLink, position, holder, list.length.toLong())
         }
 
         //Stop button
         holder.itemView.itemSoundStopBtn.setOnClickListener{
             Log.d("Clicked position :", position.toString())
-            showPlay(holder)
-            soundViewModel.stopSound()
+            soundViewModel.stopSound(position, holder)
         }
     }
 
-    private fun hidePlay(holder: ViewHolder){
-        holder.itemView.itemSoundPlayBtn.invisible()
-        holder.itemView.itemSoundStopBtn.visible()
-    }
-
-    private fun showPlay(holder: ViewHolder){
-        holder.itemView.itemSoundPlayBtn.visible()
-        holder.itemView.itemSoundStopBtn.invisible()
-    }
 }
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {

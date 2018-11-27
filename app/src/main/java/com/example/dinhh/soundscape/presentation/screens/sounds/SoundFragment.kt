@@ -3,6 +3,7 @@ package com.example.dinhh.soundscape.presentation.screens.sounds
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,9 +13,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.Model
 import kotlinx.android.synthetic.main.fragment_sound.*
+import kotlinx.android.synthetic.main.item_sound.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val ARG_CATEGORY = "category"
@@ -22,9 +25,9 @@ private const val ARG_CATEGORY = "category"
 class SoundFragment : Fragment() {
 
     private val soundViewModel: SoundViewModel by viewModel()
-    // TODO: Rename and change types of parameters
     private var category: String? = null
     lateinit var soundView: RecyclerView
+    private val handler = Handler()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +60,10 @@ class SoundFragment : Fragment() {
             progressBar.visible()
         }
 
+        SoundViewState.PlayLoading -> {
+            progressBar.visible()
+        }
+
         is SoundViewState.Success -> {
             progressBar.gone()
             Model.sounds = viewState.listSound
@@ -69,15 +76,30 @@ class SoundFragment : Fragment() {
         }
         is SoundViewState.PlaySuccess -> {
             progressBar.gone()
+            showStop(viewState.holder, viewState.length)
         }
         is SoundViewState.StopSuccess -> {
-            progressBar.gone()
+            showPlay(viewState.holder)
         }
     }
 
     private fun setupListView() {
         soundList.layoutManager = LinearLayoutManager(this.context!!)
         soundList.adapter = SoundAdapter(Model.sounds, soundViewModel)
+    }
+
+    private fun showStop(holder: ViewHolder, length: Long){
+
+        holder.itemView.itemSoundPlayBtn.invisible()
+        holder.itemView.itemSoundStopBtn.visible()
+
+        handler.removeCallbacks { showPlay(holder) }
+        handler.postDelayed({ showPlay(holder) },length * 1000)
+    }
+
+    private fun showPlay(holder: ViewHolder){
+                holder.itemView.itemSoundPlayBtn.visible()
+                holder.itemView.itemSoundStopBtn.invisible()
     }
 
 

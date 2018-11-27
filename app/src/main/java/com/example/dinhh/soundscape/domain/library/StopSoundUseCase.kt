@@ -6,8 +6,8 @@ import io.reactivex.Completable
 
 class StopSoundUseCase (private val player: Player, private val schedulerProvider: SchedulerProvider) {
 
-    fun execute(): Completable {
-        return player.stopSound()
+    fun execute(selectedPosition: Int): Completable {
+        return player.stopSound(selectedPosition)
             .subscribeOn(schedulerProvider.getIOScheduler())
             .observeOn(schedulerProvider.getUIScheduler())
     }
