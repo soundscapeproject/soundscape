@@ -19,5 +19,9 @@ data class LocalRecord(
     @ColumnInfo(name = "url")
     val url: String,
     @ColumnInfo(name = "length_sec")
-    val length_sec: Long
+    val length_sec: Long,
+    @ColumnInfo(name = "uploaded")
+    val isUploaded: Boolean,
+    @ColumnInfo(name = "favorited")
+    val isFavorited: Boolean
 )

@@ -41,11 +41,6 @@ class MainActivity : AppCompatActivity() {
 //       btnLogout.setOnClickListener {
 //            mainViewModel.logout()
 //        }
-//
-//        btnRecord.setOnClickListener {
-//            val intent = Intent(this, RecordActivity::class.java)
-//            startActivity(intent)
-//        }
 
         mainViewModel.viewState.observe(this, Observer {
             it?.run(this@MainActivity::handleView)
