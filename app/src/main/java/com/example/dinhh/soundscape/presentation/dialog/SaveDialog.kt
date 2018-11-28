@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatDialogFragment
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ProgressBar
+import android.widget.*
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
