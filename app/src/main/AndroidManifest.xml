@@ -16,7 +16,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".presentation.screens.splash.SplashActivity">
+        <activity android:name=".presentation.screens.splash.SplashActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -24,15 +25,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.screens.main.MainActivity"
-                  android:windowSoftInputMode="adjustPan">
+                  android:windowSoftInputMode="adjustPan"
+                  android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".presentation.screens.login.LoginActivity"
-            android:theme="@style/LoginTheme">
+            android:theme="@style/LoginTheme"
+            android:screenOrientation="portrait">
     </activity>
 
         <activity
-                android:name=".presentation.screens.record.RecordActivity">
+                android:name=".presentation.screens.record.RecordActivity"
+                android:screenOrientation="portrait">
         </activity>
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
     </application>
