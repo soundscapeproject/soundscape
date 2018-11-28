@@ -7,23 +7,25 @@ import java.io.IOException
 
 interface Player {
 
-    fun playSound(selectedSound: String): Completable
+    fun playSound(selectedSound: String, selectedPosition: Int): Completable
 
-    fun stopSound(): Completable
+    fun stopSound(selectedPosition: Int): Completable
 }
 
 class PlayerImpl: Player {
 
-    private var mp: MediaPlayer = MediaPlayer()
+    private var selectedMp: MutableMap<Int, MediaPlayer> = mutableMapOf()
 
-    override fun playSound(selectedSound: String): Completable {
+    override fun playSound(selectedSound: String, selectedPosition: Int): Completable {
         return Completable.create {
 
             try {
-                mp.reset()
-                mp.setDataSource(selectedSound)
-                mp.prepare()
-                mp.start()
+                selectedMp[selectedPosition] = MediaPlayer()
+                val thisMp = selectedMp[selectedPosition]
+                thisMp!!.reset()
+                thisMp.setDataSource(selectedSound)
+                thisMp.prepare()
+                thisMp.start()
                 it.onComplete()
             } catch (e: IOException) {
                 it.onError(e)
@@ -31,11 +33,10 @@ class PlayerImpl: Player {
         }
     }
 
-    override fun stopSound(): Completable {
+    override fun stopSound(selectedPosition: Int): Completable {
         return Completable.create {
-
             try {
-                mp.stop()
+                selectedMp[selectedPosition]!!.stop()
                 it.onComplete()
             } catch (e: IOException) {
                 it.onError(e)
