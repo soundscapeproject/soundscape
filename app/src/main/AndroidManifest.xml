@@ -26,12 +26,12 @@
         <activity android:name=".presentation.screens.main.MainActivity">
         </activity>
         <activity
-            android:name=".presentation.screens.login.LoginActivity"
-            android:theme="@style/LoginTheme">
-    </activity>
-
-        <activity
-                android:name=".presentation.screens.record.RecordActivity">
+                android:name=".presentation.screens.login.LoginActivity"
+                android:theme="@style/LoginTheme">
+        </activity>
+        <activity android:name=".presentation.screens.record.RecordActivity">
+        </activity>
+        <activity android:name=".presentation.screens.savedrecord.SavedRecord">
         </activity>
     </application>
 
