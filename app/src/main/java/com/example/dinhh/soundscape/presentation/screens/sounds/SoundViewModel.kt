@@ -14,14 +14,14 @@ class SoundViewModel(
     private val playSoundUseCase: PlaySoundUseCase,
     private val stopSoundUseCase: StopSoundUseCase
 ): ViewModel() {
-    private val disposables = CompositeDisposable()
+    private val disposibles = CompositeDisposable()
     private val _viewState = MutableLiveData<SoundViewState>()
     val viewState : LiveData<SoundViewState> = _viewState
 
     fun beginSearch(selectedCategory: String) {
         _viewState.value =
                 SoundViewState.Loading
-        disposables.add(
+        disposibles.add(
             beginSearchUseCase.execute(selectedCategory)
                 .subscribe({
                     _viewState.value =
@@ -33,14 +33,14 @@ class SoundViewModel(
         )
     }
 
-    fun playSound(selectedSound: String, selectedPosition: Int, holder: ViewHolder, length: Long) {
+    fun playSound(selectedSound: String) {
         _viewState.value =
-                SoundViewState.PlayLoading
-        disposables.add(
-           playSoundUseCase.execute(selectedSound, selectedPosition)
+                SoundViewState.Loading
+        disposibles.add(
+           playSoundUseCase.execute(selectedSound)
                 .subscribe({
                     _viewState.value =
-                            SoundViewState.PlaySuccess(holder, length)
+                            SoundViewState.PlaySuccess
                 }, {
                     _viewState.value =
                             SoundViewState.Failure(it)
@@ -48,11 +48,11 @@ class SoundViewModel(
         )
     }
 
-    fun stopSound(selectedPosition: Int, holder: ViewHolder) {
-        disposables.add(
-            stopSoundUseCase.execute(selectedPosition)
+    fun stopSound() {
+        disposibles.add(
+            stopSoundUseCase.execute()
                 .subscribe({
-                    _viewState.value = SoundViewState.StopSuccess(holder)
+                    _viewState.value = SoundViewState.StopSuccess
                 }, {
                     _viewState.value = SoundViewState.Failure(it)
                 })
@@ -61,15 +61,14 @@ class SoundViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        disposables.clear()
+        disposibles.clear()
     }
 }
 sealed class SoundViewState {
 
     object Loading: SoundViewState()
-    object PlayLoading: SoundViewState()
-    data class PlaySuccess(val holder: ViewHolder, val length: Long): SoundViewState()
-    data class StopSuccess(val holder: ViewHolder): SoundViewState()
+    object PlaySuccess : SoundViewState()
+    object StopSuccess : SoundViewState()
     data class Success(val listSound: List<List<Sound>>) : SoundViewState()
     data class Failure(val throwable: Throwable) : SoundViewState()
 }
