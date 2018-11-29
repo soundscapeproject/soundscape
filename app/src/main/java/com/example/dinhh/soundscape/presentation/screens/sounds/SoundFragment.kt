@@ -15,6 +15,7 @@ import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.Model
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
 import kotlinx.android.synthetic.main.fragment_sound.*
 import kotlinx.android.synthetic.main.item_sound.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -75,11 +76,26 @@ class SoundFragment : Fragment() {
             showPlay(viewState.holder)
         }
 
+        // View state behaviors for adding the selected sound to the soundscape
+        SoundViewState.AddSelectedLoading -> {
+            progressBar.visible()
+        }
+        is SoundViewState.AddSelectedSoundSuccess ->{
+            goToMixer()
+        }
+
         // View state behaviors in case of failure
         is SoundViewState.Failure -> {
             progressBar.gone()
             Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun goToMixer() {
+        val fragManager = fragmentManager
+        val fragmentTransaction = fragManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.container, MixerFragment())
+        fragmentTransaction?.addToBackStack(null)?.commit()
     }
 
     // Sets up the list of the sounds

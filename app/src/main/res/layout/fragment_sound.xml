@@ -8,6 +8,7 @@
 
     <ProgressBar
             style="?android:attr/progressBarStyle"
+            android:theme="@style/Orange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/progressBar"
@@ -25,8 +26,8 @@
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/soundList"
-            android:layout_width="352dp"
-            android:layout_height="566dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="8dp"

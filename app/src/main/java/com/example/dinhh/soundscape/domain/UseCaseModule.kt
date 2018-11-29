@@ -1,6 +1,7 @@
 package com.example.dinhh.soundscape.domain
 
 
+import com.example.dinhh.soundscape.domain.library.AddSelectedSoundUseCase
 import com.example.dinhh.soundscape.domain.library.BeginSearchUseCase
 import com.example.dinhh.soundscape.domain.library.PlaySoundUseCase
 import com.example.dinhh.soundscape.domain.library.StopSoundUseCase
@@ -68,5 +69,10 @@ val useCaseModule = module {
 
     factory {
         StopSoundUseCase(get(),get())
+    }
+
+    //Add Sound
+    factory {
+        AddSelectedSoundUseCase(get(),get())
     }
 }

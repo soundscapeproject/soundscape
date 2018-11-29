@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.example.dinhh.soundscape.data.entity.Sound
+import com.example.dinhh.soundscape.domain.library.AddSelectedSoundUseCase
 import com.example.dinhh.soundscape.domain.library.BeginSearchUseCase
 import com.example.dinhh.soundscape.domain.library.PlaySoundUseCase
 import com.example.dinhh.soundscape.domain.library.StopSoundUseCase
@@ -12,7 +13,8 @@ import io.reactivex.disposables.CompositeDisposable
 class SoundViewModel(
     private val beginSearchUseCase: BeginSearchUseCase,
     private val playSoundUseCase: PlaySoundUseCase,
-    private val stopSoundUseCase: StopSoundUseCase
+    private val stopSoundUseCase: StopSoundUseCase,
+    private val addSelectedSoundUseCase: AddSelectedSoundUseCase
 ): ViewModel() {
     private val disposables = CompositeDisposable()
     private val _viewState = MutableLiveData<SoundViewState>()
@@ -59,6 +61,21 @@ class SoundViewModel(
         )
     }
 
+    fun addSelectedSound(selectedSound: String, selectedPosition: Int, title: String, length: Int) {
+        _viewState.value =
+                SoundViewState.AddSelectedLoading
+        disposables.add(
+            addSelectedSoundUseCase.execute(selectedSound, selectedPosition, title, length)
+                .subscribe({
+                    _viewState.value =
+                            SoundViewState.AddSelectedSoundSuccess
+                }, {
+                    _viewState.value =
+                            SoundViewState.Failure(it)
+                })
+        )
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
@@ -68,6 +85,8 @@ sealed class SoundViewState {
 
     object Loading: SoundViewState()
     object PlayLoading: SoundViewState()
+    object AddSelectedLoading: SoundViewState()
+    object AddSelectedSoundSuccess: SoundViewState()
     data class PlaySuccess(val holder: ViewHolder, val length: Long): SoundViewState()
     data class StopSuccess(val holder: ViewHolder): SoundViewState()
     data class Success(val listSound: List<List<Sound>>) : SoundViewState()

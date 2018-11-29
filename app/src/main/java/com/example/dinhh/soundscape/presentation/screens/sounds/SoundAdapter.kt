@@ -6,11 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
+import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.Sound
 import kotlinx.android.synthetic.main.item_sound.view.*
 
 
 class SoundAdapter(private val items: List<List<Sound>>, private val soundViewModel: SoundViewModel): RecyclerView.Adapter<ViewHolder>(){
+
+    companion object {
+        var selectButtonIsVisible = false
+    }
 
     override fun getItemCount(): Int {
         return items.size
@@ -23,6 +28,9 @@ class SoundAdapter(private val items: List<List<Sound>>, private val soundViewMo
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (selectButtonIsVisible){
+            holder.itemView.selectSoundBtn.visible()
+        }
         val list = items[position][0]
         holder.itemView.itemSoundStopBtn.invisible()
         holder.itemView.titleTextView.text = list.title
@@ -36,6 +44,11 @@ class SoundAdapter(private val items: List<List<Sound>>, private val soundViewMo
         //Stop button
         holder.itemView.itemSoundStopBtn.setOnClickListener{
             soundViewModel.stopSound(position, holder)
+        }
+
+        //Select sound button
+        holder.itemView.selectSoundBtn.setOnClickListener{
+            soundViewModel.addSelectedSound(list.downloadLink, position, list.title, list.length.toInt())
         }
     }
 }
