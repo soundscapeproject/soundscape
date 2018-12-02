@@ -11,12 +11,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
-import com.example.dinhh.soundscape.common.invisible
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
-import com.example.dinhh.soundscape.data.entity.Sound
 import kotlinx.android.synthetic.main.fragment_sound.*
-import kotlinx.android.synthetic.main.item_sound.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val ARG_CATEGORY = "category"
@@ -55,27 +51,31 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
         return view
     }
 
+    override fun onPause() {
+        super.onPause()
+        soundViewModel.stopSound()
+    }
+
     override fun onPlayPauseToggle(layoutPosition: Int) {
         val sound = adapter.getData()[layoutPosition][0]
 
-        logD("SOUND IS POSITION: ${layoutPosition}")
-        logD("SOUND IS PLAYING: ${sound.isPlaying}")
-
-        if (sound.isPlaying) {
+        if (sound.isPlaying && playingIndex == layoutPosition) {
             // Sound is playing
             stopSound(layoutPosition)
-            logD("STOP SOUND")
-        } else {
-            // Stop: show play
-            logD("PLAY SOUND")
+        } else if (playingIndex == -1) {
+            // Nothing is playing
+            playSound(layoutPosition)
+        } else if (playingIndex != layoutPosition) {
+            // other sound is playing
+            stopSound(playingIndex)
             playSound(layoutPosition)
         }
-
     }
 
     private fun playSound(layoutPosition: Int) {
         val sound = adapter.getData()[layoutPosition][0]
         sound.isPlaying = true
+        playingIndex = layoutPosition
 
         soundViewModel.playSound(sound.downloadLink)
 
@@ -85,6 +85,7 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
     private fun stopSound(layoutPosition: Int) {
         val sound = adapter.getData()[layoutPosition][0]
         sound.isPlaying = false
+        playingIndex = -1
 
         soundViewModel.stopSound()
 
