@@ -7,10 +7,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalRecord
-import com.example.dinhh.soundscape.presentation.screens.home.SavedRecordAdapter
+import com.example.dinhh.soundscape.presentation.screens.library.SavedRecordAdapter
 import kotlinx.android.synthetic.main.activity_saved_record.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
