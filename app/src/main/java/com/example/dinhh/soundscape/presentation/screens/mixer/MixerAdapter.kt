@@ -1,7 +1,5 @@
 package com.example.dinhh.soundscape.presentation.screens.mixer
 
-import android.content.Context
-import android.media.AudioManager
 import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -9,17 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.Model
 import com.example.dinhh.soundscape.data.entity.SoundscapeItem
 import kotlinx.android.synthetic.main.item_mixer.view.*
-import android.content.Context.AUDIO_SERVICE
-import android.support.v4.content.ContextCompat.getSystemService
-
-
 
 class MixerAdapter(private val items: MutableList<SoundscapeItem>): RecyclerView.Adapter<ViewHolder>(){
     private val handler = Handler()
@@ -43,6 +36,9 @@ class MixerAdapter(private val items: MutableList<SoundscapeItem>): RecyclerView
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         //Set the default values for each sound item
+
+        val maxVolume = 100.0
+
         setColor(holder,position)
         items[position].sound.setVolume(items[position].volume.toFloat(), items[position].volume.toFloat())
         holder.itemView.volumeSeekBar.progress = items[position].volume
@@ -78,6 +74,8 @@ class MixerAdapter(private val items: MutableList<SoundscapeItem>): RecyclerView
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                 // Display the current progress of SeekBar
                 holder.itemView.volumeTextView.text = "Volume: $i"
+                val log1 = (Math.log(maxVolume - i) / Math.log(maxVolume)).toFloat()
+                items[position].sound.setVolume(1-log1,1-log1)
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 // Do something

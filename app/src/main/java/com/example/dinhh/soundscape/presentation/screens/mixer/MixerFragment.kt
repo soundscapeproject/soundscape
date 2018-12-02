@@ -1,18 +1,11 @@
 package com.example.dinhh.soundscape.presentation.screens.mixer
 
-import android.app.Activity
-import android.content.Context
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
 import android.view.*
-import android.widget.ImageButton
-import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
@@ -20,8 +13,6 @@ import com.example.dinhh.soundscape.data.Model
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundAdapter
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
 import kotlinx.android.synthetic.main.fragment_mixer.*
-import kotlinx.android.synthetic.main.item_mixer.*
-import kotlinx.android.synthetic.main.item_sound.*
 
 class MixerFragment : Fragment(){
 
