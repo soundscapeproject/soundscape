@@ -1,5 +1,6 @@
 package com.example.dinhh.soundscape.presentation.screens.library
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,11 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundAdapter
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
 import kotlinx.android.synthetic.main.fragment_library.*
+import kotlinx.android.synthetic.main.item_mixer.*
+import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerAdapter
+
 
 class LibraryFragment : Fragment() {
 
@@ -32,7 +38,6 @@ class LibraryFragment : Fragment() {
             goToSoundsFragment("human")
         }
         machineBtn.setOnClickListener {
-            goToSoundsFragment("machine")
         }
         storyBtn.setOnClickListener {
             goToSoundsFragment("story")

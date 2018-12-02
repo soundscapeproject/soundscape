@@ -1,21 +1,20 @@
 package com.example.dinhh.soundscape.device
 
 import android.media.MediaPlayer
-import android.support.v7.widget.DialogTitle
 import com.example.dinhh.soundscape.data.Model
 import com.example.dinhh.soundscape.data.entity.SoundscapeItem
 import io.reactivex.Completable
 import java.io.IOException
 
 interface AddSound {
-    fun addSound(selectedSound: String, selectedPosition: Int, title: String, length: Int): Completable
+    fun addSound(selectedSound: String, selectedPosition: Int, title: String, length: Int, category: String, volume: Int): Completable
 }
 
 class AddSoundImpl: AddSound{
 
     private var selectedMp: MutableMap<Int, MediaPlayer> = mutableMapOf()
 
-    override fun addSound(selectedSound: String, selectedPosition: Int, title: String, length: Int): Completable {
+    override fun addSound(selectedSound: String, selectedPosition: Int, title: String, length: Int, category: String, volume: Int): Completable {
         return Completable.create {
 
             try {
@@ -26,7 +25,7 @@ class AddSoundImpl: AddSound{
                 thisMp.setDataSource(selectedSound)
                 thisMp.prepare()
 
-                val soundScapeItem = SoundscapeItem(title, length, thisMp)
+                val soundScapeItem = SoundscapeItem(title, length, thisMp, category, volume)
 
                 Model.selectedSounds.add(soundScapeItem)
                 it.onComplete()

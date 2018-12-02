@@ -10,7 +10,6 @@ import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.Sound
 import kotlinx.android.synthetic.main.item_sound.view.*
 
-
 class SoundAdapter(private val items: List<List<Sound>>, private val soundViewModel: SoundViewModel): RecyclerView.Adapter<ViewHolder>(){
 
     companion object {
@@ -48,7 +47,7 @@ class SoundAdapter(private val items: List<List<Sound>>, private val soundViewMo
 
         //Select sound button
         holder.itemView.selectSoundBtn.setOnClickListener{
-            soundViewModel.addSelectedSound(list.downloadLink, position, list.title, list.length.toInt())
+            soundViewModel.addSelectedSound(list.downloadLink, position, list.title, list.length.toInt(), list.category, 50)
         }
     }
 }
