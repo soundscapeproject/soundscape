@@ -89,6 +89,7 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         btnStartRecording.invisible()
         btnStopRecording.visible()
         recordingTextView.visible()
+        chronometer.text = "00:00:00"
         chronometer.base = SystemClock.elapsedRealtime()
         chronometer.start()
         recordViewModel.startRecording()
