@@ -4,42 +4,76 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.common.invisible
+import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.Sound
 import kotlinx.android.synthetic.main.item_sound.view.*
 
+interface SoundAdapterViewHolderClicks {
 
-class SoundAdapter(private val items: List<List<Sound>>, private val soundViewModel: SoundViewModel): RecyclerView.Adapter<ViewHolder>(){
+    fun onPlayPauseToggle(layoutPosition: Int)
+}
+
+
+class SoundAdapter(
+    private val sounds: MutableList<List<Sound>>,
+    private val mListener: SoundAdapterViewHolderClicks): RecyclerView.Adapter<SoundAdapter.ViewHolder>(){
 
     override fun getItemCount(): Int {
-        return items.size
+        return sounds.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.item_sound, parent, false)
-        return ViewHolder(cellForRow)
+        return ViewHolder(cellForRow, mListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val list = items[position][0]
-        holder.itemView.itemSoundStopBtn.invisible()
-        holder.itemView.titleTextView.text = list.title
-        holder.itemView.lengthTextView.text = list.length + " sec"
+        val sound = sounds[position][0]
+        holder.itemView.titleTextView.text = sound.title
+        holder.itemView.lengthTextView.text = sound.length + " sec"
+    }
 
-        //Play button
-        holder.itemView.itemSoundPlayBtn.setOnClickListener{
-            soundViewModel.playSound(list.downloadLink, position, holder, list.length.toLong())
+    fun replaceData(sounds: List<List<Sound>>) {
+        this.sounds.clear()
+        this.sounds.addAll(sounds)
+        notifyDataSetChanged()
+    }
+
+    fun getData(): List<List<Sound>> {
+        return this.sounds
+    }
+
+    class ViewHolder (view: View, mListener: SoundAdapterViewHolderClicks) : RecyclerView.ViewHolder(view) {
+
+        val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.itemSoundPlayBtn)
+        val itemSoundStopBtn: ImageButton = view.findViewById(R.id.itemSoundStopBtn)
+        val titleTextView: TextView = view.findViewById(R.id.titleTextView)
+        val lengthTextView: TextView = view.findViewById(R.id.lengthTextView)
+
+        init {
+            itemSoundPlayBtn.setOnClickListener {
+                mListener.onPlayPauseToggle(this.layoutPosition)
+            }
+
+            itemSoundStopBtn.setOnClickListener {
+                mListener.onPlayPauseToggle(this.layoutPosition)
+            }
         }
 
-        //Stop button
-        holder.itemView.itemSoundStopBtn.setOnClickListener{
-            soundViewModel.stopSound(position, holder)
+        fun setPlayingState(playing: Boolean) {
+
+            if (playing) {
+                this.itemSoundPlayBtn.gone()
+                this.itemSoundStopBtn.visible()
+            } else {
+                this.itemSoundPlayBtn.visible()
+                this.itemSoundStopBtn.gone()
+            }
         }
     }
-}
-
-class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-
 }
