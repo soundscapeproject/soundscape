@@ -27,4 +27,8 @@
     <string name="save_soundscapes">Saved Soundscapes</string>
     <string name="recorded_tracks">Recorded Tracks</string>
     <string name="favorite_sounds">Favourite Sounds</string>
+
+    <!-- Title Name -->
+    <string name="record_screen_name">Recording</string>
+
 </resources>

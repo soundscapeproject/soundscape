@@ -25,6 +25,8 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         recordViewModel.viewState.observe(this, Observer {
             it?.run(this@RecordActivity::handleView)
@@ -89,7 +91,6 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         btnStartRecording.invisible()
         btnStopRecording.visible()
         recordingTextView.visible()
-        chronometer.text = "00:00:00"
         chronometer.base = SystemClock.elapsedRealtime()
         chronometer.start()
         recordViewModel.startRecording()
@@ -138,5 +139,10 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
     override fun onDestroy() {
         super.onDestroy()
         recordViewModel.deleteTempRecord()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }

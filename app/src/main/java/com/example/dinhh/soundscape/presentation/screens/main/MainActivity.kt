@@ -38,10 +38,6 @@ class MainActivity : AppCompatActivity() {
             getPermissionToRecordAudio()
         }
 
-//       btnLogout.setOnClickListener {
-//            mainViewModel.logout()
-//        }
-
         mainViewModel.viewState.observe(this, Observer {
             it?.run(this@MainActivity::handleView)
         })
@@ -60,17 +56,14 @@ class MainActivity : AppCompatActivity() {
                 item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    title = "Home"
                     openFragment(homeFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_record -> {
-                    title = "Record"
                     openFragment(recordFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_library -> {
-                    title = "Library"
                     openFragment(libraryFragment)
                     return@OnNavigationItemSelectedListener true
                 }
