@@ -17,12 +17,6 @@ import kotlinx.android.synthetic.main.item_mixer.view.*
 class MixerAdapter(private val items: MutableList<SoundscapeItem>): RecyclerView.Adapter<ViewHolder>(){
     private val handler = Handler()
 
-
-    companion object {
-        lateinit var category: String
-    }
-
-
     override fun getItemCount(): Int {
         return items.size
     }
@@ -34,37 +28,40 @@ class MixerAdapter(private val items: MutableList<SoundscapeItem>): RecyclerView
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        setupMixerItem(holder, position)
+    }
 
+    private fun setupMixerItem(holder: ViewHolder, position: Int){
         //Set the default values for each sound item
-
         val maxVolume = 100.0
+        val mixerItem = holder.itemView
+        val currentSound = items[position]
 
         setColor(holder,position)
-        items[position].sound.setVolume(items[position].volume.toFloat(), items[position].volume.toFloat())
-        holder.itemView.volumeSeekBar.progress = items[position].volume
-        holder.itemView.volumeTextView.text = "Volume: ${items[position].volume}"
-        holder.itemView.titleTextView.text = items[position].title
-        holder.itemView.lengthTextView.text = "${items[position].length} sec"
-        holder.itemView.itemSoundStopBtn.invisible()
-
+        currentSound.sound.setVolume(currentSound.volume.toFloat(), currentSound.volume.toFloat())
+        mixerItem.volumeSeekBar.progress = currentSound.volume
+        mixerItem.titleTextView.text = currentSound.title
+        mixerItem.lengthTextView.text = "${currentSound.length} sec"
+        mixerItem.itemSoundStopBtn.invisible()
 
         //Listeners:
 
         //Play button for individual sound
         holder.itemView.itemSoundPlayBtn.setOnClickListener{
-            items[position].sound.start()
-            showStop(holder, items[position].length.toLong())
+            currentSound.sound.start()
+            showStop(holder, currentSound.length.toLong())
         }
 
         //Stop button for individual sound
         holder.itemView.itemSoundStopBtn.setOnClickListener{
-            items[position].sound.pause()
-            items[position].sound.seekTo(0)
+            currentSound.sound.pause()
+            currentSound.sound.seekTo(0)
             showPlay(holder)
         }
 
         //Remove selected sound from the soundscape
         holder.itemView.removeSoundBtn.setOnClickListener {
+            currentSound.sound.stop()
             Model.selectedSounds.removeAt(position)
             notifyDataSetChanged()
         }
@@ -73,17 +70,17 @@ class MixerAdapter(private val items: MutableList<SoundscapeItem>): RecyclerView
         holder.itemView.volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                 // Display the current progress of SeekBar
-                holder.itemView.volumeTextView.text = "Volume: $i"
                 val log1 = (Math.log(maxVolume - i) / Math.log(maxVolume)).toFloat()
-                items[position].sound.setVolume(1-log1,1-log1)
+                currentSound.sound.setVolume(1-log1,1-log1)
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 // Do something
             }
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                items[position].volume = seekBar.progress
+                currentSound.volume = seekBar.progress
             }
         })
+
     }
 
     // Sets the color of the individual sound item according to the category it belongs

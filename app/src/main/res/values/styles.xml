@@ -27,5 +27,8 @@
     <style name="Orange" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorAccent">#ef8200</item>
     </style>
+    <style name="White" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">#ffffff</item>
+    </style>
 
 </resources>

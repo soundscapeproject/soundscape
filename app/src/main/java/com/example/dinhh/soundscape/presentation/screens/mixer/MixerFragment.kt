@@ -53,7 +53,7 @@ class MixerFragment : Fragment(){
         }
 
         //Add sounds
-        addSoundBtn.setOnClickListener {
+        addNewMixerItem.setOnClickListener {
             showPopup()
         }
     }
@@ -65,7 +65,7 @@ class MixerFragment : Fragment(){
 
     private fun showPopup() {
         val popup: PopupMenu?
-        popup = PopupMenu(activity!!.applicationContext, addSoundBtn, Gravity.END)
+        popup = PopupMenu(activity!!.applicationContext, addNewMixerItem, Gravity.END)
         popup.inflate(R.menu.popup_menu)
         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
             when (item!!.itemId) {
