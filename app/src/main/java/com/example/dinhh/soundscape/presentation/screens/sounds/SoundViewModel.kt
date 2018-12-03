@@ -20,6 +20,8 @@ class SoundViewModel(
     private val _viewState = MutableLiveData<SoundViewState>()
     val viewState : LiveData<SoundViewState> = _viewState
 
+    var playingIndex = -1
+
     fun beginSearch(selectedCategory: String) {
         _viewState.value =
                 SoundViewState.Loading
@@ -35,14 +37,14 @@ class SoundViewModel(
         )
     }
 
-    fun playSound(selectedSound: String, selectedPosition: Int, holder: ViewHolder, length: Long) {
+    fun playSound(selectedSound: String) {
         _viewState.value =
                 SoundViewState.PlayLoading
         disposables.add(
-            playSoundUseCase.execute(selectedSound, selectedPosition)
+            playSoundUseCase.execute(selectedSound)
                 .subscribe({
                     _viewState.value =
-                            SoundViewState.PlaySuccess(holder, length)
+                            SoundViewState.PlayFinish
                 }, {
                     _viewState.value =
                             SoundViewState.Failure(it)
@@ -50,11 +52,10 @@ class SoundViewModel(
         )
     }
 
-    fun stopSound(selectedPosition: Int, holder: ViewHolder) {
+    fun stopSound() {
         disposables.add(
-            stopSoundUseCase.execute(selectedPosition)
+            stopSoundUseCase.execute()
                 .subscribe({
-                    _viewState.value = SoundViewState.StopSuccess(holder)
                 }, {
                     _viewState.value = SoundViewState.Failure(it)
                 })
@@ -84,11 +85,10 @@ class SoundViewModel(
 sealed class SoundViewState {
 
     object Loading: SoundViewState()
+    object PlayFinish: SoundViewState()
     object PlayLoading: SoundViewState()
     object AddSelectedLoading: SoundViewState()
     object AddSelectedSoundSuccess: SoundViewState()
-    data class PlaySuccess(val holder: ViewHolder, val length: Long): SoundViewState()
-    data class StopSuccess(val holder: ViewHolder): SoundViewState()
     data class Success(val listSound: List<List<Sound>>) : SoundViewState()
     data class Failure(val throwable: Throwable) : SoundViewState()
 }

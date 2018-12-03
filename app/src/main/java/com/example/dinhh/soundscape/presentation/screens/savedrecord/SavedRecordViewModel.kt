@@ -37,7 +37,7 @@ class SavedRecordViewModel(
 
     fun playSound(selectedSound: String) {
         disposibles.add(
-            playSoundUseCase.execute(selectedSound,0)
+            playSoundUseCase.execute(selectedSound)
                 .subscribe({
                     _viewState.value =
                             SavedSoundViewState.PlayFinish
@@ -50,7 +50,7 @@ class SavedRecordViewModel(
 
     fun stopSound() {
         disposibles.add(
-            stopSoundUseCase.execute(0)
+            stopSoundUseCase.execute()
                 .subscribe({
                 }, {
                     _viewState.value = SavedSoundViewState.Failure(it)

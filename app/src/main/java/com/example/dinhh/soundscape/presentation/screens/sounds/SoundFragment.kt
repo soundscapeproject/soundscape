@@ -12,23 +12,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
-import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
-import com.example.dinhh.soundscape.data.Model
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
 import kotlinx.android.synthetic.main.fragment_sound.*
-import kotlinx.android.synthetic.main.item_sound.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val ARG_CATEGORY = "category"
 
-class SoundFragment : Fragment() {
+class SoundFragment : Fragment(), SoundAdapterViewHolderClicks, SoundSelected {
 
     private val soundViewModel: SoundViewModel by viewModel()
+    private lateinit var adapter: SoundAdapter
     private var category: String? = null
-    private lateinit var soundView: RecyclerView
-    private val handler = Handler()
-
+    private lateinit var soundList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +44,67 @@ class SoundFragment : Fragment() {
 
         // Inflates the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_sound, container, false)
-        soundView = view.findViewById(R.id.soundList) as RecyclerView
+        soundList = view.findViewById(R.id.soundList) as RecyclerView
+
+        setupListView()
+
         return view
+    }
+
+    override fun onPause() {
+        super.onPause()
+        soundViewModel.stopSound()
+    }
+
+    override fun onPlayPauseToggle(layoutPosition: Int) {
+        val sound = adapter.getData()[layoutPosition][0]
+
+        if (sound.isPlaying && soundViewModel.playingIndex == layoutPosition) {
+            // Sound is playing
+            stopSound(layoutPosition)
+        } else if (soundViewModel.playingIndex == -1) {
+            // Nothing is playing
+            playSound(layoutPosition)
+        } else if (soundViewModel.playingIndex != layoutPosition) {
+            // other sound is playing
+            stopSound(soundViewModel.playingIndex)
+            playSound(layoutPosition)
+        }
+    }
+
+    private fun playSound(layoutPosition: Int) {
+        val sound = adapter.getData()[layoutPosition][0]
+        sound.isPlaying = true
+        soundViewModel.playingIndex = layoutPosition
+
+        soundViewModel.playSound(sound.downloadLink)
+
+        toggleViewHolderIcon(layoutPosition, true)
+    }
+
+    private fun stopSound(layoutPosition: Int) {
+        val sound = adapter.getData()[layoutPosition][0]
+        sound.isPlaying = false
+        soundViewModel.playingIndex = -1
+
+        soundViewModel.stopSound()
+
+        toggleViewHolderIcon(layoutPosition, false)
+    }
+
+    override fun addSoundToSoundscape(layoutPosition: Int) {
+        selectSound(layoutPosition)
+    }
+
+
+    private fun selectSound(layoutPosition: Int){
+        val sound = adapter.getData()[layoutPosition][0]
+        soundViewModel.addSelectedSound(sound.downloadLink, layoutPosition, sound.title, sound.length.toInt(), sound.category, 50)
+    }
+
+    private fun toggleViewHolderIcon(layoutPosition: Int, playing: Boolean) {
+        val viewHolder = soundList.findViewHolderForAdapterPosition(layoutPosition) as SoundAdapter.ViewHolder
+        viewHolder.setPlayingState(playing)
     }
 
     private fun handleView(viewState: SoundViewState) = when (viewState) {
@@ -60,20 +115,13 @@ class SoundFragment : Fragment() {
         }
         is SoundViewState.Success -> {
             progressBar.gone()
-            Model.sounds = viewState.listSound
-            setupListView()
+            adapter.replaceData(viewState.listSound)
         }
 
         // View state behaviors for playing the selected sound
-        SoundViewState.PlayLoading -> {
-            progressBar.visible()
-        }
-        is SoundViewState.PlaySuccess -> {
-            progressBar.gone()
-            showStop(viewState.holder, viewState.length)
-        }
-        is SoundViewState.StopSuccess -> {
-            showPlay(viewState.holder)
+        SoundViewState.PlayFinish -> {
+            toggleViewHolderIcon(soundViewModel.playingIndex, false)
+            soundViewModel.playingIndex = -1
         }
 
         // View state behaviors for adding the selected sound to the soundscape
@@ -89,6 +137,8 @@ class SoundFragment : Fragment() {
             progressBar.gone()
             Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
         }
+        else -> {
+        }
     }
 
     private fun goToMixer() {
@@ -100,22 +150,9 @@ class SoundFragment : Fragment() {
 
     // Sets up the list of the sounds
     private fun setupListView() {
+        adapter = SoundAdapter(ArrayList(), this,this)
         soundList.layoutManager = LinearLayoutManager(this.context!!)
-        soundList.adapter = SoundAdapter(Model.sounds, soundViewModel)
-    }
-
-    // Changes play button to stop button for the duration of the sound
-    private fun showStop(holder: ViewHolder, length: Long){
-        holder.itemView.itemSoundPlayBtn.invisible()
-        holder.itemView.itemSoundStopBtn.visible()
-        handler.postDelayed({ showPlay(holder) },length * 1000)
-    }
-
-    // Changes stop button to play button and clears the possible remaining time from the handler
-    private fun showPlay(holder: ViewHolder){
-        holder.itemView.itemSoundPlayBtn.visible()
-        holder.itemView.itemSoundStopBtn.invisible()
-        handler.removeCallbacksAndMessages(null)
+        soundList.adapter = adapter
     }
 
     companion object {

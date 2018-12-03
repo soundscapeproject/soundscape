@@ -48,7 +48,7 @@ class RecordViewModel(
 
     fun playRecord() {
         disposibles.add(
-            playSoundUseCase.execute(fileUrl!!,0)
+            playSoundUseCase.execute(fileUrl!!)
                 .subscribe({
                     _viewState.value = RecordViewState.Success
                 }, {
