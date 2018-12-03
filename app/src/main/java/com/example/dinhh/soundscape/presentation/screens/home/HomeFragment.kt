@@ -22,20 +22,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupButtons()
-    }
-
-    private fun setupButtons(){
-        mixerBtn.setOnClickListener {
-            goToMixerFragment()
-        }
-    }
-
-    private fun goToMixerFragment(){
-        val fragManager = fragmentManager
-        val fragmentTransaction = fragManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.container, MixerFragment.newInstance())
-        fragmentTransaction?.addToBackStack(null)?.commit()
     }
 
     companion object {
