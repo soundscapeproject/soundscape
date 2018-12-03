@@ -18,6 +18,7 @@ class LibararyAdapter(val myLibraryTitle: List<String>): BaseRecyclerViewAdapter
         this.context = parent.context
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_my_library, parent, false)
         return LibraryViewHolder(view)
+
     }
 
     override fun getItemCount(): Int {

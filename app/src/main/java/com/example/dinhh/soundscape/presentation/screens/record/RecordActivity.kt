@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.view.Menu
+import android.view.MenuInflater
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
@@ -35,6 +37,13 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         setupView()
 
         handleButtonClicked()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.profile_screen, menu)
+        return true
+
     }
 
     private fun setupView() {
