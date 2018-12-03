@@ -11,6 +11,8 @@ interface Player {
     fun playSound(selectedSound: String): Completable
 
     fun stopSound(): Completable
+
+    fun onPlayComplete(): Completable
 }
 
 class PlayerImpl: Player {
@@ -22,6 +24,8 @@ class PlayerImpl: Player {
 
             mediaPlayer = MediaPlayer()
 
+
+
             try {
                 mediaPlayer.reset()
                 mediaPlayer.setDataSource(soundUrl)
@@ -30,6 +34,15 @@ class PlayerImpl: Player {
                 it.onComplete()
             } catch (e: IOException) {
                 it.onError(e)
+            }
+        }
+    }
+
+    override fun onPlayComplete(): Completable {
+
+        return Completable.create {complete ->
+            mediaPlayer.setOnCompletionListener {
+                complete.onComplete()
             }
         }
     }

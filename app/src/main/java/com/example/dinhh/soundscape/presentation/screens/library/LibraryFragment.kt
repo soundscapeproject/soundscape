@@ -1,7 +1,6 @@
 package com.example.dinhh.soundscape.presentation.screens.library
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
-import com.example.dinhh.soundscape.presentation.screens.savedrecord.SavedRecord
+import com.example.dinhh.soundscape.presentation.screens.savedrecord.SavedRecordFragment
 
 class LibraryFragment : Fragment() {
 
@@ -57,9 +56,12 @@ class LibraryFragment : Fragment() {
     }
 
     private fun goToSavedSoundscapes() {
-        val intent = Intent(activity, SavedRecord::class.java)
-        startActivity(intent)
+        val fragManager = fragmentManager
+        val fragmentTransaction = fragManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.container, SavedRecordFragment.newInstance())
+        fragmentTransaction?.addToBackStack(null)?.commit()
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = LibraryFragment()

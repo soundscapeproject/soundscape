@@ -32,6 +32,6 @@ val presentationModule = module {
     }
 
     viewModel {
-        SavedRecordViewModel(get())
+        SavedRecordViewModel(get(), get(), get())
     }
 }

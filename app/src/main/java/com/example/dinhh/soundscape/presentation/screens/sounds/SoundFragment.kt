@@ -21,7 +21,6 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
-    private var playingIndex: Int = -1
 
     private var category: String? = null
     private lateinit var soundList: RecyclerView
@@ -59,15 +58,15 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
     override fun onPlayPauseToggle(layoutPosition: Int) {
         val sound = adapter.getData()[layoutPosition][0]
 
-        if (sound.isPlaying && playingIndex == layoutPosition) {
+        if (sound.isPlaying && soundViewModel.playingIndex == layoutPosition) {
             // Sound is playing
             stopSound(layoutPosition)
-        } else if (playingIndex == -1) {
+        } else if (soundViewModel.playingIndex == -1) {
             // Nothing is playing
             playSound(layoutPosition)
-        } else if (playingIndex != layoutPosition) {
+        } else if (soundViewModel.playingIndex != layoutPosition) {
             // other sound is playing
-            stopSound(playingIndex)
+            stopSound(soundViewModel.playingIndex)
             playSound(layoutPosition)
         }
     }
@@ -75,7 +74,7 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
     private fun playSound(layoutPosition: Int) {
         val sound = adapter.getData()[layoutPosition][0]
         sound.isPlaying = true
-        playingIndex = layoutPosition
+        soundViewModel.playingIndex = layoutPosition
 
         soundViewModel.playSound(sound.downloadLink)
 
@@ -85,7 +84,7 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
     private fun stopSound(layoutPosition: Int) {
         val sound = adapter.getData()[layoutPosition][0]
         sound.isPlaying = false
-        playingIndex = -1
+        soundViewModel.playingIndex = -1
 
         soundViewModel.stopSound()
 
@@ -109,13 +108,9 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
         }
 
         // View state behaviors for playing the selected sound
-        SoundViewState.PlayLoading -> {
-            progressBar.visible()
-        }
-        SoundViewState.PlaySuccess -> {
-            progressBar.gone()
-        }
-        SoundViewState.StopSuccess -> {
+        SoundViewState.PlayFinish -> {
+            toggleViewHolderIcon(soundViewModel.playingIndex, false)
+            soundViewModel.playingIndex = -1
         }
 
         // View state behaviors in case of failure

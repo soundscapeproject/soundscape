@@ -1,9 +1,6 @@
 package com.example.dinhh.soundscape.device
 
-import android.media.MediaPlayer
 import android.media.MediaRecorder
-import android.util.Log
-import com.example.dinhh.soundscape.common.logD
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.io.File
@@ -14,16 +11,16 @@ interface Record {
 
     fun stopRecording(): Single<String>
 
-    fun playAudio(): Completable
-
     fun deleteTempFile(): Completable
+
+    fun resetTempFile(): Completable
 }
 
 class RecordImpl: Record {
 
-    private lateinit var mPlayer: MediaPlayer
     private lateinit var myAudioRecorder: MediaRecorder
-    private var fileName: String = "untitled-recording.mp3"
+    private val DEFAULT_FILE_NAME = "untitled-recording.mp3"
+    private var fileName: String = DEFAULT_FILE_NAME
 
     private val PATH = "/Soundscape/"
     private val AUDIOEXTENSION = ".mp3"
@@ -73,17 +70,9 @@ class RecordImpl: Record {
         }
     }
 
-    override fun playAudio(): Completable {
-        return Completable.create {
-            try {
-                mPlayer = MediaPlayer()
-                mPlayer.setDataSource(containFolderPath + fileName)
-                mPlayer.prepare()
-                mPlayer.start()
-                it.onComplete()
-            } catch (e: IOException) {
-                it.onError(e)
-            }
+    override fun resetTempFile(): Completable {
+        return Completable.fromAction {
+            fileName = DEFAULT_FILE_NAME
         }
     }
 

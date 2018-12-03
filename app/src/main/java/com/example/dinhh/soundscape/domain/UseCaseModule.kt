@@ -4,7 +4,6 @@ package com.example.dinhh.soundscape.domain
 import com.example.dinhh.soundscape.domain.library.BeginSearchUseCase
 import com.example.dinhh.soundscape.domain.library.PlaySoundUseCase
 import com.example.dinhh.soundscape.domain.library.StopSoundUseCase
-import com.example.dinhh.soundscape.domain.record.PlayRecordUseCase
 import com.example.dinhh.soundscape.domain.record.StartRecordUseCase
 import com.example.dinhh.soundscape.domain.record.StopRecordUseCase
 import com.example.dinhh.soundscape.domain.record.*
@@ -31,10 +30,6 @@ val useCaseModule = module {
     //RECORD
 
     factory {
-        PlayRecordUseCase(get(), get())
-    }
-
-    factory {
         StartRecordUseCase(get(), get())
     }
 
@@ -43,7 +38,7 @@ val useCaseModule = module {
     }
 
     factory {
-        SaveRecordUseCase(get(), get())
+        SaveRecordUseCase(get(), get(), get())
     }
 
     factory {
