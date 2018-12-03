@@ -8,6 +8,7 @@ class PlaySoundUseCase (private val player: Player, private val schedulerProvide
 
     fun execute(selectedSound: String): Completable {
         return player.playSound(selectedSound)
+            .andThen(player.onPlayComplete())
             .subscribeOn(schedulerProvider.getIOScheduler())
             .observeOn(schedulerProvider.getUIScheduler())
     }
