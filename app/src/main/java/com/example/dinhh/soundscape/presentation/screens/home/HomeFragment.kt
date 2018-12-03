@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
             goToSoundsFragment(SoundCategory.MACHINE.description)
         }
         storyBtn.setOnClickListener {
-            //goToSoundsFragment(SoundCategory.STORY.description)
+            goToSoundsFragment(SoundCategory.STORY.description)
         }
 
     }

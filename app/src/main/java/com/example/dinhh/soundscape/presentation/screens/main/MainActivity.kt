@@ -15,6 +15,7 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.screens.home.HomeFragment
 import com.example.dinhh.soundscape.presentation.screens.library.LibraryFragment
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
 import com.example.dinhh.soundscape.presentation.screens.record.RecordFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var homeFragment: Fragment
     private lateinit var recordFragment: Fragment
     private lateinit var libraryFragment: Fragment
+    private lateinit var mixerFragment: Fragment
     private val RECORD_AUDIO_REQUEST_CODE = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         homeFragment = HomeFragment.newInstance()
         recordFragment = RecordFragment.newInstance()
         libraryFragment = LibraryFragment.newInstance()
+        mixerFragment = MixerFragment.newInstance()
     }
 
     private fun setupButtomNavigation() {
@@ -60,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_record -> {
-                    openFragment(recordFragment)
+                    openFragment(mixerFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_library -> {
