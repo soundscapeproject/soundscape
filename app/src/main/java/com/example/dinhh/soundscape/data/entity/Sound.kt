@@ -28,6 +28,7 @@ data class Sound(
     @SerializedName("Collection ID")
     val collectionId: String,
     @SerializedName("Download link")
-    val downloadLink: String
+    val downloadLink: String,
+    var isPlaying: Boolean = false
 ) {
 }

@@ -35,7 +35,7 @@ class SoundFragment : Fragment() {
         arguments?.let {
             category = it.getString(ARG_CATEGORY)
         }
-            soundViewModel.viewState.observe(this, Observer {
+        soundViewModel.viewState.observe(this, Observer {
             it?.run(this@SoundFragment::handleView)
         })
         soundViewModel.beginSearch(category!!)
@@ -113,9 +113,9 @@ class SoundFragment : Fragment() {
 
     // Changes stop button to play button and clears the possible remaining time from the handler
     private fun showPlay(holder: ViewHolder){
-                holder.itemView.itemSoundPlayBtn.visible()
-                holder.itemView.itemSoundStopBtn.invisible()
-                handler.removeCallbacksAndMessages(null)
+        holder.itemView.itemSoundPlayBtn.visible()
+        holder.itemView.itemSoundStopBtn.invisible()
+        handler.removeCallbacksAndMessages(null)
     }
 
     companion object {

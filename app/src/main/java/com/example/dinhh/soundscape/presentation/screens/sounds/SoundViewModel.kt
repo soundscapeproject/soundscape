@@ -39,7 +39,7 @@ class SoundViewModel(
         _viewState.value =
                 SoundViewState.PlayLoading
         disposables.add(
-           playSoundUseCase.execute(selectedSound, selectedPosition)
+            playSoundUseCase.execute(selectedSound, selectedPosition)
                 .subscribe({
                     _viewState.value =
                             SoundViewState.PlaySuccess(holder, length)

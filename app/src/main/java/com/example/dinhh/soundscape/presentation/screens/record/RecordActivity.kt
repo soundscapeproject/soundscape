@@ -1,7 +1,6 @@
 package com.example.dinhh.soundscape.presentation.screens.record
 
 import android.arch.lifecycle.Observer
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -26,6 +25,8 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         recordViewModel.viewState.observe(this, Observer {
             it?.run(this@RecordActivity::handleView)
@@ -66,10 +67,6 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
             saveDialog.hideLoading()
             Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
         }
-
-        is RecordViewState.GetRecordsSuccess -> {
-            logD("GET RECORDs SUCCESS: ${viewState.localRecords.toString()}")
-        }
     }
 
     private fun handleButtonClicked() {
@@ -87,10 +84,6 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
 
         btnPlay.setOnClickListener {
             recordViewModel.playRecord()
-        }
-
-        btnGetRecords.setOnClickListener {
-            recordViewModel.getRecords()
         }
     }
 
@@ -132,7 +125,9 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
             category,
             SoundType.SOUNDSCAPE.description,
             recordViewModel.fileUrl!!,
-            recordViewModel.recordLength!!
+            recordViewModel.recordLength!!,
+            false,
+            false
         )
         recordViewModel.saveRecord(localRecord)
     }
@@ -144,5 +139,10 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
     override fun onDestroy() {
         super.onDestroy()
         recordViewModel.deleteTempRecord()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }
