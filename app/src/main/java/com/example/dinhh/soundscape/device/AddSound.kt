@@ -7,20 +7,17 @@ import io.reactivex.Completable
 import java.io.IOException
 
 interface AddSound {
-    fun addSound(selectedSound: String, selectedPosition: Int, title: String, length: Int, category: String, volume: Int): Completable
+    fun addSound(selectedSound: String, title: String, length: Int, category: String, volume: Int): Completable
 }
 
 class AddSoundImpl: AddSound{
 
-    private var selectedMp: MutableMap<Int, MediaPlayer> = mutableMapOf()
-
-    override fun addSound(selectedSound: String, selectedPosition: Int, title: String, length: Int, category: String, volume: Int): Completable {
+    override fun addSound(selectedSound: String, title: String, length: Int, category: String, volume: Int): Completable {
         return Completable.create {
 
             try {
-                selectedMp[selectedPosition] = MediaPlayer()
 
-                val thisMp = selectedMp[selectedPosition]
+                val thisMp = MediaPlayer()
                 thisMp!!.reset()
                 thisMp.setDataSource(selectedSound)
                 thisMp.prepare()

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.data.entity.SoundCategory
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerAdapter
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundAdapter
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
 import kotlinx.android.synthetic.main.fragment_home.*

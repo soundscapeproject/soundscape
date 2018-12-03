@@ -62,11 +62,11 @@ class SoundViewModel(
         )
     }
 
-    fun addSelectedSound(selectedSound: String, selectedPosition: Int, title: String, length: Int, category: String, volume: Int) {
+    fun addSelectedSound(selectedSound: String, title: String, length: Int, category: String, volume: Int) {
         _viewState.value =
                 SoundViewState.AddSelectedLoading
         disposables.add(
-            addSelectedSoundUseCase.execute(selectedSound, selectedPosition, title, length, category, volume)
+            addSelectedSoundUseCase.execute(selectedSound, title, length, category, volume)
                 .subscribe({
                     _viewState.value =
                             SoundViewState.AddSelectedSoundSuccess

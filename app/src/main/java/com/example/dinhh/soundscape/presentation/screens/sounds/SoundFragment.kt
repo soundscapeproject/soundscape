@@ -99,7 +99,7 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks, SoundSelected {
 
     private fun selectSound(layoutPosition: Int){
         val sound = adapter.getData()[layoutPosition][0]
-        soundViewModel.addSelectedSound(sound.downloadLink, layoutPosition, sound.title, sound.length.toInt(), sound.category, 50)
+        soundViewModel.addSelectedSound(sound.downloadLink, sound.title, sound.length.toInt(), sound.category, 50)
     }
 
     private fun toggleViewHolderIcon(layoutPosition: Int, playing: Boolean) {
