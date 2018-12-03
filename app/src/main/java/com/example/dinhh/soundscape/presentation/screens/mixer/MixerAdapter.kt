@@ -11,6 +11,7 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.Model
+import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.data.entity.SoundscapeItem
 import kotlinx.android.synthetic.main.item_mixer.view.*
 
@@ -85,16 +86,16 @@ class MixerAdapter(private val items: MutableList<SoundscapeItem>): RecyclerView
 
     // Sets the color of the individual sound item according to the category it belongs
     private fun setColor(holder: ViewHolder, position: Int){
-        if(items[position].category == "nature"){
+        if(items[position].category == SoundCategory.NATURE.description){
             holder.itemView.mixerItem.background = ContextCompat.getDrawable(holder.itemView.context, R.drawable.category_background_nature)
         }
-        if(items[position].category == "human"){
+        if(items[position].category == SoundCategory.HUMAN.description){
             holder.itemView.mixerItem.background = ContextCompat.getDrawable(holder.itemView.context, R.drawable.category_background_human)
         }
-        if(items[position].category == "machine"){
+        if(items[position].category == SoundCategory.MACHINE.description){
             holder.itemView.mixerItem.background = ContextCompat.getDrawable(holder.itemView.context, R.drawable.category_background_machine)
         }
-        if(items[position].category == "story"){
+        if(items[position].category == SoundCategory.STORY.description){
             holder.itemView.mixerItem.background = ContextCompat.getDrawable(holder.itemView.context, R.drawable.category_background_story)
         }
     }
