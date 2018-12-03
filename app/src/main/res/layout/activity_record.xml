@@ -5,8 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.screens.record.RecordActivity"
-        android:theme="@style/ToolbarTheme">
+        tools:context=".presentation.screens.record.RecordActivity">
 
     <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
@@ -15,7 +14,11 @@
             android:background="?attr/colorPrimary"
             app:title="@string/record_screen_name"
             app:titleTextColor="@color/colorText"
-            android:elevation="4dp"/>
+            android:elevation="4dp"
+            android:theme="@style/ToolbarTheme"/>
+
+
+
 
     <Chronometer
             android:id="@+id/chronometer"

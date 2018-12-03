@@ -8,6 +8,7 @@
     <string name="record">record</string>
     <string name="recording_audio">Recording audio</string>
     <string name="stop_recording">stop recording</string>
+    <string name="setting">Settings</string>
     <string name="play">play</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -30,5 +31,10 @@
 
     <!-- Title Name -->
     <string name="record_screen_name">Recording</string>
+    <string name="sound_scape_recap">Your sounds recap:</string>
+    <string name="sound_scape_numb_txt">- Soundscapes:</string>
+    <string name="record_numb_txt">- Records:</string>
+    <string name="ss_numb">3</string>
+    <string name="rc_numb">2</string>
 
 </resources>

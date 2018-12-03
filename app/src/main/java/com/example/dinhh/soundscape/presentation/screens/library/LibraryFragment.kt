@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
 import com.example.dinhh.soundscape.presentation.screens.savedrecord.SavedRecordFragment
@@ -19,12 +17,18 @@ class LibraryFragment : Fragment() {
 
     private lateinit var myLibraryTitle: List<String>
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true)
         val view = inflater.inflate(R.layout.fragment_library, container, false)
         rvLibrary = view.findViewById(R.id.rvLibrary) as RecyclerView
 
@@ -36,8 +40,22 @@ class LibraryFragment : Fragment() {
 
         setupViews()
 
+
         return view
+
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        menu!!.clear()
+        inflater!!.inflate(R.menu.profile_screen,menu)
+    }
+
+
 
     private fun setupViews() {
         adapter = LibararyAdapter(myLibraryTitle)
