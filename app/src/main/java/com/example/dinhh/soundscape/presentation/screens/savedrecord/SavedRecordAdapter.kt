@@ -1,6 +1,5 @@
 package com.example.dinhh.soundscape.presentation.screens.library
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,52 +7,75 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.data.entity.LocalRecord
-import com.example.dinhh.soundscape.presentation.base.BaseRecyclerViewAdapter
+import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.visible
+import com.example.dinhh.soundscape.presentation.screens.savedrecord.SavedRecord
+import kotlinx.android.synthetic.main.item_sound.view.*
 
 
-class SavedRecordAdapter(val localRecords: MutableList<LocalRecord>): BaseRecyclerViewAdapter<SavedRecordAdapter.SavedRecordViewHolder>() {
+interface SavedRecordAdapterViewHolderClicks {
 
-    lateinit var context: Context
+    fun onPlayPauseToggle(layoutPosition: Int)
+}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedRecordAdapter.SavedRecordViewHolder {
-        this.context = parent.context
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_saved_record, parent, false)
-        return SavedRecordViewHolder(view)
-    }
+
+class SavedRecordAdapter(
+    private val records: MutableList<SavedRecord>,
+    private val mListener: SavedRecordAdapterViewHolderClicks
+): RecyclerView.Adapter<SavedRecordAdapter.ViewHolder>(){
 
     override fun getItemCount(): Int {
-        return localRecords.size
+        return records.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        super.onBindViewHolder(holder, position)
-
-        val vh = holder as SavedRecordViewHolder
-        val localRecord = localRecords[position]
-
-        vh.txtName.text = localRecord.title
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val cellForRow = layoutInflater.inflate(R.layout.item_sound, parent, false)
+        return ViewHolder(cellForRow, mListener)
     }
 
-    fun replaceData(localRecords: List<LocalRecord>) {
-        this.localRecords.clear()
-        this.localRecords.addAll(localRecords)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val sound = records[position]
+        holder.itemView.titleTextView.text = sound.title
+        holder.itemView.lengthTextView.text = sound.length.toString() + " sec"
+    }
+
+    fun replaceData(localRecords: MutableList<SavedRecord>) {
+        this.records.clear()
+        this.records.addAll(localRecords)
         notifyDataSetChanged()
     }
 
-    fun addData(localRecords: List<LocalRecord>) {
-        this.localRecords.addAll(localRecords)
-        notifyDataSetChanged()
+    fun getData(): MutableList<SavedRecord> {
+        return this.records
     }
 
-    fun clearData() {
-        this.localRecords.clear()
-        notifyDataSetChanged()
-    }
+    class ViewHolder (view: View, mListener: SavedRecordAdapterViewHolderClicks) : RecyclerView.ViewHolder(view) {
 
-    class SavedRecordViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val txtName: TextView = view.findViewById(R.id.txtName)
-        val btnUpload: ImageButton = view.findViewById(R.id.btnUpload)
-    }
+        val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.itemSoundPlayBtn)
+        val itemSoundStopBtn: ImageButton = view.findViewById(R.id.itemSoundStopBtn)
+        val titleTextView: TextView = view.findViewById(R.id.titleTextView)
+        val lengthTextView: TextView = view.findViewById(R.id.lengthTextView)
 
+        init {
+            itemSoundPlayBtn.setOnClickListener {
+                mListener.onPlayPauseToggle(this.layoutPosition)
+            }
+
+            itemSoundStopBtn.setOnClickListener {
+                mListener.onPlayPauseToggle(this.layoutPosition)
+            }
+        }
+
+        fun setPlayingState(playing: Boolean) {
+
+            if (playing) {
+                this.itemSoundPlayBtn.gone()
+                this.itemSoundStopBtn.visible()
+            } else {
+                this.itemSoundPlayBtn.visible()
+                this.itemSoundStopBtn.gone()
+            }
+        }
+    }
 }
