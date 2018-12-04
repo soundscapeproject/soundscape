@@ -30,5 +30,4 @@ data class Sound(
     @SerializedName("Download link")
     val downloadLink: String,
     var isPlaying: Boolean = false
-) {
-}
+)

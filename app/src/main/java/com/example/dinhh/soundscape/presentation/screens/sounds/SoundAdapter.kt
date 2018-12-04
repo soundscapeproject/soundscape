@@ -16,17 +16,14 @@ import kotlinx.android.synthetic.main.item_sound.view.*
 interface SoundAdapterViewHolderClicks {
 
     fun onPlayPauseToggle(layoutPosition: Int)
-}
-
-interface SoundSelected {
 
     fun addSoundToSoundscape(layoutPosition: Int)
 }
 
 class SoundAdapter(
     private val sounds: MutableList<List<Sound>>,
-    private val mListener: SoundAdapterViewHolderClicks,
-    private val sSelected: SoundSelected): RecyclerView.Adapter<SoundAdapter.ViewHolder>() {
+    private val mListener: SoundAdapterViewHolderClicks
+) : RecyclerView.Adapter<SoundAdapter.ViewHolder>() {
 
 
     companion object {
@@ -40,11 +37,11 @@ class SoundAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.item_sound, parent, false)
-        return ViewHolder(cellForRow, mListener, sSelected)
+        return ViewHolder(cellForRow, mListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (selectButtonIsVisible){
+        if (selectButtonIsVisible) {
             holder.itemView.selectSoundBtn.visible()
         }
         val list = sounds[position][0]
@@ -64,37 +61,38 @@ class SoundAdapter(
     }
 
 
-class ViewHolder (view: View, mListener: SoundAdapterViewHolderClicks, selected: SoundSelected) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, mListener: SoundAdapterViewHolderClicks) :
+        RecyclerView.ViewHolder(view) {
 
-    val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.itemSoundPlayBtn)
-    val itemSoundStopBtn: ImageButton = view.findViewById(R.id.itemSoundStopBtn)
-    val itemSoundAddBtn: ImageButton = view.findViewById(R.id.selectSoundBtn)
-    val titleTextView: TextView = view.findViewById(R.id.titleTextView)
-    val lengthTextView: TextView = view.findViewById(R.id.lengthTextView)
+        val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.itemSoundPlayBtn)
+        val itemSoundStopBtn: ImageButton = view.findViewById(R.id.itemSoundStopBtn)
+        val itemSoundAddBtn: ImageButton = view.findViewById(R.id.selectSoundBtn)
+        val titleTextView: TextView = view.findViewById(R.id.titleTextView)
+        val lengthTextView: TextView = view.findViewById(R.id.lengthTextView)
 
-    init {
-        itemSoundPlayBtn.setOnClickListener {
-            mListener.onPlayPauseToggle(this.layoutPosition)
+        init {
+            itemSoundPlayBtn.setOnClickListener {
+                mListener.onPlayPauseToggle(this.layoutPosition)
+            }
+
+            itemSoundStopBtn.setOnClickListener {
+                mListener.onPlayPauseToggle(this.layoutPosition)
+            }
+
+            itemSoundAddBtn.setOnClickListener {
+                mListener.addSoundToSoundscape(this.layoutPosition)
+            }
         }
 
-        itemSoundStopBtn.setOnClickListener {
-            mListener.onPlayPauseToggle(this.layoutPosition)
-        }
+        fun setPlayingState(playing: Boolean) {
 
-        itemSoundAddBtn.setOnClickListener {
-            selected.addSoundToSoundscape(this.layoutPosition)
+            if (playing) {
+                this.itemSoundPlayBtn.gone()
+                this.itemSoundStopBtn.visible()
+            } else {
+                this.itemSoundPlayBtn.visible()
+                this.itemSoundStopBtn.gone()
+            }
         }
-    }
-
-    fun setPlayingState(playing: Boolean) {
-
-        if (playing) {
-            this.itemSoundPlayBtn.gone()
-            this.itemSoundStopBtn.visible()
-        } else {
-            this.itemSoundPlayBtn.visible()
-            this.itemSoundStopBtn.gone()
-        }
-    }
     }
 }

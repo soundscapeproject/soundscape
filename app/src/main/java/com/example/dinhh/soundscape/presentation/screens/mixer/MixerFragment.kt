@@ -1,22 +1,36 @@
 package com.example.dinhh.soundscape.presentation.screens.mixer
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
 import android.view.*
+import android.widget.PopupMenu
+import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.Model
+import com.example.dinhh.soundscape.data.entity.SoundCategory
+import com.example.dinhh.soundscape.presentation.screens.sounds.MixerViewModel
+import com.example.dinhh.soundscape.presentation.screens.sounds.MixerViewState
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundAdapter
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
 import kotlinx.android.synthetic.main.fragment_mixer.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class MixerFragment : Fragment(){
+class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
 
     private lateinit var mixerView: RecyclerView
+    private lateinit var mixerAdapter: MixerAdapter
+
+    private val mixerViewModel: MixerViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mixerViewModel.getSoundScapes()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,9 +39,15 @@ class MixerFragment : Fragment(){
 
         // Inflates the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_mixer, container, false)
+
+        mixerViewModel.viewState.observe(this, Observer {
+            it?.run(this@MixerFragment::handleView)
+        })
+
         mixerView = view.findViewById(R.id.mixerList) as RecyclerView
         return view
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,25 +57,60 @@ class MixerFragment : Fragment(){
         playAllBtn.setOnClickListener {
             playAllBtn.invisible()
             stopAllBtn.visible()
-            for (i in 0 until Model.selectedSounds.size) {
-                Model.selectedSounds[i].sound.start()
-            }
+            mixerViewModel.playSoundScapes()
         }
 
         //Stop created soundscape
         stopAllBtn.setOnClickListener {
             playAllBtn.visible()
             stopAllBtn.invisible()
-                for (i in 0 until Model.selectedSounds.size) {
-                    Model.selectedSounds[i].sound.pause()
-                    Model.selectedSounds[i].sound.seekTo(0)
-                }
+            mixerViewModel.stopSoundScapes()
         }
 
         //Add sounds
         addNewMixerItem.setOnClickListener {
             showPopup()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mixerViewModel.getSoundScapes()
+    }
+
+    private fun handleView(viewState: MixerViewState) {
+        when (viewState) {
+
+            MixerViewState.Loading -> {
+//                progressBar.visible()
+            }
+
+            MixerViewState.Success -> {
+//                progressBar.gone()
+            }
+
+            is MixerViewState.Failure -> {
+//                progressBar.gone()
+                Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+
+            is MixerViewState.GetSoundScapesSuccess -> {
+//                progressBar.gone()
+                mixerAdapter.replaceData(viewState.soundScapeItems)
+            }
+        }
+    }
+
+    override fun onPlaySingleSoundScape(layoutPosition: Int) {
+        mixerViewModel.playSingleSoundScape(layoutPosition)
+    }
+
+    override fun onStopSingleSoundScape(layoutPosition: Int) {
+        mixerViewModel.stopSingleSoundScape(layoutPosition)
+    }
+
+    override fun onRemoveSingleSoundScape(layoutPosition: Int) {
+        mixerViewModel.removeSingleSoundScape(layoutPosition)
     }
 
     override fun onDestroy() {
@@ -65,18 +120,18 @@ class MixerFragment : Fragment(){
 
     private fun showPopup() {
         val popup: PopupMenu?
-        popup = PopupMenu(activity!!.applicationContext, addNewMixerItem, Gravity.END)
+        popup = PopupMenu(activity, addNewMixerItem, Gravity.END)
         popup.inflate(R.menu.popup_menu)
         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
             when (item!!.itemId) {
                 R.id.naturePopupItem -> {
-                    getSoundsFromSelectedCategory(item.title.toString())
+                    getSoundsFromSelectedCategory(SoundCategory.NATURE.description)
                 }
                 R.id.humanPopupItem -> {
-                    getSoundsFromSelectedCategory(item.title.toString())
+                    getSoundsFromSelectedCategory(SoundCategory.HUMAN.description)
                 }
                 R.id.machinePopupItem -> {
-                    getSoundsFromSelectedCategory(item.title.toString())
+                    getSoundsFromSelectedCategory(SoundCategory.MACHINE.description)
                 }
                 R.id.recordedPopupItem -> {
                     //MixerAdapter.itemBackground = ContextCompat.getDrawable(Activity(), R.drawable.category_background_story)!!
@@ -97,7 +152,8 @@ class MixerFragment : Fragment(){
 
     private fun setupMixerView() {
         mixerList.layoutManager = LinearLayoutManager(this.context!!)
-        mixerList.adapter = MixerAdapter(Model.selectedSounds)
+        mixerAdapter = MixerAdapter(Model.selectedSounds, this)
+        mixerList.adapter = mixerAdapter
     }
 
     companion object {

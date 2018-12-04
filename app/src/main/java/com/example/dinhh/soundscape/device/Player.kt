@@ -1,6 +1,7 @@
 package com.example.dinhh.soundscape.device
 
 import android.media.MediaPlayer
+import com.example.dinhh.soundscape.common.logD
 import io.reactivex.Completable
 import java.io.IOException
 
@@ -19,6 +20,9 @@ class PlayerImpl: Player {
     private lateinit var mediaPlayer: MediaPlayer
 
     override fun playSound(soundUrl: String): Completable {
+
+        logD("PLAY SOUND: ${soundUrl}")
+
         return Completable.create {
 
             mediaPlayer = MediaPlayer()
@@ -55,4 +59,6 @@ class PlayerImpl: Player {
             }
         }
     }
+
+
 }
