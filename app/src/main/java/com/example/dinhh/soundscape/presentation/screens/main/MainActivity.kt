@@ -19,6 +19,8 @@ import com.example.dinhh.soundscape.presentation.screens.library.LibraryFragment
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
 import com.example.dinhh.soundscape.presentation.screens.record.RecordFragment
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         setupFragments()
 
         setupButtomNavigation()
+
+        setSupportActionBar(my_toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getPermissionToRecordAudio()
@@ -61,14 +66,17 @@ class MainActivity : AppCompatActivity() {
                 item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
+                    toolbar_title.text = "Home"
                     openFragment(homeFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_record -> {
+                    toolbar_title.text = "Soundscapes"
                     openFragment(mixerFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_library -> {
+                    toolbar_title.text = "Settings"
                     openFragment(libraryFragment)
                     return@OnNavigationItemSelectedListener true
                 }
@@ -78,6 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         // Initial tab
         bottomNavigation.setSelectedItemId(R.id.navigation_home)
+        toolbar_title.text = "Home"
     }
 
     private fun handleView(viewState: MainViewState) {

@@ -36,5 +36,8 @@
     <string name="record_numb_txt">- Records:</string>
     <string name="ss_numb">3</string>
     <string name="rc_numb">2</string>
+    <string name="fragment_title">Name</string>
+    <string name="search_txt">Names, categories or records</string>
+    <string name="category_name">category name</string>
 
 </resources>

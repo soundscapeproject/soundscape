@@ -51,7 +51,6 @@ class LibraryFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        menu!!.clear()
         inflater!!.inflate(R.menu.profile_screen,menu)
     }
 

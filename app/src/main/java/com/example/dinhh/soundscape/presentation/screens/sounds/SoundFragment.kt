@@ -9,13 +9,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
+import com.example.dinhh.soundscape.presentation.screens.main.MainActivity
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
 import kotlinx.android.synthetic.main.fragment_sound.*
+import kotlinx.android.synthetic.main.fragment_sound.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.w3c.dom.Text
 
 private const val ARG_CATEGORY = "category"
 
@@ -35,6 +39,7 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks, SoundSelected {
             it?.run(this@SoundFragment::handleView)
         })
         soundViewModel.beginSearch(category!!)
+
     }
 
     override fun onCreateView(
@@ -47,6 +52,9 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks, SoundSelected {
         soundList = view.findViewById(R.id.soundList) as RecyclerView
 
         setupListView()
+
+        val categoryTxt = view.findViewById<TextView>(R.id.txt_Category_Name)
+        categoryTxt.text = categoryName
 
         return view
     }
@@ -163,5 +171,6 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks, SoundSelected {
                     putString(ARG_CATEGORY, category)
                 }
             }
+        lateinit var categoryName: String
     }
 }
