@@ -31,13 +31,8 @@ val dataModule = module {
 
 
     factory<SoundscapeRepository> {
-        SoundscapeRepositoryImpl(get(), get())
+        SoundscapeRepositoryImpl(get(), get(), get())
     }
-
-    /*SharedPref
-    factory<SharedPref> {
-        SharedPrefImpl(get())
-    }*/
 
     factory<RecordRepository> {
         RecordRepositoryImpl(get())
@@ -75,10 +70,12 @@ val dataModule = module {
     }
 
     factory<SoundscapeLocalData> {
-        SoundscapeLocalDataImpl(get())
+        SoundscapeLocalDataImpl(get(), get())
     }
 
     factory { get<Database>().recordDao() }
+
+    factory { get<Database>().soundscapeDao() }
 
     single<Database> {
         Room.databaseBuilder(
