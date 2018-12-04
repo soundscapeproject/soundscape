@@ -1,16 +1,20 @@
 package com.example.dinhh.soundscape.presentation.screens.mixer
 
+import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
 import android.view.*
+import android.widget.ImageButton
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.R.id.addNewMixerItem
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.Model
+import com.example.dinhh.soundscape.presentation.screens.record.RecordActivity
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundAdapter
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
 import kotlinx.android.synthetic.main.fragment_mixer.*
@@ -53,11 +57,10 @@ class MixerFragment : Fragment(){
                 }
         }
 
-
-        //Add sounds
-        //addNewMixerItem. {
-        //    showPopup()
-        //}
+        val btnMic = view.findViewById<ImageButton>(R.id.micBtn)
+        btnMic.setOnClickListener {
+            startActivity(Intent(activity, RecordActivity::class.java))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

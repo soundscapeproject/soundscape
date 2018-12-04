@@ -10,16 +10,12 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuInflater
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.screens.home.HomeFragment
 import com.example.dinhh.soundscape.presentation.screens.library.LibraryFragment
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
-import com.example.dinhh.soundscape.presentation.screens.record.RecordFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -27,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
     private lateinit var homeFragment: Fragment
-    private lateinit var recordFragment: Fragment
     private lateinit var libraryFragment: Fragment
     private lateinit var mixerFragment: Fragment
     private val RECORD_AUDIO_REQUEST_CODE = 101
@@ -54,7 +49,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupFragments() {
         homeFragment = HomeFragment.newInstance()
-        recordFragment = RecordFragment.newInstance()
         libraryFragment = LibraryFragment.newInstance()
         mixerFragment = MixerFragment.newInstance()
     }
