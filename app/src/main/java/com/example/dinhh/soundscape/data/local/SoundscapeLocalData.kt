@@ -1,24 +1,34 @@
 package com.example.dinhh.soundscape.data.local
 
-import com.example.dinhh.soundscape.data.entity.LocalSoundscape
+import com.example.dinhh.soundscape.data.entity.LocalRecord
 import io.reactivex.Completable
 import io.reactivex.Single
 
 interface SoundscapeLocalData {
 
-    fun saveLocalSoundscapes(localSoundscape: LocalSoundscape): Completable
+    fun saveLocalRecord(localRecord: LocalRecord): Completable
 
-    fun getAllLocalSoundscapes(): Single<List<LocalSoundscape>>
+    fun getAllLocalRecords(): Single<List<LocalRecord>>
+
+    fun deleteRecord(localRecord: LocalRecord): Completable
 }
 
-class SoundscapeLocalDataImpl(private val localSoundscapeDao: SoundscapeDao): SoundscapeLocalData {
-    override fun saveLocalSoundscapes(localSoundscape: LocalSoundscape): Completable {
+class SoundscapeLocalDataImpl(private val recordDao: RecordDao): SoundscapeLocalData {
+    override fun saveLocalRecord(localRecord: LocalRecord): Completable {
         return Completable.fromAction {
-            localSoundscapeDao.insert(localSoundscape)
+            recordDao.insert(localRecord)
         }
     }
 
-    override fun getAllLocalSoundscapes(): Single<List<LocalSoundscape>> {
-        return localSoundscapeDao.getAll()
+    override fun getAllLocalRecords(): Single<List<LocalRecord>> {
+        return recordDao.getAll()
     }
+
+    override fun deleteRecord(localRecord: LocalRecord): Completable {
+        return Completable.fromAction {
+            recordDao.delete(localRecord)
+        }
+    }
+
+
 }
