@@ -61,8 +61,8 @@ class LibraryFragment : Fragment() {
         adapter.setOnItemClickListener(object : RecyclerViewListener.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 when (position) {
-                    0 -> {
-                        goToSavedSoundscapes()
+                    1 -> {
+                        openFragment(SavedRecordFragment.newInstance())
                     }
                 }
             }
@@ -72,10 +72,10 @@ class LibraryFragment : Fragment() {
         rvLibrary.adapter = adapter
     }
 
-    private fun goToSavedSoundscapes() {
+    private fun openFragment(fragment: Fragment) {
         val fragManager = fragmentManager
         val fragmentTransaction = fragManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.container, SavedRecordFragment.newInstance())
+        fragmentTransaction?.replace(R.id.container, fragment)
         fragmentTransaction?.addToBackStack(null)?.commit()
     }
 
