@@ -25,7 +25,7 @@ class MixerViewModel(
         disposables.add(
             playSoundScapesUseCase.execute()
                 .subscribe({
-                    _viewState.value = MixerViewState.PlayFinish
+                    _viewState.value = MixerViewState.PlaySoundScapeFinish
                 }, {
                     _viewState.value =
                             MixerViewState.Failure(it)
@@ -69,6 +69,7 @@ class MixerViewModel(
         disposables.add(
             playSingleSoundScapeUseCase.execute(index)
                 .subscribe({
+                    _viewState.value = MixerViewState.PlaySoundFinish(it)
                 }, {
                 })
         )
@@ -110,7 +111,8 @@ class MixerViewModel(
 sealed class MixerViewState {
     object Loading: MixerViewState()
     object Success : MixerViewState()
-    object PlayFinish: MixerViewState()
+    object PlaySoundScapeFinish: MixerViewState()
+    data class PlaySoundFinish(val index: Int): MixerViewState()
 
     data class Failure(val throwable: Throwable) : MixerViewState()
 

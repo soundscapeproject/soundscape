@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.invisible
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.device.SoundscapeItem
@@ -53,11 +54,11 @@ class MixerAdapter(
         val currentSound = items[position]
 
         setColor(holder,position)
+        setPlayPauseButton(holder, position)
 //        currentSound.sound.setVolume(currentSound.volume.toFloat(), currentSound.volume.toFloat())
 //        mixerItem.volumeSeekBar.progress = currentSound.volume
         mixerItem.titleTextView.text = currentSound.title
         mixerItem.lengthTextView.text = "${currentSound.length} sec"
-        mixerItem.itemSoundStopBtn.invisible()
 
         //Volume slider for individual sound
 //        holder.itemView.volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -73,6 +74,18 @@ class MixerAdapter(
 //                currentSound.volume = seekBar.progress
 //            }
 //        })
+    }
+
+    fun setPlayPauseButton(holder: ViewHolder, position: Int) {
+        val sound = items[position]
+
+        if (sound.isPlaying) {
+            holder.itemSoundStopBtn.visible()
+            holder.itemSoundPlayBtn.invisible()
+        } else {
+            holder.itemSoundPlayBtn.visible()
+            holder.itemSoundStopBtn.invisible()
+        }
     }
 
     fun replaceData(items:  MutableList<SoundscapeItem>) {

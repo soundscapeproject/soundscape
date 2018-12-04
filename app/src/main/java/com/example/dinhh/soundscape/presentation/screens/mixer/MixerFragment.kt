@@ -59,6 +59,7 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
             playAllBtn.invisible()
             stopAllBtn.visible()
             mixerViewModel.playSoundScapes()
+            mixerAdapter.notifyDataSetChanged()
         }
 
         //Stop created soundscape
@@ -66,6 +67,7 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
             playAllBtn.visible()
             stopAllBtn.invisible()
             mixerViewModel.stopSoundScapes()
+            mixerAdapter.notifyDataSetChanged()
         }
 
         //Add sounds
@@ -95,9 +97,13 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
 //                progressBar.gone()
             }
 
-            MixerViewState.PlayFinish -> {
+            MixerViewState.PlaySoundScapeFinish -> {
                 playAllBtn.visible()
                 stopAllBtn.invisible()
+            }
+
+            is MixerViewState.PlaySoundFinish -> {
+                toggleViewHolderIcon(viewState.index, false)
             }
 
             MixerViewState.RemoveSoundScapeSuccess -> {

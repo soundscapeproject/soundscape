@@ -7,7 +7,7 @@ interface SoundScape {
 
     fun addSound(soundScape: SoundscapeItem): Completable
 
-    fun playSingleSoundScapes(index: Int): Completable
+    fun playSingleSoundScapes(index: Int): Single<Int>
 
     fun stopSingleSoundScapes(index: Int): Completable
 
@@ -28,6 +28,7 @@ data class SoundscapeItem(
     val category: String,
     var source: String,
     var volume: Int = 50,
+    var isPlaying: Boolean = false,
     val player: Player = PlayerImpl()
 )
 
@@ -55,20 +56,24 @@ class SoundScapeImpl: SoundScape{
         }
     }
 
-    override fun playSingleSoundScapes(index: Int): Completable {
+    override fun playSingleSoundScapes(index: Int): Single<Int> {
         val soundScape = soundsScapes[index]
-        return soundScape.player.playSound(soundScape.source)
+        soundScape.isPlaying = true
+        return soundScape.player.playSound(soundScape.source).toSingleDefault(index)
     }
 
     override fun stopSingleSoundScapes(index: Int): Completable {
         val soundScape = soundsScapes[index]
+        soundScape.isPlaying = false
         return soundScape.player.stopSound()
     }
 
     override fun playSoundScapes(): Completable {
 
         val completableList = soundsScapes.map{
-                soundScape ->  soundScape.player.playSound(soundScape.source)
+                soundScape ->
+            soundScape.isPlaying = true
+            soundScape.player.playSound(soundScape.source)
         }
 
         return Completable.mergeArray(*completableList.toTypedArray())
@@ -77,7 +82,9 @@ class SoundScapeImpl: SoundScape{
     override fun stopSoundScapes(): Completable {
 
         val completableList = soundsScapes.map{
-                soundScape ->  soundScape.player.stopSound()
+                soundScape ->
+            soundScape.isPlaying = false
+            soundScape.player.stopSound()
         }
 
         return Completable.mergeArray(*completableList.toTypedArray())
