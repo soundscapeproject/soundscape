@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/naturePopupItem"
+            android:title="Nature"/>
+
+    <item
+            android:id="@+id/humanPopupItem"
+            android:title="Human"/>
+
+    <item
+            android:id="@+id/machinePopupItem"
+            android:title="Machine"/>
+
+    <item
+            android:id="@+id/recordedPopupItem"
+            android:title="Recorded sounds"/>
+
+</menu>

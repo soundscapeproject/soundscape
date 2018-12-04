@@ -4,15 +4,18 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.example.dinhh.soundscape.data.entity.Sound
+import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.domain.library.BeginSearchUseCase
 import com.example.dinhh.soundscape.domain.library.PlaySoundUseCase
 import com.example.dinhh.soundscape.domain.library.StopSoundUseCase
+import com.example.dinhh.soundscape.domain.soundscape.AddSoundScapeUseCase
 import io.reactivex.disposables.CompositeDisposable
 
 class SoundViewModel(
     private val beginSearchUseCase: BeginSearchUseCase,
     private val playSoundUseCase: PlaySoundUseCase,
-    private val stopSoundUseCase: StopSoundUseCase
+    private val stopSoundUseCase: StopSoundUseCase,
+    private val addSoundScapeUseCase: AddSoundScapeUseCase
 ): ViewModel() {
     private val disposables = CompositeDisposable()
     private val _viewState = MutableLiveData<SoundViewState>()
@@ -37,7 +40,7 @@ class SoundViewModel(
 
     fun playSound(selectedSound: String) {
         disposables.add(
-           playSoundUseCase.execute(selectedSound)
+            playSoundUseCase.execute(selectedSound)
                 .subscribe({
                     _viewState.value =
                             SoundViewState.PlayFinish
@@ -54,6 +57,15 @@ class SoundViewModel(
                 .subscribe({
                 }, {
                     _viewState.value = SoundViewState.Failure(it)
+                })
+        )
+    }
+
+    fun addSoundScape(soundscapeItem: SoundscapeItem) {
+        disposables.add(
+            addSoundScapeUseCase.execute(soundscapeItem)
+                .subscribe({
+                }, {
                 })
         )
     }

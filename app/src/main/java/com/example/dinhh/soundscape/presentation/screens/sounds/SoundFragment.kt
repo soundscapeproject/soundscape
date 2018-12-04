@@ -1,6 +1,7 @@
 package com.example.dinhh.soundscape.presentation.screens.sounds
 
 import android.arch.lifecycle.Observer
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -12,6 +13,8 @@ import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
+import com.example.dinhh.soundscape.device.SoundscapeItem
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
 import kotlinx.android.synthetic.main.fragment_sound.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -21,7 +24,6 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
-
     private var category: String? = null
     private lateinit var soundList: RecyclerView
 
@@ -30,7 +32,7 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
         arguments?.let {
             category = it.getString(ARG_CATEGORY)
         }
-            soundViewModel.viewState.observe(this, Observer {
+        soundViewModel.viewState.observe(this, Observer {
             it?.run(this@SoundFragment::handleView)
         })
         soundViewModel.beginSearch(category!!)
@@ -91,6 +93,14 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
         toggleViewHolderIcon(layoutPosition, false)
     }
 
+    override fun addSoundToSoundscape(layoutPosition: Int) {
+        val sound = adapter.getData()[layoutPosition][0]
+        val soundscapeItem =
+            SoundscapeItem(sound.title, sound.length.toInt(), sound.category, sound.downloadLink)
+        soundViewModel.addSoundScape(soundscapeItem)
+        goToMixer()
+    }
+
     private fun toggleViewHolderIcon(layoutPosition: Int, playing: Boolean) {
         val viewHolder = soundList.findViewHolderForAdapterPosition(layoutPosition) as SoundAdapter.ViewHolder
         viewHolder.setPlayingState(playing)
@@ -107,17 +117,22 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
             adapter.replaceData(viewState.listSound)
         }
 
+        is SoundViewState.Failure -> {
+            Toast.makeText(activity, "Error: ${viewState.throwable.message}", Toast.LENGTH_SHORT).show()
+        }
+
         // View state behaviors for playing the selected sound
         SoundViewState.PlayFinish -> {
             toggleViewHolderIcon(soundViewModel.playingIndex, false)
             soundViewModel.playingIndex = -1
         }
+    }
 
-        // View state behaviors in case of failure
-        is SoundViewState.Failure -> {
-            progressBar.gone()
-            Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
-        }
+    private fun goToMixer() {
+        val fragManager = fragmentManager
+        val fragmentTransaction = fragManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.container, MixerFragment())
+        fragmentTransaction?.addToBackStack(null)?.commit()
     }
 
     // Sets up the list of the sounds

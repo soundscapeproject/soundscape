@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.Sound
 import kotlinx.android.synthetic.main.item_sound.view.*
@@ -15,12 +16,19 @@ import kotlinx.android.synthetic.main.item_sound.view.*
 interface SoundAdapterViewHolderClicks {
 
     fun onPlayPauseToggle(layoutPosition: Int)
-}
 
+    fun addSoundToSoundscape(layoutPosition: Int)
+}
 
 class SoundAdapter(
     private val sounds: MutableList<List<Sound>>,
-    private val mListener: SoundAdapterViewHolderClicks): RecyclerView.Adapter<SoundAdapter.ViewHolder>(){
+    private val mListener: SoundAdapterViewHolderClicks
+) : RecyclerView.Adapter<SoundAdapter.ViewHolder>() {
+
+
+    companion object {
+        var selectButtonIsVisible = false
+    }
 
     override fun getItemCount(): Int {
         return sounds.size
@@ -33,9 +41,13 @@ class SoundAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val sound = sounds[position][0]
-        holder.itemView.titleTextView.text = sound.title
-        holder.itemView.lengthTextView.text = sound.length + " sec"
+        if (selectButtonIsVisible) {
+            holder.itemView.selectSoundBtn.visible()
+        }
+        val list = sounds[position][0]
+        holder.itemView.itemSoundStopBtn.invisible()
+        holder.itemView.titleTextView.text = list.title
+        holder.itemView.lengthTextView.text = list.length + " sec"
     }
 
     fun replaceData(sounds: List<List<Sound>>) {
@@ -48,10 +60,13 @@ class SoundAdapter(
         return this.sounds
     }
 
-    class ViewHolder (view: View, mListener: SoundAdapterViewHolderClicks) : RecyclerView.ViewHolder(view) {
+
+    class ViewHolder(view: View, mListener: SoundAdapterViewHolderClicks) :
+        RecyclerView.ViewHolder(view) {
 
         val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.itemSoundPlayBtn)
         val itemSoundStopBtn: ImageButton = view.findViewById(R.id.itemSoundStopBtn)
+        val itemSoundAddBtn: ImageButton = view.findViewById(R.id.selectSoundBtn)
         val titleTextView: TextView = view.findViewById(R.id.titleTextView)
         val lengthTextView: TextView = view.findViewById(R.id.lengthTextView)
 
@@ -62,6 +77,10 @@ class SoundAdapter(
 
             itemSoundStopBtn.setOnClickListener {
                 mListener.onPlayPauseToggle(this.layoutPosition)
+            }
+
+            itemSoundAddBtn.setOnClickListener {
+                mListener.addSoundToSoundscape(this.layoutPosition)
             }
         }
 

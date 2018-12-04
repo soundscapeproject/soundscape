@@ -4,6 +4,7 @@ import com.example.dinhh.soundscape.presentation.screens.login.LoginViewModel
 import com.example.dinhh.soundscape.presentation.screens.main.MainViewModel
 import com.example.dinhh.soundscape.presentation.screens.record.RecordViewModel
 import com.example.dinhh.soundscape.presentation.screens.savedrecord.SavedRecordViewModel
+import com.example.dinhh.soundscape.presentation.screens.sounds.MixerViewModel
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundViewModel
 import com.example.dinhh.soundscape.presentation.screens.splash.SplashViewModel
 import org.koin.android.viewmodel.ext.koin.viewModel
@@ -28,10 +29,14 @@ val presentationModule = module {
     }
 
     viewModel {
-        SoundViewModel(get(), get(), get())
+        SoundViewModel(get(), get(), get(), get())
     }
 
     viewModel {
         SavedRecordViewModel(get(), get(), get())
+    }
+
+    viewModel {
+        MixerViewModel(get(), get(), get(), get(), get(), get())
     }
 }
