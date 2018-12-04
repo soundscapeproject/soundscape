@@ -14,17 +14,17 @@ interface RecordRepository {
     fun deleteLocalRecord(localRecord: LocalRecord): Completable
 }
 
-class RecordRepositoryImpl(private val soundscapeLocalData: SoundscapeLocalData): RecordRepository {
+class RecordRepositoryImpl(private val recordLocalData: Record): RecordRepository {
 
     override fun saveRecord(localRecord: LocalRecord): Completable {
-        return soundscapeLocalData.saveLocalRecord(localRecord)
+        return recordLocalData.save(localRecord)
     }
 
     override fun getLocalRecords(): Single<List<LocalRecord>> {
-        return soundscapeLocalData.getAllLocalRecords()
+        return recordLocalData.getAllLocalRecords()
     }
 
     override fun deleteLocalRecord(localRecord: LocalRecord): Completable {
-        return soundscapeLocalData.deleteRecord(localRecord)
+        return recordLocalData.deleteRecord(localRecord)
     }
 }
