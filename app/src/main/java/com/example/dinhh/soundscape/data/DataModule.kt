@@ -31,13 +31,8 @@ val dataModule = module {
 
 
     factory<SoundscapeRepository> {
-        SoundscapeRepositoryImpl(get(), get())
+        SoundscapeRepositoryImpl(get(), get(), get())
     }
-
-    /*SharedPref
-    factory<SharedPref> {
-        SharedPrefImpl(get())
-    }*/
 
     factory<RecordRepository> {
         RecordRepositoryImpl(get())
