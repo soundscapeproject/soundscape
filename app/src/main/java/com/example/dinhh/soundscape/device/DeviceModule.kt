@@ -12,8 +12,8 @@ val deviceModule = module {
         PlayerImpl()
     }
 
-    single<AddSound> {
-        AddSoundImpl()
+    single<SoundScape> {
+        SoundScapeImpl()
     }
 }
 

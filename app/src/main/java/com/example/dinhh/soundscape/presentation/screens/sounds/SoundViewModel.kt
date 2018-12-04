@@ -4,17 +4,18 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.example.dinhh.soundscape.data.entity.Sound
-import com.example.dinhh.soundscape.domain.library.AddSelectedSoundUseCase
+import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.domain.library.BeginSearchUseCase
 import com.example.dinhh.soundscape.domain.library.PlaySoundUseCase
 import com.example.dinhh.soundscape.domain.library.StopSoundUseCase
+import com.example.dinhh.soundscape.domain.soundscape.AddSoundScapeUseCase
 import io.reactivex.disposables.CompositeDisposable
 
 class SoundViewModel(
     private val beginSearchUseCase: BeginSearchUseCase,
     private val playSoundUseCase: PlaySoundUseCase,
     private val stopSoundUseCase: StopSoundUseCase,
-    private val addSelectedSoundUseCase: AddSelectedSoundUseCase
+    private val addSoundScapeUseCase: AddSoundScapeUseCase
 ): ViewModel() {
     private val disposables = CompositeDisposable()
     private val _viewState = MutableLiveData<SoundViewState>()
@@ -38,8 +39,6 @@ class SoundViewModel(
     }
 
     fun playSound(selectedSound: String) {
-        _viewState.value =
-                SoundViewState.PlayLoading
         disposables.add(
             playSoundUseCase.execute(selectedSound)
                 .subscribe({
@@ -62,17 +61,11 @@ class SoundViewModel(
         )
     }
 
-    fun addSelectedSound(selectedSound: String, title: String, length: Int, category: String, volume: Int) {
-        _viewState.value =
-                SoundViewState.AddSelectedLoading
+    fun addSoundScape(soundscapeItem: SoundscapeItem) {
         disposables.add(
-            addSelectedSoundUseCase.execute(selectedSound, title, length, category, volume)
+            addSoundScapeUseCase.execute(soundscapeItem)
                 .subscribe({
-                    _viewState.value =
-                            SoundViewState.AddSelectedSoundSuccess
                 }, {
-                    _viewState.value =
-                            SoundViewState.Failure(it)
                 })
         )
     }
@@ -86,9 +79,6 @@ sealed class SoundViewState {
 
     object Loading: SoundViewState()
     object PlayFinish: SoundViewState()
-    object PlayLoading: SoundViewState()
-    object AddSelectedLoading: SoundViewState()
-    object AddSelectedSoundSuccess: SoundViewState()
     data class Success(val listSound: List<List<Sound>>) : SoundViewState()
     data class Failure(val throwable: Throwable) : SoundViewState()
 }

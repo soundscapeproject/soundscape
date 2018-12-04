@@ -2,7 +2,6 @@ package com.example.dinhh.soundscape.presentation.screens.sounds
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -14,16 +13,14 @@ import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
-import com.example.dinhh.soundscape.presentation.screens.main.MainActivity
+import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
 import kotlinx.android.synthetic.main.fragment_sound.*
-import kotlinx.android.synthetic.main.fragment_sound.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.w3c.dom.Text
 
 private const val ARG_CATEGORY = "category"
 
-class SoundFragment : Fragment(), SoundAdapterViewHolderClicks, SoundSelected {
+class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
@@ -101,13 +98,11 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks, SoundSelected {
     }
 
     override fun addSoundToSoundscape(layoutPosition: Int) {
-        selectSound(layoutPosition)
-    }
-
-
-    private fun selectSound(layoutPosition: Int){
         val sound = adapter.getData()[layoutPosition][0]
-        soundViewModel.addSelectedSound(sound.downloadLink, sound.title, sound.length.toInt(), sound.category, 50)
+        val soundscapeItem =
+            SoundscapeItem(sound.title, sound.length.toInt(), sound.category, sound.downloadLink)
+        soundViewModel.addSoundScape(soundscapeItem)
+        goToMixer()
     }
 
     private fun toggleViewHolderIcon(layoutPosition: Int, playing: Boolean) {
@@ -126,26 +121,14 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks, SoundSelected {
             adapter.replaceData(viewState.listSound)
         }
 
+        is SoundViewState.Failure -> {
+            Toast.makeText(activity, "Error: ${viewState.throwable.message}", Toast.LENGTH_SHORT).show()
+        }
+
         // View state behaviors for playing the selected sound
         SoundViewState.PlayFinish -> {
             toggleViewHolderIcon(soundViewModel.playingIndex, false)
             soundViewModel.playingIndex = -1
-        }
-
-        // View state behaviors for adding the selected sound to the soundscape
-        SoundViewState.AddSelectedLoading -> {
-            progressBar.visible()
-        }
-        is SoundViewState.AddSelectedSoundSuccess ->{
-            goToMixer()
-        }
-
-        // View state behaviors in case of failure
-        is SoundViewState.Failure -> {
-            progressBar.gone()
-            Toast.makeText(activity, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
-        }
-        else -> {
         }
     }
 
@@ -158,7 +141,7 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks, SoundSelected {
 
     // Sets up the list of the sounds
     private fun setupListView() {
-        adapter = SoundAdapter(ArrayList(), this,this)
+        adapter = SoundAdapter(ArrayList(), this)
         soundList.layoutManager = LinearLayoutManager(this.context!!)
         soundList.adapter = adapter
     }

@@ -1,6 +1,6 @@
 package com.example.dinhh.soundscape.data
 
-import com.example.dinhh.soundscape.data.entity.SoundscapeItem
+import com.example.dinhh.soundscape.device.SoundscapeItem
 
 object Model {
     var selectedSounds: MutableList<SoundscapeItem> = mutableListOf()
