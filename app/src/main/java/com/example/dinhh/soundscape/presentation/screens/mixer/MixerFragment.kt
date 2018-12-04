@@ -89,6 +89,10 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
 //                progressBar.gone()
             }
 
+            MixerViewState.RemoveSoundScapeSuccess -> {
+                mixerViewModel.getSoundScapes()
+            }
+
             is MixerViewState.Failure -> {
 //                progressBar.gone()
                 Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
@@ -103,10 +107,12 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
 
     override fun onPlaySingleSoundScape(layoutPosition: Int) {
         mixerViewModel.playSingleSoundScape(layoutPosition)
+        toggleViewHolderIcon(layoutPosition, true)
     }
 
     override fun onStopSingleSoundScape(layoutPosition: Int) {
         mixerViewModel.stopSingleSoundScape(layoutPosition)
+        toggleViewHolderIcon(layoutPosition, false)
     }
 
     override fun onRemoveSingleSoundScape(layoutPosition: Int) {
@@ -155,6 +161,12 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
         mixerAdapter = MixerAdapter(Model.selectedSounds, this)
         mixerList.adapter = mixerAdapter
     }
+
+    private fun toggleViewHolderIcon(layoutPosition: Int, playing: Boolean) {
+        val viewHolder = mixerView.findViewHolderForAdapterPosition(layoutPosition) as MixerAdapter.ViewHolder
+        viewHolder.setPlayingState(playing)
+    }
+
 
     companion object {
         @JvmStatic

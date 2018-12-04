@@ -12,7 +12,8 @@ class MixerViewModel(
     private val stopSoundsScapeUseCase: StopSoundsScapeUseCase,
     private val playSingleSoundScapeUseCase: PlaySingleSoundScapeUseCase,
     private val stopSingleSoundScapeUseCase: StopSingleSoundScapeUseCase,
-    private val getSoundScapeUseCase: GetSoundScapeUseCase
+    private val getSoundScapeUseCase: GetSoundScapeUseCase,
+    private val removeSingleSoundScapeUseCase: RemoveSingleSoundScapeUseCase
 ): ViewModel() {
     private val disposables = CompositeDisposable()
     private val _viewState = MutableLiveData<MixerViewState>()
@@ -80,12 +81,26 @@ class MixerViewModel(
         disposables.add(
            stopSingleSoundScapeUseCase.execute(index)
                 .subscribe({
+                    _viewState.value = MixerViewState.Success
                 }, {
+                    _viewState.value =
+                            MixerViewState.Failure(it)
                 })
         )
     }
 
     fun removeSingleSoundScape(index: Int) {
+        _viewState.value =
+                MixerViewState.Loading
+        disposables.add(
+            removeSingleSoundScapeUseCase.execute(index)
+                .subscribe({
+                    _viewState.value = MixerViewState.RemoveSoundScapeSuccess
+                }, {
+                    _viewState.value =
+                            MixerViewState.Failure(it)
+                })
+        )
     }
 
     override fun onCleared() {
@@ -99,4 +114,5 @@ sealed class MixerViewState {
     data class Failure(val throwable: Throwable) : MixerViewState()
 
     data class GetSoundScapesSuccess(val soundScapeItems: MutableList<SoundscapeItem>): MixerViewState()
+    object RemoveSoundScapeSuccess : MixerViewState()
 }

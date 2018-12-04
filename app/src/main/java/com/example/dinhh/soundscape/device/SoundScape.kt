@@ -1,10 +1,8 @@
 package com.example.dinhh.soundscape.device
 
-import android.media.MediaPlayer
 import com.example.dinhh.soundscape.common.logD
 import io.reactivex.Completable
 import io.reactivex.Single
-import java.io.IOException
 
 interface SoundScape {
 
@@ -31,7 +29,7 @@ data class SoundscapeItem(
     val category: String,
     var source: String,
     var volume: Int = 50,
-    val player: MediaPlayer = MediaPlayer()
+    val player: Player = PlayerImpl()
 )
 
 class SoundScapeImpl: SoundScape{
@@ -59,49 +57,31 @@ class SoundScapeImpl: SoundScape{
     }
 
     override fun playSingleSoundScapes(index: Int): Completable {
-        return Completable.create{
-            val soundScape = soundsScapes[index]
-            val mediaPlayer = soundScape.player
-
-            try {
-                mediaPlayer.reset()
-                mediaPlayer.setDataSource(soundScape.source)
-                mediaPlayer.prepare()
-                mediaPlayer.start()
-                it.onComplete()
-            } catch (e: IOException) {
-                it.onError(e)
-            }
-        }
+        val soundScape = soundsScapes[index]
+        return soundScape.player.playSound(soundScape.source)
     }
 
     override fun stopSingleSoundScapes(index: Int): Completable {
-        return Completable.create {
-            val soundScape = soundsScapes[index]
-            val mediaPlayer = soundScape.player
-
-            try {
-                mediaPlayer.stop()
-                mediaPlayer.release()
-                it.onComplete()
-            } catch (e: IOException) {
-                it.onError(e)
-            }
-        }
+        val soundScape = soundsScapes[index]
+        return soundScape.player.stopSound()
     }
 
     override fun playSoundScapes(): Completable {
-        return Completable.fromAction{
-            soundsScapes.forEach { (soundsScape, index) ->
-                playSingleSoundScapes(index)
-            }
+
+        val completableList = soundsScapes.map{
+                soundScape ->  soundScape.player.playSound(soundScape.source)
         }
+
+        return Completable.mergeArray(*completableList.toTypedArray())
     }
 
     override fun stopSoundScapes(): Completable {
-        return Completable.fromAction{
-            soundsScapes.forEach { (soundsScape, index) -> stopSingleSoundScapes(index)}
+
+        val completableList = soundsScapes.map{
+                soundScape ->  soundScape.player.stopSound()
         }
+
+        return Completable.mergeArray(*completableList.toTypedArray())
     }
 
     override fun getSoundScapes(): Single<MutableList<SoundscapeItem>> {
