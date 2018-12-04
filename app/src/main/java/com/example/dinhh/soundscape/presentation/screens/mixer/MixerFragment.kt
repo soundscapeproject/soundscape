@@ -89,6 +89,11 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
 //                progressBar.gone()
             }
 
+            MixerViewState.PlayFinish -> {
+                playAllBtn.visible()
+                stopAllBtn.invisible()
+            }
+
             MixerViewState.RemoveSoundScapeSuccess -> {
                 mixerViewModel.getSoundScapes()
             }

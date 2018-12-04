@@ -25,8 +25,7 @@ class MixerViewModel(
         disposables.add(
             playSoundScapesUseCase.execute()
                 .subscribe({
-                    _viewState.value =
-                            MixerViewState.Success
+                    _viewState.value = MixerViewState.PlayFinish
                 }, {
                     _viewState.value =
                             MixerViewState.Failure(it)
@@ -111,6 +110,8 @@ class MixerViewModel(
 sealed class MixerViewState {
     object Loading: MixerViewState()
     object Success : MixerViewState()
+    object PlayFinish: MixerViewState()
+
     data class Failure(val throwable: Throwable) : MixerViewState()
 
     data class GetSoundScapesSuccess(val soundScapeItems: MutableList<SoundscapeItem>): MixerViewState()

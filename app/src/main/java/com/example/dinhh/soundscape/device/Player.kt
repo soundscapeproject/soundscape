@@ -32,7 +32,7 @@ class PlayerImpl: Player {
             } catch (e: IOException) {
                 it.onError(e)
             }
-        }
+        }.andThen(onPlayComplete())
     }
 
     override fun onPlayComplete(): Completable {
