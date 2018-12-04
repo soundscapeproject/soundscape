@@ -12,6 +12,7 @@ import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundAdapter
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_sound.*
 
 
 class HomeFragment : Fragment() {
@@ -45,6 +46,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun goToSoundsFragment(category: String){
+        SoundFragment.categoryName = category
         SoundAdapter.selectButtonIsVisible = false
         val fragManager = fragmentManager
         val fragmentTransaction = fragManager?.beginTransaction()

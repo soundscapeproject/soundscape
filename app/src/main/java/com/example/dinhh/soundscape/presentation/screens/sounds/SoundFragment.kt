@@ -1,7 +1,6 @@
 package com.example.dinhh.soundscape.presentation.screens.sounds
 
 import android.arch.lifecycle.Observer
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
@@ -36,6 +36,7 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
             it?.run(this@SoundFragment::handleView)
         })
         soundViewModel.beginSearch(category!!)
+
     }
 
     override fun onCreateView(
@@ -48,6 +49,9 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
         soundList = view.findViewById(R.id.soundList) as RecyclerView
 
         setupListView()
+
+        val categoryTxt = view.findViewById<TextView>(R.id.txt_Category_Name)
+        categoryTxt.text = categoryName
 
         return view
     }
@@ -150,5 +154,6 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
                     putString(ARG_CATEGORY, category)
                 }
             }
+        lateinit var categoryName: String
     }
 }

@@ -12,20 +12,17 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.presentation.screens.home.HomeFragment
 import com.example.dinhh.soundscape.presentation.screens.library.LibraryFragment
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
-import com.example.dinhh.soundscape.presentation.screens.record.RecordFragment
-import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
+import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
     private lateinit var homeFragment: Fragment
-    private lateinit var recordFragment: Fragment
     private lateinit var libraryFragment: Fragment
     private lateinit var mixerFragment: Fragment
     private val RECORD_AUDIO_REQUEST_CODE = 101
@@ -38,6 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         setupButtomNavigation()
 
+        setSupportActionBar(my_toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getPermissionToRecordAudio()
         }
@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupFragments() {
         homeFragment = HomeFragment.newInstance()
-        recordFragment = RecordFragment.newInstance()
         libraryFragment = LibraryFragment.newInstance()
         mixerFragment = MixerFragment.newInstance()
     }
@@ -61,14 +60,17 @@ class MainActivity : AppCompatActivity() {
                 item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
+                    toolbar_title.text = "Home"
                     openFragment(homeFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_record -> {
+                    toolbar_title.text = "Soundscapes"
                     openFragment(mixerFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_library -> {
+                    toolbar_title.text = "Settings"
                     openFragment(libraryFragment)
                     return@OnNavigationItemSelectedListener true
                 }
@@ -78,6 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         // Initial tab
         bottomNavigation.setSelectedItemId(R.id.navigation_home)
+        toolbar_title.text = "Home"
     }
 
     private fun handleView(viewState: MainViewState) {
