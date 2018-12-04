@@ -1,6 +1,5 @@
 package com.example.dinhh.soundscape.device
 
-import com.example.dinhh.soundscape.common.logD
 import io.reactivex.Completable
 import io.reactivex.Single
 

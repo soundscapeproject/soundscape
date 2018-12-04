@@ -16,7 +16,11 @@ interface Player {
 
 class PlayerImpl: Player {
 
-    private lateinit var mediaPlayer: MediaPlayer
+    private var mediaPlayer: MediaPlayer
+
+    constructor() {
+        mediaPlayer = MediaPlayer()
+    }
 
     override fun playSound(soundUrl: String): Completable {
         return Completable.create {
@@ -46,12 +50,15 @@ class PlayerImpl: Player {
 
     override fun stopSound(): Completable {
         return Completable.create {
-            try {
-                mediaPlayer.stop()
-                mediaPlayer.release()
-                it.onComplete()
-            } catch (e: IOException) {
-                it.onError(e)
+            if (mediaPlayer != null) {
+                try {
+                    if(mediaPlayer.isPlaying) {
+                        mediaPlayer.pause()
+                    }
+                    it.onComplete()
+                } catch (e: IOException) {
+                    it.onError(e)
+                }
             }
         }
     }

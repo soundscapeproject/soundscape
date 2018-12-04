@@ -10,6 +10,7 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.Model
 import com.example.dinhh.soundscape.data.entity.SoundCategory
@@ -73,6 +74,11 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        mixerViewModel.stopSoundScapes()
+    }
+
     override fun onResume() {
         super.onResume()
         mixerViewModel.getSoundScapes()
@@ -100,6 +106,7 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
 
             is MixerViewState.Failure -> {
 //                progressBar.gone()
+                throw(viewState.throwable)
                 Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
 
