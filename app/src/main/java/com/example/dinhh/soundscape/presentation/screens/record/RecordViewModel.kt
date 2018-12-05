@@ -90,7 +90,6 @@ sealed class RecordViewState {
 
     //Save
     object SaveRecordLoading : RecordViewState()
-
     object SaveRecordSuccess : RecordViewState()
     data class SaveRecordFailure(val throwable: Throwable) : RecordViewState()
 }

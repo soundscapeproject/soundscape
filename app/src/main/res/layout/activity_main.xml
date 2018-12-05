@@ -49,5 +49,14 @@
             app:itemBackground="@color/colorPrimary"
             app:itemIconTint="@color/colorWhite"
             app:itemTextColor="@color/colorWhite"
-            app:menu="@menu/navigation"/>
+            app:menu="@menu/navigation">
+    </android.support.design.widget.BottomNavigationView>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@android:drawable/btn_star_big_on"
+            android:id="@+id/btnMixer"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginBottom="4dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:translationZ="10dp"/>
 </android.support.constraint.ConstraintLayout>

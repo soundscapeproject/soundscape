@@ -1,5 +1,6 @@
 package com.example.dinhh.soundscape.presentation.screens.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -7,12 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.data.entity.SoundCategory
-import com.example.dinhh.soundscape.presentation.screens.mixer.MixerAdapter
-import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
+import com.example.dinhh.soundscape.presentation.screens.sounds.SoundActivity
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundAdapter
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_sound.*
 
 
 class HomeFragment : Fragment() {
@@ -31,27 +31,24 @@ class HomeFragment : Fragment() {
 
     private fun setupButtons(){
         natureBtn.setOnClickListener {
-            goToSoundsFragment(SoundCategory.NATURE.description)
+            goToSoundsActivity(SoundCategory.NATURE.description)
         }
         humanBtn.setOnClickListener {
-            goToSoundsFragment(SoundCategory.HUMAN.description)
+            goToSoundsActivity(SoundCategory.HUMAN.description)
         }
         machineBtn.setOnClickListener {
-            goToSoundsFragment(SoundCategory.MACHINE.description)
+            goToSoundsActivity(SoundCategory.MACHINE.description)
         }
         storyBtn.setOnClickListener {
-            goToSoundsFragment(SoundCategory.STORY.description)
+            goToSoundsActivity(SoundCategory.STORY.description)
         }
 
     }
 
-    private fun goToSoundsFragment(category: String){
-        SoundFragment.categoryName = category
-        SoundAdapter.selectButtonIsVisible = false
-        val fragManager = fragmentManager
-        val fragmentTransaction = fragManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.container, SoundFragment.newInstance(category))
-        fragmentTransaction?.addToBackStack(null)?.commit()
+    private fun goToSoundsActivity(category: String){
+        val intent = Intent(activity, SoundActivity::class.java)
+        intent.putExtra("category", category)
+        startActivity(intent)
     }
 
     companion object {

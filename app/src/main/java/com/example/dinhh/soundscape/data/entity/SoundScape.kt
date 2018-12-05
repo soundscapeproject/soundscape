@@ -5,5 +5,5 @@ data class SoundScape(
     val length: Int,
     val category: String,
     var source: String,
-    var volume: Int = 50
+    var volume: Int
 )

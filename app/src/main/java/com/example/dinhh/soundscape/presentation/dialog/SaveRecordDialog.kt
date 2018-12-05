@@ -12,7 +12,6 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.SoundCategory
-import kotlinx.android.synthetic.main.dialog_save_record.*
 import kotlinx.android.synthetic.main.dialog_save_record.view.*
 
 private const val ARG_TITLE = "title"
@@ -24,7 +23,7 @@ private val categoryList = listOf(
     SoundCategory.STORY.description
 )
 
-class SaveDialog: AppCompatDialogFragment() {
+class SaveRecordDialog: AppCompatDialogFragment() {
 
     private var title: String? = null
     private var listener: SaveDialogListener? = null
@@ -32,7 +31,7 @@ class SaveDialog: AppCompatDialogFragment() {
 
     private lateinit var progressBar: ProgressBar
 
-   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -41,7 +40,7 @@ class SaveDialog: AppCompatDialogFragment() {
             setupCategorySpinner(view)
             progressBar = view.progressBar
 
-           builder
+            builder
                 .setView(view)
                 .setTitle(title)
                 .setPositiveButton(getString(R.string.save),
@@ -65,7 +64,7 @@ class SaveDialog: AppCompatDialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is SaveDialog.SaveDialogListener) {
+        if (context is SaveRecordDialog.SaveDialogListener) {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
@@ -103,7 +102,7 @@ class SaveDialog: AppCompatDialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(title: String) = SaveDialog().apply {
+        fun newInstance(title: String) = SaveRecordDialog().apply {
             arguments = Bundle().apply {
                 putString(ARG_TITLE, title)
             }
@@ -114,7 +113,7 @@ class SaveDialog: AppCompatDialogFragment() {
 
         fun onSaveDialogPositiveClick(recordName: String, category: String)
 
-        fun onSaveDialogNegativeClick(dialog: SaveDialog)
+        fun onSaveDialogNegativeClick(recordDialog: SaveRecordDialog)
     }
 
 }

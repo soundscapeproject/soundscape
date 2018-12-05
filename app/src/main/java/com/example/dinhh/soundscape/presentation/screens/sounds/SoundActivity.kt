@@ -3,12 +3,8 @@ package com.example.dinhh.soundscape.presentation.screens.sounds
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
@@ -19,42 +15,26 @@ import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
 import kotlinx.android.synthetic.main.fragment_sound.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-private const val ARG_CATEGORY = "category"
-
-class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
+class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
-    private var category: String? = null
-    private lateinit var soundList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            category = it.getString(ARG_CATEGORY)
-        }
+        setContentView(R.layout.activity_sound)
+
         soundViewModel.viewState.observe(this, Observer {
-            it?.run(this@SoundFragment::handleView)
+            it?.run(this@SoundActivity::handleView)
         })
+
+        val category = intent.getStringExtra("category")
+
         soundViewModel.beginSearch(category!!)
 
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        // Inflates the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_sound, container, false)
-        soundList = view.findViewById(R.id.soundList) as RecyclerView
+        txt_Category_Name.text = category
 
         setupListView()
-
-        val categoryTxt = view.findViewById<TextView>(R.id.txt_Category_Name)
-        categoryTxt.text = categoryName
-
-        return view
     }
 
     override fun onPause() {
@@ -123,7 +103,7 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
         }
 
         is SoundViewState.Failure -> {
-            Toast.makeText(activity, "Error: ${viewState.throwable.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error: ${viewState.throwable.message}", Toast.LENGTH_SHORT).show()
         }
 
         // View state behaviors for playing the selected sound
@@ -134,25 +114,13 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
     }
 
     private fun goToMixer() {
-        val intent = Intent(activity, MixerActivity::class.java)
-        startActivity(intent)
+        finish()
     }
 
     // Sets up the list of the sounds
     private fun setupListView() {
         adapter = SoundAdapter(ArrayList(), this)
-        soundList.layoutManager = LinearLayoutManager(this.context!!)
+        soundList.layoutManager = LinearLayoutManager(this)
         soundList.adapter = adapter
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(category: String) =
-            SoundFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_CATEGORY, category)
-                }
-            }
-        lateinit var categoryName: String
     }
 }
