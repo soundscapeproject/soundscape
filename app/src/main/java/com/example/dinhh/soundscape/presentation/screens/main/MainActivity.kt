@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_library -> {
-                    toolbar_title.text = "Settings"
+                    toolbar_title.text = "Library"
                     openFragment(libraryFragment)
                     return@OnNavigationItemSelectedListener true
                 }
