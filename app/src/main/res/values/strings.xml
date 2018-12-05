@@ -39,5 +39,6 @@
     <string name="fragment_title">Name</string>
     <string name="search_txt">Names, categories or records</string>
     <string name="category_name">category name</string>
+    <string name="app_slogan">where sounds become masterpiece</string>
 
 </resources>
