@@ -20,6 +20,7 @@ import com.example.dinhh.soundscape.presentation.dialog.SaveSoundscapeDialog
 import com.example.dinhh.soundscape.presentation.screens.record.RecordActivity
 import com.example.dinhh.soundscape.presentation.screens.sounds.*
 import kotlinx.android.synthetic.main.fragment_mixer.*
+import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSoundscapeDialog.SaveDialogListener {
@@ -36,6 +37,7 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
 
         setSupportActionBar(findViewById(R.id.my_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         mixerViewModel.getSoundScapes()
 
@@ -46,6 +48,7 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
         setupMixerView()
 
         saveSoundscapeDialog = SaveSoundscapeDialog.newInstance(getString(R.string.title_save_soundscape_dialog))
+        toolbar_title.text = "Workplace"
 
 
         //Play created soundscape
@@ -95,6 +98,10 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
             }
             R.id.item4 -> {
                 getSoundsFromSelectedCategory(item.title.toString())
+            }
+            android.R.id.home -> {
+                onBackPressed()
+                return true
             }
         }
         return super.onOptionsItemSelected(item)

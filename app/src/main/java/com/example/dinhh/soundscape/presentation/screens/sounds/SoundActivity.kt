@@ -4,14 +4,14 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.device.SoundscapeItem
 import kotlinx.android.synthetic.main.activity_sound.*
+import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
@@ -24,6 +24,9 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sound)
 
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         soundViewModel.viewState.observe(this, Observer {
             it?.run(this@SoundActivity::handleView)
         })
@@ -34,8 +37,19 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         soundViewModel.beginSearch(category!!)
 
         txt_Category_Name.text = category
+        toolbar_title.text = "Category"
 
         setupListView()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onPause() {

@@ -7,15 +7,21 @@
         android:layout_height="match_parent"
         tools:context=".presentation.screens.mixer.MixerActivity">
 
-    <android.support.v7.widget.Toolbar
-            android:id="@+id/my_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:title="@string/record_screen_name"
-            app:titleTextColor="@color/colorText"
-            android:elevation="4dp"
-            android:theme="@style/ToolbarTheme"/>
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/constraintLayout2"
+            app:contentInsetStart="0dp">
+        <include
+                android:id="@+id/topbar"
+                layout="@layout/topbar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:contentInsetStart="0dp"/>
+    </android.support.constraint.ConstraintLayout>
 
 
     <android.support.constraint.ConstraintLayout

@@ -15,6 +15,7 @@
             app:title="@string/record_screen_name"
             app:titleTextColor="@color/colorText"
             android:elevation="4dp"
+            android:gravity="center"
             android:theme="@style/ToolbarTheme"/>
 
 
