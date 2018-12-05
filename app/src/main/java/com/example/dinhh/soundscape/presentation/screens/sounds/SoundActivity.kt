@@ -4,12 +4,14 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.device.SoundscapeItem
-import kotlinx.android.synthetic.main.fragment_sound.*
+import kotlinx.android.synthetic.main.activity_sound.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
@@ -94,14 +96,15 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
 
         // View state behaviors for loading the list of sounds
         SoundViewState.Loading -> {
-            progressBar.visible()
+            soundProgressBar.visible()
         }
         is SoundViewState.Success -> {
-            progressBar.gone()
+            soundProgressBar.gone()
             adapter.replaceData(viewState.listSound)
         }
 
         is SoundViewState.Failure -> {
+            soundProgressBar.gone()
             Toast.makeText(this, "Error: ${viewState.throwable.message}", Toast.LENGTH_SHORT).show()
         }
 
