@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.data.entity.SoundCategory
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -27,24 +28,42 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupButtons(){
+
         natureBtn.setOnClickListener {
-            goToSoundsActivity(SoundCategory.NATURE.description)
+            SoundActivity.cameFromPopup = false
+            goToActivity("Sound", SoundCategory.NATURE.description)
         }
         humanBtn.setOnClickListener {
-            goToSoundsActivity(SoundCategory.HUMAN.description)
+            SoundActivity.cameFromPopup = false
+            goToActivity("Sound", SoundCategory.HUMAN.description)
         }
         machineBtn.setOnClickListener {
-            goToSoundsActivity(SoundCategory.MACHINE.description)
+            SoundActivity.cameFromPopup = false
+            goToActivity("Sound", SoundCategory.MACHINE.description)
         }
         storyBtn.setOnClickListener {
-            goToSoundsActivity(SoundCategory.STORY.description)
+            SoundActivity.cameFromPopup = false
+            goToActivity("Sound", SoundCategory.STORY.description)
+        }
+
+        soundscapeCreatorButton.setOnClickListener {
+            goToActivity("Mixer", SoundCategory.STORY.description)
         }
 
     }
 
-    private fun goToSoundsActivity(category: String){
-        val intent = Intent(activity, SoundActivity::class.java)
-        intent.putExtra("category", category)
+    private fun goToActivity(act: String, category: String){
+        lateinit var intent: Intent
+
+        if(act == "Sound") {
+            intent = Intent(activity, SoundActivity::class.java)
+            intent.putExtra("category", category)
+        }
+
+        if(act == "Mixer"){
+            intent = Intent(activity, MixerActivity::class.java)
+        }
+
         startActivity(intent)
     }
 

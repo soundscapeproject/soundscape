@@ -86,7 +86,14 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
         }
 
         btnPlay.setOnClickListener {
+            btnPlay.invisible()
+            btnStopPlaying.visible()
             recordViewModel.playRecord()
+        }
+        btnStopPlaying.setOnClickListener {
+            recordViewModel.stopPlaying()
+            btnStopPlaying.invisible()
+            btnPlay.visible()
         }
     }
 

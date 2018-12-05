@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.domain.library.PlaySoundUseCase
+import com.example.dinhh.soundscape.domain.library.StopSoundUseCase
 import com.example.dinhh.soundscape.domain.record.DeleteTempRecordUseCase
 import com.example.dinhh.soundscape.domain.record.SaveRecordUseCase
 import com.example.dinhh.soundscape.domain.record.StartRecordUseCase
@@ -16,7 +17,8 @@ class RecordViewModel(
     private val stopRecordUseCase: StopRecordUseCase,
     private val playSoundUseCase: PlaySoundUseCase,
     private val saveRecordUseCase: SaveRecordUseCase,
-    private val deleteTempRecordUseCase: DeleteTempRecordUseCase
+    private val deleteTempRecordUseCase: DeleteTempRecordUseCase,
+    private val stopPlayingUseCase: StopSoundUseCase
 ) : ViewModel() {
     private val disposibles = CompositeDisposable()
     private val _viewState = MutableLiveData<RecordViewState>()
@@ -49,6 +51,16 @@ class RecordViewModel(
     fun playRecord() {
         disposibles.add(
             playSoundUseCase.execute(fileUrl!!)
+                .subscribe({
+                    _viewState.value = RecordViewState.Success
+                }, {
+                    _viewState.value = RecordViewState.Failure(it)
+                })
+        )
+    }
+    fun stopPlaying() {
+        disposibles.add(
+            stopPlayingUseCase.execute()
                 .subscribe({
                     _viewState.value = RecordViewState.Success
                 }, {

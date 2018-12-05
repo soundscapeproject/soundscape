@@ -12,11 +12,17 @@ interface Player {
     fun stopSound(): Completable
 
     fun onPlayComplete(): Completable
+
+    fun loopSound()
+
+    fun stopLoop()
 }
 
 class PlayerImpl: Player {
 
     private var mediaPlayer: MediaPlayer
+
+    private var isLooping = false
 
     constructor() {
         mediaPlayer = MediaPlayer()
@@ -39,11 +45,24 @@ class PlayerImpl: Player {
         }.andThen(onPlayComplete())
     }
 
+    override fun loopSound(){
+        isLooping = true
+    }
+
+    override fun stopLoop(){
+        isLooping = false
+    }
+
     override fun onPlayComplete(): Completable {
 
         return Completable.create {complete ->
             mediaPlayer.setOnCompletionListener {
-                complete.onComplete()
+                if (!isLooping) {
+                    complete.onComplete()
+                }else{
+                    mediaPlayer.seekTo(0)
+                    mediaPlayer.start()
+                }
             }
         }
     }

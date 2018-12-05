@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.Model
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
@@ -86,6 +85,7 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        SoundActivity.cameFromPopup = true
         when (item?.itemId){
             R.id.item1 -> {
                 getSoundsFromSelectedCategory(item.title.toString())
@@ -188,6 +188,15 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
         toggleViewHolderIcon(layoutPosition, true)
     }
 
+    override fun onLoopSingleSound(layoutPosition: Int) {
+        mixerViewModel.loopSingleSound(layoutPosition)
+    }
+
+    override fun stopLoopSingleSound(layoutPosition: Int) {
+        mixerViewModel.stopLoopSingleSound(layoutPosition)
+    }
+
+
     override fun onStopSingleSoundScape(layoutPosition: Int) {
         mixerViewModel.stopSingleSoundScape(layoutPosition)
         toggleViewHolderIcon(layoutPosition, false)
@@ -219,8 +228,6 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
     }
 
     private fun getSoundsFromSelectedCategory(category: String){
-        SoundAdapter.selectButtonIsVisible = true
-
         val intent = Intent(this, SoundActivity::class.java)
         intent.putExtra("category", category)
         intent.putExtra("isGoFromMixer", true)

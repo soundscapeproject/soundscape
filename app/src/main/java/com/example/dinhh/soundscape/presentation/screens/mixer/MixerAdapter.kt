@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import com.example.dinhh.soundscape.R
@@ -25,6 +26,10 @@ interface MixerAdapterViewHolderClicks {
     fun onStopSingleSoundScape(layoutPosition: Int)
 
     fun onRemoveSingleSoundScape(layoutPosition: Int)
+
+    fun onLoopSingleSound(layoutPosition: Int)
+
+    fun stopLoopSingleSound(layoutPosition: Int)
 }
 
 class MixerAdapter(
@@ -132,6 +137,8 @@ class MixerAdapter(
         val removeSoundBtn: ImageButton = view.findViewById(R.id.removeSoundBtn)
         val itemSoundStopBtn: ImageButton = view.findViewById(R.id.itemSoundStopBtn)
         val mixerItem: ConstraintLayout = view.findViewById(R.id.mixerItem)
+        val toggleLoopOn: Button = view.findViewById(R.id.loopBtnToggleOn)
+        val toggleLoopOff: Button = view.findViewById(R.id.loopBtnToggleOff)
 
         init {
             itemSoundPlayBtn.setOnClickListener {
@@ -144,6 +151,18 @@ class MixerAdapter(
 
             removeSoundBtn.setOnClickListener {
                 mListener.onRemoveSingleSoundScape(this.layoutPosition)
+            }
+
+            toggleLoopOn.setOnClickListener {
+                toggleLoopOff.visible()
+                toggleLoopOn.invisible()
+                mListener.onLoopSingleSound(this.layoutPosition)
+            }
+
+            toggleLoopOff.setOnClickListener {
+                toggleLoopOn.visible()
+                toggleLoopOff.invisible()
+                mListener.stopLoopSingleSound(this.layoutPosition)
             }
         }
 

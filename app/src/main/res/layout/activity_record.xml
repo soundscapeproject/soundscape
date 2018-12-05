@@ -90,6 +90,22 @@
             app:layout_constraintTop_toTopOf="@id/btnStartRecording"
             app:layout_constraintBottom_toBottomOf="@id/btnStartRecording"
     />
+
+    <ImageButton
+            android:id="@+id/btnStopPlaying"
+            android:src="@drawable/ic_stop_ic"
+            android:contentDescription="@string/play"
+            android:elevation="2dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/mix_btn_bg"
+            tools:targetApi="lollipop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnStartRecording"
+            app:layout_constraintTop_toTopOf="@id/btnStartRecording"
+            app:layout_constraintBottom_toBottomOf="@id/btnStartRecording"
+            android:visibility="gone"
+    />
     <ImageButton
             android:id="@+id/btnSave"
             android:src="@drawable/ic_save_ic"
