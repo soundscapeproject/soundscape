@@ -40,15 +40,6 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
         handleButtonClicked()
     }
 
-
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.profile_screen, menu)
-        return true
-
-    }
-
     private fun setupView() {
         btnStopRecording.invisible()
         btnPlay.invisible()

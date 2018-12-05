@@ -28,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
 
         splashViewModel.getLoginState()
 
-        fullscreen_content.translateX(getHeight().toFloat(),500)
+        fullscreen_content.translateY(getHeight().toFloat(),500)
         popupAnimator.apply {
             addUpdateListener {
                 fullscreen_content.scaleX = it.animatedValue as Float
