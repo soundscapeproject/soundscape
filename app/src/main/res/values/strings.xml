@@ -22,6 +22,7 @@
     <string name="saved">Saved</string>
     <string name="title_activity_record">RecordActivity</string>
     <string name="title_save_record_dialog">Save Record</string>
+    <string name="title_save_soundscape_dialog">Save Soundscape</string>
     <string name="no_records">No records</string>
     <string name="name_required">Name should not be empty</string>
 
@@ -39,6 +40,6 @@
     <string name="fragment_title">Name</string>
     <string name="search_txt">Names, categories or records</string>
     <string name="category_name">category name</string>
+    <string name="soundscape_name">Soundscape name</string>
     <string name="app_slogan">where sounds become masterpiece</string>
-
 </resources>

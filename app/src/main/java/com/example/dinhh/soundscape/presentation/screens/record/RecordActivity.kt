@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
@@ -14,15 +15,15 @@ import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.data.entity.SoundType
-import com.example.dinhh.soundscape.presentation.dialog.SaveDialog
+import com.example.dinhh.soundscape.presentation.dialog.SaveRecordDialog
 import kotlinx.android.synthetic.main.activity_record.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
+class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener {
 
     private val recordViewModel: RecordViewModel by viewModel()
 
-    private lateinit var saveDialog: SaveDialog
+    private lateinit var saveRecordDialog: SaveRecordDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,20 +40,13 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         handleButtonClicked()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.profile_screen, menu)
-        return true
-
-    }
-
     private fun setupView() {
         btnStopRecording.invisible()
         btnPlay.invisible()
         recordingTextView.invisible()
         btnSave.invisible()
 
-        saveDialog = SaveDialog.newInstance(getString(R.string.title_save_record_dialog))
+        saveRecordDialog = SaveRecordDialog.newInstance(getString(R.string.title_save_record_dialog))
     }
 
     private fun handleView(viewState: RecordViewState) = when (viewState) {
@@ -63,17 +57,17 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         }
 
         is RecordViewState.SaveRecordLoading -> {
-            saveDialog.showLoading()
+            saveRecordDialog.showLoading()
         }
 
         is RecordViewState.SaveRecordSuccess -> {
-            saveDialog.hideLoading()
+            saveRecordDialog.hideLoading()
             dismissSaveDialog()
             Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
         }
 
         is RecordViewState.SaveRecordFailure -> {
-            saveDialog.hideLoading()
+            saveRecordDialog.hideLoading()
             Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
         }
     }
@@ -119,11 +113,11 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
     }
 
     private fun showSaveDialog() {
-        saveDialog.show(supportFragmentManager, "SAVE_DIALOG")
+        saveRecordDialog.show(supportFragmentManager, "SAVE_DIALOG")
     }
 
     private fun dismissSaveDialog() {
-        saveDialog.dismiss()
+        saveRecordDialog.dismiss()
     }
 
     override fun onSaveDialogPositiveClick(recordName: String, category: String) {
@@ -141,7 +135,7 @@ class RecordActivity : AppCompatActivity(), SaveDialog.SaveDialogListener {
         recordViewModel.saveRecord(localRecord)
     }
 
-    override fun onSaveDialogNegativeClick(dialog: SaveDialog) {
+    override fun onSaveDialogNegativeClick(recordDialog: SaveRecordDialog) {
         logD("CANCEL DIALOG")
     }
 

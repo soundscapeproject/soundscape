@@ -15,7 +15,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="32dp" android:layout_marginEnd="32dp" app:layout_constraintEnd_toEndOf="parent"
-            android:hint="@string/record_name"/>
+            android:hint="@string/soundscape_name"/>
     <Spinner
             android:layout_width="0dp"
             android:layout_height="wrap_content"

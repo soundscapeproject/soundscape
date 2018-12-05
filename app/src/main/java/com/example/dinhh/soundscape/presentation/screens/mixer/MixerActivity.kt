@@ -1,58 +1,55 @@
 package com.example.dinhh.soundscape.presentation.screens.mixer
 
-import android.content.Intent
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.*
-import android.widget.ImageButton
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.Model
+import com.example.dinhh.soundscape.data.entity.LocalSoundscape
+import com.example.dinhh.soundscape.data.entity.SoundScape
+import com.example.dinhh.soundscape.device.SoundscapeItem
+import com.example.dinhh.soundscape.presentation.dialog.SaveSoundscapeDialog
 import com.example.dinhh.soundscape.presentation.screens.record.RecordActivity
-import com.example.dinhh.soundscape.presentation.screens.sounds.MixerViewModel
-import com.example.dinhh.soundscape.presentation.screens.sounds.MixerViewState
-import com.example.dinhh.soundscape.presentation.screens.sounds.SoundAdapter
-import com.example.dinhh.soundscape.presentation.screens.sounds.SoundFragment
+import com.example.dinhh.soundscape.presentation.screens.sounds.*
 import kotlinx.android.synthetic.main.fragment_mixer.*
+import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
+class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSoundscapeDialog.SaveDialogListener {
 
-    private lateinit var mixerView: RecyclerView
     private lateinit var mixerAdapter: MixerAdapter
+    private lateinit var saveSoundscapeDialog: SaveSoundscapeDialog
 
     private val mixerViewModel: MixerViewModel by viewModel()
+    private var soundScapesList: MutableList<SoundscapeItem> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mixerViewModel.getSoundScapes()
-    }
+        setContentView(R.layout.activity_mixer)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        setHasOptionsMenu(true)
-        // Inflates the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_mixer, container, false)
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        mixerViewModel.getSoundScapes()
 
         mixerViewModel.viewState.observe(this, Observer {
-            it?.run(this@MixerFragment::handleView)
+            it?.run(this@MixerActivity::handleView)
         })
 
-        mixerView = view.findViewById(R.id.mixerList) as RecyclerView
-        return view
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         setupMixerView()
+
+        saveSoundscapeDialog = SaveSoundscapeDialog.newInstance(getString(R.string.title_save_soundscape_dialog))
+        toolbar_title.text = "Workplace"
+
 
         //Play created soundscape
         playAllBtn.setOnClickListener {
@@ -70,14 +67,22 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
             mixerAdapter.notifyDataSetChanged()
         }
 
-        val btnMic = view.findViewById<ImageButton>(R.id.micBtn)
-        btnMic.setOnClickListener {
-            startActivity(Intent(activity, RecordActivity::class.java))
+        saveMixBtn.setOnClickListener {
+            showSaveDialog()
+        }
+
+        micBtn.setOnClickListener {
+            startActivity(Intent(this, RecordActivity::class.java))
+        }
+
+        btnGetLocal.setOnClickListener {
+            mixerViewModel.getLocalSounds()
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.mix_screen,menu)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.mix_screen,menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -93,6 +98,10 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
             }
             R.id.item4 -> {
                 getSoundsFromSelectedCategory(item.title.toString())
+            }
+            android.R.id.home -> {
+                onBackPressed()
+                return true
             }
         }
         return super.onOptionsItemSelected(item)
@@ -135,15 +144,44 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
             is MixerViewState.Failure -> {
 //                progressBar.gone()
                 throw(viewState.throwable)
-                Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
 
             is MixerViewState.GetSoundScapesSuccess -> {
 //                progressBar.gone()
+                soundScapesList = viewState.soundScapeItems
                 mixerAdapter.replaceData(viewState.soundScapeItems)
+            }
+
+            //Local Sound State
+            is MixerViewState.GetLocalSoundScapesSuccess -> {
+            }
+
+            MixerViewState.SaveSoundScapeLoading -> {
+                saveSoundscapeDialog.showLoading()
+            }
+
+            MixerViewState.SaveSoundScapeSuccess -> {
+                saveSoundscapeDialog.hideLoading()
+                dismissSaveDialog()
+                Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
+            }
+
+            is MixerViewState.SaveSoundScapeFailure -> {
+                saveSoundscapeDialog.hideLoading()
+                Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
             }
         }
     }
+
+    private fun showSaveDialog() {
+        saveSoundscapeDialog.show(supportFragmentManager, "SAVE_SOUNDSCAPE_DIALOG")
+    }
+
+    private fun dismissSaveDialog() {
+        saveSoundscapeDialog.dismiss()
+    }
+
 
     override fun onPlaySingleSoundScape(layoutPosition: Int) {
         mixerViewModel.playSingleSoundScape(layoutPosition)
@@ -159,59 +197,44 @@ class MixerFragment : Fragment(), MixerAdapterViewHolderClicks {
         mixerViewModel.removeSingleSoundScape(layoutPosition)
     }
 
+    override fun onSaveDialogPositiveClick(soundScapeName: String) {
+        val soundScapeList = soundScapesList.map { it -> SoundScape(
+            it.title,
+            it.length,
+            it.category,
+            it.source,
+            it.volume
+        )
+        }
+        val localSoundscape = LocalSoundscape(null, soundScapeName, soundScapeList)
+        mixerViewModel.saveSoundScape(localSoundscape)
+    }
+
+    override fun onSaveDialogNegativeClick(recordDialog: SaveSoundscapeDialog) {
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         Model.selectedSounds.clear()
     }
 
-
-    /*private fun showPopup() {
-        val popup: PopupMenu?
-        popup = PopupMenu(activity, addNewMixerItem, Gravity.END)
-        popup.inflate(R.menu.popup_menu)
-        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
-            when (item!!.itemId) {
-                R.id.naturePopupItem -> {
-                    getSoundsFromSelectedCategory(SoundCategory.NATURE.description)
-                }
-                R.id.humanPopupItem -> {
-                    getSoundsFromSelectedCategory(SoundCategory.HUMAN.description)
-                }
-                R.id.machinePopupItem -> {
-                    getSoundsFromSelectedCategory(SoundCategory.MACHINE.description)
-                }
-                R.id.recordedPopupItem -> {
-                    //MixerAdapter.itemBackground = ContextCompat.getDrawable(Activity(), R.drawable.category_background_story)!!
-                }
-            }
-            true
-        })
-        popup.show()
-    }*/
-
     private fun getSoundsFromSelectedCategory(category: String){
-        SoundFragment.categoryName = category
         SoundAdapter.selectButtonIsVisible = true
-        val fragManager = fragmentManager
-        val fragmentTransaction = fragManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.container, SoundFragment.newInstance(category))
-        fragmentTransaction?.addToBackStack(null)?.commit()
+
+        val intent = Intent(this, SoundActivity::class.java)
+        intent.putExtra("category", category)
+        intent.putExtra("isGoFromMixer", true)
+        startActivity(intent)
     }
 
     private fun setupMixerView() {
-        mixerList.layoutManager = LinearLayoutManager(this.context!!)
+        mixerList.layoutManager = LinearLayoutManager(this)
         mixerAdapter = MixerAdapter(Model.selectedSounds, this)
         mixerList.adapter = mixerAdapter
     }
 
     private fun toggleViewHolderIcon(layoutPosition: Int, playing: Boolean) {
-        val viewHolder = mixerView.findViewHolderForAdapterPosition(layoutPosition) as MixerAdapter.ViewHolder
+        val viewHolder = mixerList.findViewHolderForAdapterPosition(layoutPosition) as MixerAdapter.ViewHolder
         viewHolder.setPlayingState(playing)
-    }
-
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = MixerFragment()
     }
 }

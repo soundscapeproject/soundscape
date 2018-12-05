@@ -15,6 +15,7 @@
             app:title="@string/record_screen_name"
             app:titleTextColor="@color/colorText"
             android:elevation="4dp"
+            android:gravity="center"
             android:theme="@style/ToolbarTheme"/>
 
 
@@ -59,7 +60,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="10dp"/>
 
     <ImageButton
             android:id="@+id/btnStopRecording"
@@ -73,7 +74,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="10dp"/>
 
     <ImageButton
             android:id="@+id/btnPlay"

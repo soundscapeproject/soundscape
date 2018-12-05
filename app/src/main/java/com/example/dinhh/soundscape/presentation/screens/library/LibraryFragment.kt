@@ -1,16 +1,24 @@
 package com.example.dinhh.soundscape.presentation.screens.library
 
 
+import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
+import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
+import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
 import com.example.dinhh.soundscape.presentation.screens.savedrecord.SavedRecordFragment
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LibraryFragment : Fragment() {
+
+    private val libraryViewModel: LibraryViewModel by viewModel()
+
 
     private lateinit var adapter: LibararyAdapter
     private lateinit var rvLibrary: RecyclerView
@@ -21,6 +29,9 @@ class LibraryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        libraryViewModel.viewState.observe(this, Observer {
+            it?.run(this@LibraryFragment::handleView)
+        })
     }
 
     override fun onCreateView(
@@ -54,6 +65,16 @@ class LibraryFragment : Fragment() {
         inflater!!.inflate(R.menu.profile_screen,menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.setting -> {
+                libraryViewModel.logout()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
 
     private fun setupViews() {
@@ -61,8 +82,8 @@ class LibraryFragment : Fragment() {
         adapter.setOnItemClickListener(object : RecyclerViewListener.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 when (position) {
-                    0 -> {
-                        goToSavedSoundscapes()
+                    1 -> {
+                        openFragment(SavedRecordFragment.newInstance())
                     }
                 }
             }
@@ -72,11 +93,33 @@ class LibraryFragment : Fragment() {
         rvLibrary.adapter = adapter
     }
 
-    private fun goToSavedSoundscapes() {
+    private fun openFragment(fragment: Fragment) {
         val fragManager = fragmentManager
         val fragmentTransaction = fragManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.container, SavedRecordFragment.newInstance())
+        fragmentTransaction?.replace(R.id.container, fragment)
         fragmentTransaction?.addToBackStack(null)?.commit()
+    }
+
+    private fun handleView(viewState: LibraryViewState) {
+        when (viewState) {
+            LibraryViewState.Loading -> {
+            }
+
+            is LibraryViewState.LogoutSuccess -> {
+                gotoLoginActivity()
+            }
+
+            is LibraryViewState.Failure -> {
+                Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun gotoLoginActivity() {
+        val intent = Intent(activity, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     companion object {

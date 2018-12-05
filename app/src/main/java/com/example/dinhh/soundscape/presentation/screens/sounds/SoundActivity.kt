@@ -2,58 +2,54 @@ package com.example.dinhh.soundscape.presentation.screens.sounds
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.device.SoundscapeItem
-import com.example.dinhh.soundscape.presentation.screens.mixer.MixerFragment
-import kotlinx.android.synthetic.main.fragment_sound.*
+import kotlinx.android.synthetic.main.activity_sound.*
+import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-private const val ARG_CATEGORY = "category"
-
-class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
+class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
-    private var category: String? = null
-    private lateinit var soundList: RecyclerView
+    private var isGoFromMixer: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            category = it.getString(ARG_CATEGORY)
-        }
+        setContentView(R.layout.activity_sound)
+
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         soundViewModel.viewState.observe(this, Observer {
-            it?.run(this@SoundFragment::handleView)
+            it?.run(this@SoundActivity::handleView)
         })
+
+        val category = intent.getStringExtra("category")
+        isGoFromMixer = intent.getBooleanExtra("isGoFromMixer", false)
+
         soundViewModel.beginSearch(category!!)
 
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        // Inflates the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_sound, container, false)
-        soundList = view.findViewById(R.id.soundList) as RecyclerView
+        txt_Category_Name.text = category
+        toolbar_title.text = "Category"
 
         setupListView()
+    }
 
-        val categoryTxt = view.findViewById<TextView>(R.id.txt_Category_Name)
-        categoryTxt.text = categoryName
-
-        return view
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onPause() {
@@ -114,15 +110,16 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
 
         // View state behaviors for loading the list of sounds
         SoundViewState.Loading -> {
-            progressBar.visible()
+            soundProgressBar.visible()
         }
         is SoundViewState.Success -> {
-            progressBar.gone()
+            soundProgressBar.gone()
             adapter.replaceData(viewState.listSound)
         }
 
         is SoundViewState.Failure -> {
-            Toast.makeText(activity, "Error: ${viewState.throwable.message}", Toast.LENGTH_SHORT).show()
+            soundProgressBar.gone()
+            Toast.makeText(this, "Error: ${viewState.throwable.message}", Toast.LENGTH_SHORT).show()
         }
 
         // View state behaviors for playing the selected sound
@@ -133,27 +130,14 @@ class SoundFragment : Fragment(), SoundAdapterViewHolderClicks {
     }
 
     private fun goToMixer() {
-        val fragManager = fragmentManager
-        val fragmentTransaction = fragManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.container, MixerFragment())
-        fragmentTransaction?.addToBackStack(null)?.commit()
+        finish()
     }
 
     // Sets up the list of the sounds
     private fun setupListView() {
         adapter = SoundAdapter(ArrayList(), this)
-        soundList.layoutManager = LinearLayoutManager(this.context!!)
+        SoundAdapter.selectButtonIsVisible = isGoFromMixer
+        soundList.layoutManager = LinearLayoutManager(this)
         soundList.adapter = adapter
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(category: String) =
-            SoundFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_CATEGORY, category)
-                }
-            }
-        lateinit var categoryName: String
     }
 }
