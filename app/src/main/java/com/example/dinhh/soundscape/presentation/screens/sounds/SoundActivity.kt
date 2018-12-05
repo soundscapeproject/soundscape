@@ -1,17 +1,14 @@
 package com.example.dinhh.soundscape.presentation.screens.sounds
 
 import android.arch.lifecycle.Observer
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.TextView
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.device.SoundscapeItem
-import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
 import kotlinx.android.synthetic.main.fragment_sound.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -19,6 +16,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
+    private var isGoFromMixer: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +27,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         })
 
         val category = intent.getStringExtra("category")
+        isGoFromMixer = intent.getBooleanExtra("isGoFromMixer", false)
 
         soundViewModel.beginSearch(category!!)
 
@@ -120,6 +119,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
     // Sets up the list of the sounds
     private fun setupListView() {
         adapter = SoundAdapter(ArrayList(), this)
+        SoundAdapter.selectButtonIsVisible = isGoFromMixer
         soundList.layoutManager = LinearLayoutManager(this)
         soundList.adapter = adapter
     }

@@ -148,7 +148,6 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
 
             //Local Sound State
             is MixerViewState.GetLocalSoundScapesSuccess -> {
-                logD("GET LOCAL SUCCESS: ${viewState.list}")
             }
 
             MixerViewState.SaveSoundScapeLoading -> {
@@ -217,6 +216,7 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
 
         val intent = Intent(this, SoundActivity::class.java)
         intent.putExtra("category", category)
+        intent.putExtra("isGoFromMixer", true)
         startActivity(intent)
     }
 

@@ -66,11 +66,11 @@ class SaveSoundscapeDialog: AppCompatDialogFragment() {
     }
 
     fun showLoading() {
-        progressBar.visible()
+//        progressBar.visible()
     }
 
     fun hideLoading() {
-        progressBar.gone()
+//        progressBar.gone()
     }
 
     companion object {
