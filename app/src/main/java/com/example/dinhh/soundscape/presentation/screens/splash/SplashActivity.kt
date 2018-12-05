@@ -1,5 +1,6 @@
 package com.example.dinhh.soundscape.presentation.screens.splash
 
+import android.animation.ValueAnimator
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +8,10 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
+import com.example.dinhh.soundscape.common.*
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
 import com.example.dinhh.soundscape.presentation.screens.main.MainActivity
+import kotlinx.android.synthetic.main.activity_splash.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SplashActivity : AppCompatActivity() {
@@ -24,6 +27,17 @@ class SplashActivity : AppCompatActivity() {
         })
 
         splashViewModel.getLoginState()
+
+        fullscreen_content.translateX(getHeight().toFloat(),500)
+        popupAnimator.apply {
+            addUpdateListener {
+                fullscreen_content.scaleX = it.animatedValue as Float
+                fullscreen_content.scaleY = it.animatedValue as Float
+            }
+            start()
+        }
+        txt_application_name.translateY(getHeight().toFloat(),500)
+        txt_application_slogan.translateY(getHeight().toFloat(),500)
 
     }
 
@@ -71,4 +85,13 @@ class SplashActivity : AppCompatActivity() {
         }
         background.start()
     }
+
+    private val popupAnimator = ValueAnimator.ofFloat(1f, 0.9f)
+        .also {
+            it.duration = 500
+            it.repeatMode = ValueAnimator.REVERSE
+            it.repeatCount = ValueAnimator.INFINITE
+        }
+
+
 }
