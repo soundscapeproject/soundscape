@@ -26,7 +26,7 @@ val presentationModule = module {
     }
 
     viewModel {
-        RecordViewModel(get(), get(), get(), get(), get())
+        RecordViewModel(get(), get(), get(), get(), get(), get())
     }
 
     viewModel {
@@ -38,7 +38,7 @@ val presentationModule = module {
     }
 
     viewModel {
-        MixerViewModel(get(), get(), get(), get(), get(), get(), get(), get())
+        MixerViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get())
     }
 
     viewModel {

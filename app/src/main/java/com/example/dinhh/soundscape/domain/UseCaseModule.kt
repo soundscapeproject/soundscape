@@ -81,6 +81,10 @@ val useCaseModule = module {
     }
 
     factory {
+        SetLoopingUseCase(get())
+    }
+
+    factory {
         PlaySoundScapesUseCase(get(),get())
     }
 

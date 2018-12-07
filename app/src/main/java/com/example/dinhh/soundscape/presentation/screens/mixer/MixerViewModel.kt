@@ -3,7 +3,6 @@ package com.example.dinhh.soundscape.presentation.screens.sounds
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.domain.soundscape.*
@@ -17,7 +16,9 @@ class MixerViewModel(
     private val getSoundScapeUseCase: GetSoundScapeUseCase,
     private val removeSingleSoundScapeUseCase: RemoveSingleSoundScapeUseCase,
     private val saveSoundScapesUseCase: SaveSoundScapesUseCase,
-    private val getLocalSoundscapesUseCase: GetLocalSoundscapesUseCase
+    private val getLocalSoundscapesUseCase: GetLocalSoundscapesUseCase,
+    private val setLoopingUseCase: SetLoopingUseCase
+
 ): ViewModel() {
     private val disposables = CompositeDisposable()
     private val _viewState = MutableLiveData<MixerViewState>()
@@ -135,6 +136,12 @@ class MixerViewModel(
         )
     }
 
+    fun loopSingleSound(index: Int, isLooping: Boolean){
+        _viewState.value =
+                MixerViewState.Loading
+            setLoopingUseCase.execute(index, isLooping)
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
@@ -145,7 +152,6 @@ sealed class MixerViewState {
     object Success : MixerViewState()
     object PlaySoundScapeFinish: MixerViewState()
     data class PlaySoundFinish(val index: Int): MixerViewState()
-
     data class Failure(val throwable: Throwable) : MixerViewState()
 
     data class GetSoundScapesSuccess(val soundScapeItems: MutableList<SoundscapeItem>): MixerViewState()

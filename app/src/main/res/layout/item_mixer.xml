@@ -1,128 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/mixerItem"
+        android:background="@drawable/category_background_nature"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:layout_gravity="top"
-              android:paddingBottom="20dp">
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/itemSoundPlayBtn"
+            android:background="@null"
+            android:src="@drawable/ic_play_arrow_white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
 
-    <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
-                                                 android:layout_height="wrap_content"
-                                                 android:id="@+id/mixerItem"
-                                                 android:background="@drawable/category_background_nature">
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/itemSoundStopBtn"
+            android:src="@drawable/ic_stop_white_64dp"
+            android:background="@null"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
 
-        <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp">
+    <android.support.constraint.Guideline
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.5"
+            android:id="@+id/guideline"/>
 
-            <android.support.constraint.ConstraintLayout
-                    android:id="@+id/layout_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-            >
-                <ImageButton
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:id="@+id/itemSoundPlayBtn"
-                        android:background="@null"
-                        android:src="@drawable/ic_play_arrow_white_48dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                />
+    <TextView
+            android:id="@+id/titleTextView"
+            app:layout_constrainedHeight="true"
+            android:layout_width="221dp"
+            android:paddingStart="5dp"
+            android:layout_height="0dp"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="Title"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"/>
 
-                <ImageButton
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:id="@+id/itemSoundStopBtn"
-                        android:src="@drawable/ic_stop_ic"
-                        android:background="@null"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:visibility="visible"/>
-            </android.support.constraint.ConstraintLayout>
+    <TextView
+            android:id="@+id/lengthTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="Length"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/removeSoundBtn"/>
 
+    <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/removeSoundBtn"
+            android:src="@android:drawable/ic_menu_delete"
+            android:layout_gravity="center"
+            android:background="@null"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
+    <Button
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:id="@+id/loopBtnToggleOn"
+            android:layout_weight="1"
+            android:background="@android:drawable/ic_menu_rotate"
+            android:backgroundTint="@color/slightlyTransparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"/>
 
-            <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:id="@+id/layout_txt"
-                    app:layout_constraintStart_toEndOf="@id/layout_btn"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-                <TextView
-                        android:id="@+id/titleTextView"
-                        android:layout_width="0dp"
-                        android:paddingStart="5dp"
-                        android:paddingTop="10dp"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/roboto_medium"
-                        android:layout_weight="1"
-                        android:gravity="top|start"
-                        android:text="Title"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:drawablePadding="10dp" android:textColor="@color/colorText"/>
+    <Button
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:id="@+id/loopBtnToggleOff"
+            android:layout_weight="1"
+            android:background="@android:drawable/ic_menu_rotate"
+            android:backgroundTint="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            android:visibility="gone"/>
 
-                <TextView
-                        android:id="@+id/lengthTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Length"
-                        android:paddingRight="5dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/colorText"/>
-
-                <ImageButton
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:id="@+id/removeSoundBtn"
-                        android:src="@drawable/ic_delete_ic"
-                        android:background="@null"/>
-            </LinearLayout>
-
-            <LinearLayout android:layout_width="0dp"
-                          android:layout_height="20dp"
-                          android:orientation="horizontal"
-                          android:theme="@style/White"
-                          android:id="@+id/seekBarBase"
-                          app:layout_constraintStart_toEndOf="@id/layout_btn"
-                          app:layout_constraintTop_toBottomOf="@id/layout_txt"
-                          app:layout_constraintBottom_toBottomOf="parent"
-                          app:layout_constraintEnd_toEndOf="parent">
-
-                <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@android:drawable/ic_lock_silent_mode_off"/>
-
-                <android.support.v7.widget.AppCompatSeekBar
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/volumeSeekBar"/>
-            </LinearLayout>
-
-        </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.Guideline
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline2" app:layout_constraintGuide_end="221dp"/>
 
 
-</LinearLayout>
+    <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_lock_silent_mode_off"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            android:id="@+id/appCompatImageView"/>
+
+    <android.support.v7.widget.AppCompatSeekBar
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/White"
+            android:id="@+id/volumeSeekBar"
+            app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <android.support.constraint.Guideline
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/guideline4" app:layout_constraintGuide_end="287dp"/>
+
+
+</android.support.constraint.ConstraintLayout>

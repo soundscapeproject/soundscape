@@ -187,7 +187,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <TextView
-                android:text="Your choice"
+                android:text="Create a soundscape"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewYourChoice"
@@ -205,12 +205,12 @@
         <TextView
                 android:fontFamily="@font/roboto_black"
                 android:textColor="@color/colorWhite"
-                android:id="@+id/randomBtn"
+                android:id="@+id/soundscapeCreatorButton"
                 android:textSize="20sp"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:gravity="center"
-                android:text="SOUND TYPES"
+                android:text="SOUNDSCAPE CREATOR"
                 android:background="@drawable/background_random"
                 app:layout_constraintTop_toBottomOf="@id/textViewYourChoice"
                 app:layout_constraintStart_toStartOf="parent"

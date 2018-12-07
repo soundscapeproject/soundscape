@@ -7,4 +7,5 @@
     <color name="colorText">#ffffff</color>
     <color name="colorTextDark">#000000</color>
     <color name="transparent">#00ffffff</color>
+    <color name="slightlyTransparent">#46000000</color>
 </resources>

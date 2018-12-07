@@ -20,6 +20,8 @@ interface SoundScape {
     fun clearSoundScapes(): Completable
 
     fun getSoundScapes(): Single<MutableList<SoundscapeItem>>
+
+    fun loopSingleSound(index: Int, isLooping: Boolean)
 }
 
 data class SoundscapeItem(
@@ -66,6 +68,11 @@ class SoundScapeImpl: SoundScape{
         val soundScape = soundsScapes[index]
         soundScape.isPlaying = false
         return soundScape.player.stopSound()
+    }
+
+    override fun loopSingleSound(index: Int, isLooping: Boolean) {
+        val soundScape = soundsScapes[index]
+        return soundScape.player.loopSound(isLooping)
     }
 
     override fun playSoundScapes(): Completable {

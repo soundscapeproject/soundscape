@@ -1,6 +1,7 @@
 package com.example.dinhh.soundscape.presentation.screens.sounds
 
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.device.SoundscapeItem
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
 import kotlinx.android.synthetic.main.activity_sound.*
 import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -19,6 +21,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
     private var isGoFromMixer: Boolean = false
+    private var cameFromPopup: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         })
 
         val category = intent.getStringExtra("category")
+        cameFromPopup = intent.getBooleanExtra("cameFromPopup", false)
         isGoFromMixer = intent.getBooleanExtra("isGoFromMixer", false)
 
         soundViewModel.beginSearch(category!!)
@@ -54,6 +58,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
 
     override fun onPause() {
         super.onPause()
+        cameFromPopup = false
         soundViewModel.stopSound()
     }
 
@@ -131,6 +136,10 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
 
     private fun goToMixer() {
         finish()
+        val intent = Intent(this, MixerActivity::class.java)
+        if(!cameFromPopup) {
+            startActivity(intent)
+        }
     }
 
     // Sets up the list of the sounds

@@ -1,5 +1,6 @@
 package com.example.dinhh.soundscape.presentation.screens.sounds
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.Sound
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
 import kotlinx.android.synthetic.main.item_sound.view.*
 
 interface SoundAdapterViewHolderClicks {
@@ -81,6 +83,7 @@ class SoundAdapter(
 
             itemSoundAddBtn.setOnClickListener {
                 mListener.addSoundToSoundscape(this.layoutPosition)
+
             }
         }
 
