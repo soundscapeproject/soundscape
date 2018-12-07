@@ -33,11 +33,11 @@ class SaveSoundscapeDialog: AppCompatDialogFragment() {
                 .setView(view)
                 .setTitle(title)
                 .setPositiveButton(getString(R.string.save),
-                    DialogInterface.OnClickListener { dialog, id ->
+                    DialogInterface.OnClickListener { _, _ ->
                         listener?.onSaveDialogPositiveClick(view.soundScapleName.text.toString())
                     })
                 .setNegativeButton(getString(R.string.cancel),
-                    DialogInterface.OnClickListener { dialog, id ->
+                    DialogInterface.OnClickListener { _, _ ->
                         listener?.onSaveDialogNegativeClick(this)
                     })
             builder.create()

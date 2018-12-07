@@ -2,7 +2,7 @@ package com.example.dinhh.soundscape.data.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Sound(
+data class RemoteSound(
     @SerializedName("Title")
     val title: String,
     @SerializedName("Original filename")
@@ -11,7 +11,7 @@ data class Sound(
     val description: String,
     @SerializedName("Category")
     val category: String,
-    @SerializedName("Sound Type")
+    @SerializedName("RemoteSound Type")
     val soundType: String,
     @SerializedName("Length (sec)")
     val length: String,

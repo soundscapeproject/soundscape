@@ -9,17 +9,17 @@
             android:visible="true"
             app:showAsAction="ifRoom">
         <menu>
-            <item android:id="@+id/item1"
+            <item android:id="@+id/menuNature"
                   android:title="Nature"
                   app:showAsAction="never"/>
-            <item android:id="@+id/item2"
+            <item android:id="@+id/menuHuman"
                   android:title="Human"
                   app:showAsAction="never"/>
-            <item android:id="@+id/item3"
+            <item android:id="@+id/menuMachine"
                   android:title="Machine"
                   app:showAsAction="never"/>
-            <item android:id="@+id/item4"
-                  android:title="Recorded Sounds"
+            <item android:id="@+id/menuRecord"
+                  android:title="Record"
                   app:showAsAction="never"/>
         </menu>
     </item>

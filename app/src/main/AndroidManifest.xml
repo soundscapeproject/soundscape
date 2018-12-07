@@ -41,9 +41,6 @@
             android:name=".presentation.screens.login.LoginActivity"
             android:theme="@style/LoginTheme">
         </activity>
-        <activity android:name=".presentation.screens.savedrecord.SavedRecord">
-        </activity>
-
         <meta-data
                 android:name="preloaded_fonts"
                 android:resource="@array/preloaded_fonts"/>

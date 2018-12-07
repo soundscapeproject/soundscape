@@ -14,6 +14,6 @@
 
     <item
             android:id="@+id/recordedPopupItem"
-            android:title="Recorded sounds"/>
+            android:title="Recorded remoteSounds"/>
 
 </menu>
