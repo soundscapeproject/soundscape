@@ -23,7 +23,6 @@ class SoundActivity : AppCompatActivity(),
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
-    private var isGoFromMixer: Boolean = false
     private var cameFromPopup: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +38,6 @@ class SoundActivity : AppCompatActivity(),
 
         val category = intent.getStringExtra("category")
         cameFromPopup = intent.getBooleanExtra("cameFromPopup", false)
-        isGoFromMixer = intent.getBooleanExtra("isGoFromMixer", false)
 
         soundViewModel.beginSearch(category!!)
 
@@ -148,7 +146,6 @@ class SoundActivity : AppCompatActivity(),
     // Sets up the list of the sounds
     private fun setupListView() {
         adapter = SoundAdapter(ArrayList(), this)
-        SoundAdapter.selectButtonIsVisible = isGoFromMixer
         soundList.layoutManager = LinearLayoutManager(this)
         soundList.adapter = adapter
     }

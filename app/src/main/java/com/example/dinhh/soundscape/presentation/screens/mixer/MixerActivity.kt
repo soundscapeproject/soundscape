@@ -229,7 +229,6 @@ class MixerActivity : AppCompatActivity(),
     private fun getSoundsFromSelectedCategory(category: String){
         val intent = Intent(this, SoundActivity::class.java)
         intent.putExtra("category", category)
-        intent.putExtra("isGoFromMixer", true)
         intent.putExtra("cameFromPopup", true)
         startActivity(intent)
     }
