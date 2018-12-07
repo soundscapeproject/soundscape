@@ -23,7 +23,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
     private lateinit var saveRecordDialog: SaveRecordDialog
 
-    private val thirtySecs: Long = 5010
+    private val thirtySecs: Long = 30001
 
     private val handler = Handler()
 
