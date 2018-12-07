@@ -39,7 +39,7 @@
     <string name="rc_numb">2</string>
     <string name="fragment_title">Name</string>
     <string name="search_txt">Names, categories or records</string>
-    <string name="category_name">category name</string>
+    <string name="sounds">Sounds</string>
     <string name="soundscape_name">Soundscape name</string>
     <string name="app_slogan">where remoteSounds become masterpiece</string>
 </resources>

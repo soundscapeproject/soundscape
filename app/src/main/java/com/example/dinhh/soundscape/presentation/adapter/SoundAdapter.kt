@@ -10,7 +10,7 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
-import com.example.dinhh.soundscape.data.entity.RemoteSound
+import com.example.dinhh.soundscape.presentation.screens.entity.DisplaySound
 import kotlinx.android.synthetic.main.item_sound.view.*
 
 interface SoundAdapterViewHolderClicks {
@@ -21,7 +21,7 @@ interface SoundAdapterViewHolderClicks {
 }
 
 class SoundAdapter(
-    private val remoteSounds: MutableList<List<RemoteSound>>,
+    private val displaySounds: MutableList<DisplaySound>,
     private val mListener: SoundAdapterViewHolderClicks
 ) : RecyclerView.Adapter<SoundAdapter.ViewHolder>() {
 
@@ -31,7 +31,7 @@ class SoundAdapter(
     }
 
     override fun getItemCount(): Int {
-        return remoteSounds.size
+        return displaySounds.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,20 +44,23 @@ class SoundAdapter(
         if (selectButtonIsVisible) {
             holder.itemView.selectSoundBtn.visible()
         }
-        val list = remoteSounds[position][0]
+        val sound = displaySounds[position]
         holder.itemView.itemSoundStopBtn.invisible()
-        holder.itemView.titleTextView.text = list.title
-        holder.itemView.lengthTextView.text = list.length + " sec"
+        holder.itemView.titleTextView.text = sound.title
+
+        if (!sound.length.isNullOrEmpty()) {
+            holder.itemView.lengthTextView.text = "${sound.length} sec"
+        }
     }
 
-    fun replaceData(remoteSounds: List<List<RemoteSound>>) {
-        this.remoteSounds.clear()
-        this.remoteSounds.addAll(remoteSounds)
+    fun replaceData(displaySounds: List<DisplaySound>) {
+        this.displaySounds.clear()
+        this.displaySounds.addAll(displaySounds)
         notifyDataSetChanged()
     }
 
-    fun getData(): List<List<RemoteSound>> {
-        return this.remoteSounds
+    fun getData(): List<DisplaySound> {
+        return this.displaySounds
     }
 
 

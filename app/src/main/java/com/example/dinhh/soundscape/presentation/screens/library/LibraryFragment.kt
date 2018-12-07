@@ -10,9 +10,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
+import com.example.dinhh.soundscape.presentation.adapter.LibararyAdapter
 import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
-import com.example.dinhh.soundscape.presentation.screens.savedrecord.SavedRecordFragment
+import com.example.dinhh.soundscape.presentation.screens.sounds.SoundActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LibraryFragment : Fragment() {
@@ -83,7 +84,7 @@ class LibraryFragment : Fragment() {
             override fun onItemClick(view: View, position: Int) {
                 when (position) {
                     1 -> {
-                        openFragment(SavedRecordFragment.newInstance())
+                        goToSoundActivity("Records")
                     }
                 }
             }
@@ -93,11 +94,11 @@ class LibraryFragment : Fragment() {
         rvLibrary.adapter = adapter
     }
 
-    private fun openFragment(fragment: Fragment) {
-        val fragManager = fragmentManager
-        val fragmentTransaction = fragManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.container, fragment)
-        fragmentTransaction?.addToBackStack(null)?.commit()
+    private fun goToSoundActivity(category: String) {
+        val intent = Intent(activity, SoundActivity::class.java)
+        intent.putExtra(SoundActivity.KEY_CAME_FROM_SAVED_SOUND, true)
+        intent.putExtra(SoundActivity.KEY_CATEGORY, category)
+        startActivity(intent)
     }
 
     private fun handleView(viewState: LibraryViewState) {

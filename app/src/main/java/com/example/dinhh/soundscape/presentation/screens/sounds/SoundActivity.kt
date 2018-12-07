@@ -13,17 +13,24 @@ import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.presentation.adapter.SoundAdapter
 import com.example.dinhh.soundscape.presentation.adapter.SoundAdapterViewHolderClicks
+import com.example.dinhh.soundscape.presentation.screens.entity.DisplaySound
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
 import kotlinx.android.synthetic.main.activity_sound.*
 import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SoundActivity : AppCompatActivity(),
-    SoundAdapterViewHolderClicks {
+class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
     private var cameFromPopup: Boolean = false
+    private var cameFromSavedSound: Boolean = false
+
+    companion object {
+        val KEY_CAME_FROM_SAVED_SOUND = "cameFromSavedSound"
+        val KEY_CAME_FROM_POP_UP = "cameFromPopup"
+        val KEY_CATEGORY = "category"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,13 +43,17 @@ class SoundActivity : AppCompatActivity(),
             it?.run(this@SoundActivity::handleView)
         })
 
-        val category = intent.getStringExtra("category")
-        cameFromPopup = intent.getBooleanExtra("cameFromPopup", false)
+        val category = intent.getStringExtra(KEY_CATEGORY)
+        cameFromPopup = intent.getBooleanExtra(KEY_CAME_FROM_POP_UP, false)
+        cameFromSavedSound = intent.getBooleanExtra(KEY_CAME_FROM_SAVED_SOUND, false)
 
-        soundViewModel.beginSearch(category!!)
+        if (cameFromSavedSound) {
+            soundViewModel.getRecords()
+        } else {
+            soundViewModel.beginSearch(category!!)
+        }
 
-        txt_Category_Name.text = category
-        toolbar_title.text = "Category"
+        toolbar_title.text = category
 
         setupListView()
     }
@@ -64,7 +75,7 @@ class SoundActivity : AppCompatActivity(),
     }
 
     override fun onPlayPauseToggle(layoutPosition: Int) {
-        val sound = adapter.getData()[layoutPosition][0]
+        val sound = adapter.getData()[layoutPosition]
 
         if (sound.isPlaying && soundViewModel.playingIndex == layoutPosition) {
             // RemoteSound is playing
@@ -80,7 +91,7 @@ class SoundActivity : AppCompatActivity(),
     }
 
     private fun playSound(layoutPosition: Int) {
-        val sound = adapter.getData()[layoutPosition][0]
+        val sound = adapter.getData()[layoutPosition]
         sound.isPlaying = true
         soundViewModel.playingIndex = layoutPosition
 
@@ -90,7 +101,7 @@ class SoundActivity : AppCompatActivity(),
     }
 
     private fun stopSound(layoutPosition: Int) {
-        val sound = adapter.getData()[layoutPosition][0]
+        val sound = adapter.getData()[layoutPosition]
         sound.isPlaying = false
         soundViewModel.playingIndex = -1
 
@@ -100,9 +111,9 @@ class SoundActivity : AppCompatActivity(),
     }
 
     override fun addSoundToSoundscape(layoutPosition: Int) {
-        val sound = adapter.getData()[layoutPosition][0]
+        val sound = adapter.getData()[layoutPosition]
         val soundscapeItem =
-            SoundscapeItem(sound.title, sound.length.toInt(), sound.category, sound.downloadLink)
+            SoundscapeItem(sound.title, sound.length ?: "" , sound.category, sound.downloadLink)
         soundViewModel.addSoundScape(soundscapeItem)
         goToMixer()
     }
@@ -112,15 +123,48 @@ class SoundActivity : AppCompatActivity(),
         viewHolder.setPlayingState(playing)
     }
 
+    private fun changeTitleBar(soundList: List<DisplaySound>) {
+
+        val numberOfSounds = soundList.count()
+
+        when(numberOfSounds) {
+            1 -> {
+                txt_Category_Name.text = "${numberOfSounds} Sound"
+            }
+
+            else -> {
+                txt_Category_Name.text = "${numberOfSounds} Sounds"
+            }
+        }
+    }
+
     private fun handleView(viewState: SoundViewState) = when (viewState) {
 
         // View state behaviors for loading the list of sounds
         SoundViewState.Loading -> {
             soundProgressBar.visible()
         }
-        is SoundViewState.Success -> {
+        is SoundViewState.GetRemoteSoundSuccess -> {
             soundProgressBar.gone()
-            adapter.replaceData(viewState.listRemoteSound)
+
+            val listRemoteSound = viewState.listRemoteSound
+            val displaySoundList = listRemoteSound.map { element ->
+                DisplaySound.remoteSoundToDisplaySound(element[0])
+            }
+
+            changeTitleBar(displaySoundList)
+            adapter.replaceData(displaySoundList)
+        }
+
+        is SoundViewState.GetRecordsSuccess -> {
+            soundProgressBar.gone()
+
+            val displaySoundList = viewState.localRecords.map {element ->
+                DisplaySound.localRecordToDisplaySound(element)
+            }
+
+            changeTitleBar(displaySoundList)
+            adapter.replaceData(displaySoundList)
         }
 
         is SoundViewState.Failure -> {

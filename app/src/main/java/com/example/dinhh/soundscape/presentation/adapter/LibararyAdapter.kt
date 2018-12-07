@@ -1,4 +1,4 @@
-package com.example.dinhh.soundscape.presentation.screens.library
+package com.example.dinhh.soundscape.presentation.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -14,7 +14,7 @@ class LibararyAdapter(val myLibraryTitle: List<String>): BaseRecyclerViewAdapter
 
     lateinit var context: Context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibararyAdapter.LibraryViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryViewHolder {
         this.context = parent.context
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_my_library, parent, false)
         return LibraryViewHolder(view)
@@ -25,10 +25,10 @@ class LibararyAdapter(val myLibraryTitle: List<String>): BaseRecyclerViewAdapter
         return myLibraryTitle.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        super.onBindViewHolder(holder, position)
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        super.onBindViewHolder(viewHolder, position)
 
-        val vh = holder as LibraryViewHolder
+        val vh = viewHolder as LibraryViewHolder
         val title = myLibraryTitle[position]
 
         vh.txtLibraryTitle.text = title

@@ -7,8 +7,9 @@ data class DisplaySound(
     val title: String,
     val category: String,
     val downloadLink: String,
+    val length: String?,
     val isUploaded: Boolean = false,
-    val isPlaying: Boolean = false,
+    var isPlaying: Boolean = false,
     val isFavorite: Boolean = false
 ) {
 
@@ -20,6 +21,7 @@ data class DisplaySound(
                 remoteSound.title,
                 remoteSound.category,
                 remoteSound.downloadLink,
+                remoteSound.length,
                 true
             )
         }
@@ -30,6 +32,7 @@ data class DisplaySound(
                 localRecord.title,
                 localRecord.category,
                 localRecord.url,
+                localRecord.length_sec.toString(),
                 false
             )
         }

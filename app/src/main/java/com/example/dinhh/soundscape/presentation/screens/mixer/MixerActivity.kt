@@ -90,17 +90,17 @@ class MixerActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         //SoundActivity.cameFromPopup = true
         when (item?.itemId){
-            R.id.item1 -> {
+            R.id.menuNature -> {
                 getSoundsFromSelectedCategory(item.title.toString())
             }
-            R.id.item2 -> {
+            R.id.menuHuman -> {
                 getSoundsFromSelectedCategory(item.title.toString())
             }
-            R.id.item3 -> {
+            R.id.menuMachine -> {
                 getSoundsFromSelectedCategory(item.title.toString())
             }
-            R.id.item4 -> {
-                getSoundsFromSelectedCategory(item.title.toString())
+            R.id.menuRecord -> {
+                getSoundsFromRecordCategory(item.title.toString())
             }
             android.R.id.home -> {
                 onBackPressed()
@@ -146,7 +146,6 @@ class MixerActivity : AppCompatActivity(),
 
             is MixerViewState.Failure -> {
 //                progressBar.gone()
-                throw(viewState.throwable)
                 Toast.makeText(this, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
 
@@ -228,8 +227,15 @@ class MixerActivity : AppCompatActivity(),
 
     private fun getSoundsFromSelectedCategory(category: String){
         val intent = Intent(this, SoundActivity::class.java)
-        intent.putExtra("category", category)
-        intent.putExtra("cameFromPopup", true)
+        intent.putExtra(SoundActivity.KEY_CATEGORY, category)
+        intent.putExtra(SoundActivity.KEY_CAME_FROM_POP_UP, true)
+        startActivity(intent)
+    }
+
+    private fun getSoundsFromRecordCategory(category: String) {
+        val intent = Intent(this, SoundActivity::class.java)
+        intent.putExtra(SoundActivity.KEY_CAME_FROM_SAVED_SOUND, true)
+        intent.putExtra(SoundActivity.KEY_CATEGORY, category)
         startActivity(intent)
     }
 

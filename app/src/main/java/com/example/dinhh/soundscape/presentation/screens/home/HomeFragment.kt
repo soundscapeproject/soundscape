@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
 
     private fun goToSoundsActivity(category: String) {
         val intent = Intent(activity, SoundActivity::class.java)
-        intent.putExtra("category", category)
+        intent.putExtra(SoundActivity.KEY_CATEGORY, category)
         startActivity(intent)
     }
 
