@@ -1,4 +1,4 @@
-package com.example.dinhh.soundscape.presentation.screens.mixer
+package com.example.dinhh.soundscape.presentation.adapter
 
 import android.os.Handler
 import android.support.constraint.ConstraintLayout
@@ -13,7 +13,6 @@ import android.widget.TextView
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.invisible
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.device.SoundscapeItem

@@ -3,7 +3,7 @@ package com.example.dinhh.soundscape.presentation.screens.sounds
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.example.dinhh.soundscape.data.entity.Sound
+import com.example.dinhh.soundscape.data.entity.RemoteSound
 import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.domain.library.BeginSearchUseCase
 import com.example.dinhh.soundscape.domain.library.PlaySoundUseCase
@@ -79,6 +79,6 @@ sealed class SoundViewState {
 
     object Loading: SoundViewState()
     object PlayFinish: SoundViewState()
-    data class Success(val listSound: List<List<Sound>>) : SoundViewState()
+    data class Success(val listRemoteSound: List<List<RemoteSound>>) : SoundViewState()
     data class Failure(val throwable: Throwable) : SoundViewState()
 }

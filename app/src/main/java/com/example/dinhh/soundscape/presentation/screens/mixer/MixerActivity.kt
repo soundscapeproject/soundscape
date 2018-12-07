@@ -15,6 +15,8 @@ import com.example.dinhh.soundscape.data.Model
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.data.entity.SoundScape
 import com.example.dinhh.soundscape.device.SoundscapeItem
+import com.example.dinhh.soundscape.presentation.adapter.MixerAdapter
+import com.example.dinhh.soundscape.presentation.adapter.MixerAdapterViewHolderClicks
 import com.example.dinhh.soundscape.presentation.dialog.SaveSoundscapeDialog
 import com.example.dinhh.soundscape.presentation.screens.record.RecordActivity
 import com.example.dinhh.soundscape.presentation.screens.sounds.*
@@ -22,7 +24,8 @@ import kotlinx.android.synthetic.main.fragment_mixer.*
 import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSoundscapeDialog.SaveDialogListener {
+class MixerActivity : AppCompatActivity(),
+    MixerAdapterViewHolderClicks, SaveSoundscapeDialog.SaveDialogListener {
 
     private lateinit var mixerAdapter: MixerAdapter
     private lateinit var saveSoundscapeDialog: SaveSoundscapeDialog
@@ -153,7 +156,7 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
                 mixerAdapter.replaceData(viewState.soundScapeItems)
             }
 
-            //Local Sound State
+            //Local RemoteSound State
             is MixerViewState.GetLocalSoundScapesSuccess -> {
             }
 

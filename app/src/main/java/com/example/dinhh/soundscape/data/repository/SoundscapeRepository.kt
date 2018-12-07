@@ -1,7 +1,7 @@
 package com.example.dinhh.soundscape.data.repository
 
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
-import com.example.dinhh.soundscape.data.entity.Sound
+import com.example.dinhh.soundscape.data.entity.RemoteSound
 import com.example.dinhh.soundscape.data.local.SoundscapeLocalData
 import com.example.dinhh.soundscape.data.pref.SharedPref
 import com.example.dinhh.soundscape.data.remote.SoundscapeRemoteData
@@ -9,7 +9,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface SoundscapeRepository {
-    fun beginSearch(selectedCategory: String): Single<List<List<Sound>>>
+    fun beginSearch(selectedCategory: String): Single<List<List<RemoteSound>>>
 
     fun saveLocalSoundScapes(localSoundscape: LocalSoundscape): Completable
 
@@ -32,7 +32,7 @@ class SoundscapeRepositoryImpl(
         return soundscapeLocalData.getAllLocalSoundscapes()
     }
 
-    override fun beginSearch(selectedCategory: String): Single<List<List<Sound>>> {
+    override fun beginSearch(selectedCategory: String): Single<List<List<RemoteSound>>> {
         return soundscapeRemoteData.fetchLibrary(key = sharedPref.getToken().blockingGet(),selectedCategory = selectedCategory)
     }
 }

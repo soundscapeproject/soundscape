@@ -50,7 +50,7 @@
 
         <activity android:name=".presentation.screens.mixer.MixerActivity">
         </activity>
-        <activity android:name=".presentation.screens.sounds.SoundActivity">
+        <activity android:name=".presentation.screens.remoteSounds.SoundActivity">
         </activity>
     </application>
 

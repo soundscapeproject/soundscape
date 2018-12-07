@@ -11,12 +11,15 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.device.SoundscapeItem
+import com.example.dinhh.soundscape.presentation.adapter.SoundAdapter
+import com.example.dinhh.soundscape.presentation.adapter.SoundAdapterViewHolderClicks
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
 import kotlinx.android.synthetic.main.activity_sound.*
 import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
+class SoundActivity : AppCompatActivity(),
+    SoundAdapterViewHolderClicks {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
@@ -66,7 +69,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         val sound = adapter.getData()[layoutPosition][0]
 
         if (sound.isPlaying && soundViewModel.playingIndex == layoutPosition) {
-            // Sound is playing
+            // RemoteSound is playing
             stopSound(layoutPosition)
         } else if (soundViewModel.playingIndex == -1) {
             // Nothing is playing
@@ -119,7 +122,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         }
         is SoundViewState.Success -> {
             soundProgressBar.gone()
-            adapter.replaceData(viewState.listSound)
+            adapter.replaceData(viewState.listRemoteSound)
         }
 
         is SoundViewState.Failure -> {

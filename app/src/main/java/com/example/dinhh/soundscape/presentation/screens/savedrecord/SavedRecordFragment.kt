@@ -97,7 +97,7 @@ class SavedRecordFragment : Fragment(), SavedRecordAdapterViewHolderClicks {
         val sound = adapter.getData()[layoutPosition]
 
         if (sound.isPlaying && savedRecordViewModel.playingIndex == layoutPosition) {
-            // Sound is playing
+            // RemoteSound is playing
             stopSound(layoutPosition)
         } else if (savedRecordViewModel.playingIndex == -1) {
             // Nothing is playing

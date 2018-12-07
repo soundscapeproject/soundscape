@@ -1,6 +1,5 @@
-package com.example.dinhh.soundscape.presentation.screens.sounds
+package com.example.dinhh.soundscape.presentation.adapter
 
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,7 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
-import com.example.dinhh.soundscape.data.entity.Sound
-import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
+import com.example.dinhh.soundscape.data.entity.RemoteSound
 import kotlinx.android.synthetic.main.item_sound.view.*
 
 interface SoundAdapterViewHolderClicks {
@@ -23,7 +21,7 @@ interface SoundAdapterViewHolderClicks {
 }
 
 class SoundAdapter(
-    private val sounds: MutableList<List<Sound>>,
+    private val remoteSounds: MutableList<List<RemoteSound>>,
     private val mListener: SoundAdapterViewHolderClicks
 ) : RecyclerView.Adapter<SoundAdapter.ViewHolder>() {
 
@@ -33,7 +31,7 @@ class SoundAdapter(
     }
 
     override fun getItemCount(): Int {
-        return sounds.size
+        return remoteSounds.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,20 +44,20 @@ class SoundAdapter(
         if (selectButtonIsVisible) {
             holder.itemView.selectSoundBtn.visible()
         }
-        val list = sounds[position][0]
+        val list = remoteSounds[position][0]
         holder.itemView.itemSoundStopBtn.invisible()
         holder.itemView.titleTextView.text = list.title
         holder.itemView.lengthTextView.text = list.length + " sec"
     }
 
-    fun replaceData(sounds: List<List<Sound>>) {
-        this.sounds.clear()
-        this.sounds.addAll(sounds)
+    fun replaceData(remoteSounds: List<List<RemoteSound>>) {
+        this.remoteSounds.clear()
+        this.remoteSounds.addAll(remoteSounds)
         notifyDataSetChanged()
     }
 
-    fun getData(): List<List<Sound>> {
-        return this.sounds
+    fun getData(): List<List<RemoteSound>> {
+        return this.remoteSounds
     }
 
 

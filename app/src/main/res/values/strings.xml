@@ -32,7 +32,7 @@
 
     <!-- Title Name -->
     <string name="record_screen_name">Recording</string>
-    <string name="sound_scape_recap">Your sounds recap:</string>
+    <string name="sound_scape_recap">Your remoteSounds recap:</string>
     <string name="sound_scape_numb_txt">- Soundscapes:</string>
     <string name="record_numb_txt">- Records:</string>
     <string name="ss_numb">3</string>
@@ -41,5 +41,5 @@
     <string name="search_txt">Names, categories or records</string>
     <string name="category_name">category name</string>
     <string name="soundscape_name">Soundscape name</string>
-    <string name="app_slogan">where sounds become masterpiece</string>
+    <string name="app_slogan">where remoteSounds become masterpiece</string>
 </resources>
