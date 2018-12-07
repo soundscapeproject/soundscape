@@ -85,7 +85,7 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        SoundActivity.cameFromPopup = true
+        //SoundActivity.cameFromPopup = true
         when (item?.itemId){
             R.id.item1 -> {
                 getSoundsFromSelectedCategory(item.title.toString())
@@ -188,12 +188,8 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
         toggleViewHolderIcon(layoutPosition, true)
     }
 
-    override fun onLoopSingleSound(layoutPosition: Int) {
-        mixerViewModel.loopSingleSound(layoutPosition)
-    }
-
-    override fun stopLoopSingleSound(layoutPosition: Int) {
-        mixerViewModel.stopLoopSingleSound(layoutPosition)
+    override fun onLoopSingleSound(layoutPosition: Int, isLooping: Boolean) {
+        mixerViewModel.loopSingleSound(layoutPosition, isLooping)
     }
 
 
@@ -231,6 +227,7 @@ class MixerActivity : AppCompatActivity(), MixerAdapterViewHolderClicks, SaveSou
         val intent = Intent(this, SoundActivity::class.java)
         intent.putExtra("category", category)
         intent.putExtra("isGoFromMixer", true)
+        intent.putExtra("cameFromPopup", true)
         startActivity(intent)
     }
 

@@ -18,13 +18,10 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
 
-    companion object {
-        var cameFromPopup = false
-    }
-
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
     private var isGoFromMixer: Boolean = false
+    private var cameFromPopup: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +35,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         })
 
         val category = intent.getStringExtra("category")
+        cameFromPopup = intent.getBooleanExtra("cameFromPopup", false)
         isGoFromMixer = intent.getBooleanExtra("isGoFromMixer", false)
 
         soundViewModel.beginSearch(category!!)

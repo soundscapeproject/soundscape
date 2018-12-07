@@ -13,9 +13,7 @@ interface Player {
 
     fun onPlayComplete(): Completable
 
-    fun loopSound()
-
-    fun stopLoop()
+    fun loopSound(looping: Boolean)
 }
 
 class PlayerImpl: Player {
@@ -45,12 +43,8 @@ class PlayerImpl: Player {
         }.andThen(onPlayComplete())
     }
 
-    override fun loopSound(){
-        isLooping = true
-    }
-
-    override fun stopLoop(){
-        isLooping = false
+    override fun loopSound(looping: Boolean){
+        isLooping = looping
     }
 
     override fun onPlayComplete(): Completable {

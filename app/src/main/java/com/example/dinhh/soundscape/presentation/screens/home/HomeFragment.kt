@@ -30,40 +30,32 @@ class HomeFragment : Fragment() {
     private fun setupButtons(){
 
         natureBtn.setOnClickListener {
-            SoundActivity.cameFromPopup = false
-            goToActivity("Sound", SoundCategory.NATURE.description)
+            goToSoundsActivity(SoundCategory.NATURE.description)
         }
         humanBtn.setOnClickListener {
-            SoundActivity.cameFromPopup = false
-            goToActivity("Sound", SoundCategory.HUMAN.description)
+            goToSoundsActivity(SoundCategory.HUMAN.description)
         }
         machineBtn.setOnClickListener {
-            SoundActivity.cameFromPopup = false
-            goToActivity("Sound", SoundCategory.MACHINE.description)
+            goToSoundsActivity(SoundCategory.MACHINE.description)
         }
         storyBtn.setOnClickListener {
-            SoundActivity.cameFromPopup = false
-            goToActivity("Sound", SoundCategory.STORY.description)
+            goToSoundsActivity(SoundCategory.STORY.description)
         }
 
         soundscapeCreatorButton.setOnClickListener {
-            goToActivity("Mixer", SoundCategory.STORY.description)
+            goToMixerActivity()
         }
 
     }
 
-    private fun goToActivity(act: String, category: String){
-        lateinit var intent: Intent
+    private fun goToSoundsActivity(category: String) {
+        val intent = Intent(activity, SoundActivity::class.java)
+        intent.putExtra("category", category)
+        startActivity(intent)
+    }
 
-        if(act == "Sound") {
-            intent = Intent(activity, SoundActivity::class.java)
-            intent.putExtra("category", category)
-        }
-
-        if(act == "Mixer"){
-            intent = Intent(activity, MixerActivity::class.java)
-        }
-
+    private fun goToMixerActivity(){
+        val intent = Intent(activity, MixerActivity::class.java)
         startActivity(intent)
     }
 

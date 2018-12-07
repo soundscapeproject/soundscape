@@ -3,7 +3,6 @@ package com.example.dinhh.soundscape.presentation.screens.sounds
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.domain.soundscape.*
@@ -18,8 +17,7 @@ class MixerViewModel(
     private val removeSingleSoundScapeUseCase: RemoveSingleSoundScapeUseCase,
     private val saveSoundScapesUseCase: SaveSoundScapesUseCase,
     private val getLocalSoundscapesUseCase: GetLocalSoundscapesUseCase,
-    private val loopSingleSoundUseCase: LoopSingleSoundUseCase,
-    private val stopLoopSingleSoundUseCase: StopLoopSingleSoundUseCase
+    private val setLoopingUseCase: SetLoopingUseCase
 
 ): ViewModel() {
     private val disposables = CompositeDisposable()
@@ -138,16 +136,10 @@ class MixerViewModel(
         )
     }
 
-    fun loopSingleSound(index: Int){
+    fun loopSingleSound(index: Int, isLooping: Boolean){
         _viewState.value =
                 MixerViewState.Loading
-            loopSingleSoundUseCase.execute(index)
-    }
-
-    fun stopLoopSingleSound(index: Int){
-        _viewState.value =
-                MixerViewState.Loading
-        stopLoopSingleSoundUseCase.execute(index)
+            setLoopingUseCase.execute(index, isLooping)
     }
 
     override fun onCleared() {

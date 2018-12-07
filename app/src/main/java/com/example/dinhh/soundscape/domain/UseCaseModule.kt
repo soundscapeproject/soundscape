@@ -81,11 +81,7 @@ val useCaseModule = module {
     }
 
     factory {
-        LoopSingleSoundUseCase(get())
-    }
-
-    factory {
-        StopLoopSingleSoundUseCase(get())
+        SetLoopingUseCase(get())
     }
 
     factory {

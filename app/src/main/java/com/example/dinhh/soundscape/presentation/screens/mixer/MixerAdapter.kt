@@ -27,9 +27,8 @@ interface MixerAdapterViewHolderClicks {
 
     fun onRemoveSingleSoundScape(layoutPosition: Int)
 
-    fun onLoopSingleSound(layoutPosition: Int)
+    fun onLoopSingleSound(layoutPosition: Int, isLooping: Boolean)
 
-    fun stopLoopSingleSound(layoutPosition: Int)
 }
 
 class MixerAdapter(
@@ -156,13 +155,13 @@ class MixerAdapter(
             toggleLoopOn.setOnClickListener {
                 toggleLoopOff.visible()
                 toggleLoopOn.invisible()
-                mListener.onLoopSingleSound(this.layoutPosition)
+                mListener.onLoopSingleSound(this.layoutPosition, true)
             }
 
             toggleLoopOff.setOnClickListener {
                 toggleLoopOn.visible()
                 toggleLoopOff.invisible()
-                mListener.stopLoopSingleSound(this.layoutPosition)
+                mListener.onLoopSingleSound(this.layoutPosition, false)
             }
         }
 
