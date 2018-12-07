@@ -54,7 +54,8 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
     }
 
     private fun handleView(viewState: RecordViewState) = when (viewState) {
-        is RecordViewState.Success -> {}
+        is RecordViewState.Success -> {
+        }
 
         is RecordViewState.Failure -> {
             Toast.makeText(this, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
@@ -103,6 +104,8 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
     private fun onStartBtnClicked() {
         setChronometerToThirtySecs()
+        btnPlay.invisible()
+        btnSave.invisible()
         btnStartRecording.invisible()
         btnStopRecording.visible()
         recordingTextView.visible()
@@ -122,16 +125,16 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
         btnStartRecording.visible()
         btnStopRecording.invisible()
         recordingTextView.invisible()
+        btnPlay.invisible()
+        btnSave.invisible()
         chronometer.stop()
-        recordViewModel.recordLength = (thirtySecs - ((chronometer.base - SystemClock.elapsedRealtime() ))) /1000
+        recordViewModel.recordLength = (thirtySecs - ((chronometer.base - SystemClock.elapsedRealtime()))) / 1000
         setChronometerToThirtySecs()
         if (!btnPlay.isVisible()) {
             btnPlay.visible()
             btnSave.visible()
         }
-            recordViewModel.stopRecording()
-
-
+        recordViewModel.stopRecording()
     }
 
     private fun showSaveDialog() {
@@ -142,7 +145,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
         saveRecordDialog.dismiss()
     }
 
-    private fun setChronometerToThirtySecs(){
+    private fun setChronometerToThirtySecs() {
         chronometer.base = SystemClock.elapsedRealtime() + thirtySecs
     }
 
