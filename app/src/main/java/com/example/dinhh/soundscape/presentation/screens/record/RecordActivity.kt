@@ -3,10 +3,8 @@ package com.example.dinhh.soundscape.presentation.screens.record
 import android.arch.lifecycle.Observer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.os.SystemClock
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
@@ -25,6 +23,10 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
     private lateinit var saveRecordDialog: SaveRecordDialog
 
+    private val thirtySecs: Long = 30001
+
+    private val handler = Handler()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
@@ -41,6 +43,8 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
     }
 
     private fun setupView() {
+        setChronometerToThirtySecs()
+        chronometer.isCountDown = true
         btnStopRecording.invisible()
         btnPlay.invisible()
         recordingTextView.invisible()
@@ -50,7 +54,8 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
     }
 
     private fun handleView(viewState: RecordViewState) = when (viewState) {
-        is RecordViewState.Success -> {}
+        is RecordViewState.Success -> {
+        }
 
         is RecordViewState.Failure -> {
             Toast.makeText(this, "Error: ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
@@ -98,20 +103,33 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
     }
 
     private fun onStartBtnClicked() {
+        setChronometerToThirtySecs()
+        btnPlay.invisible()
+        btnSave.invisible()
         btnStartRecording.invisible()
         btnStopRecording.visible()
         recordingTextView.visible()
-        chronometer.base = SystemClock.elapsedRealtime()
         chronometer.start()
         recordViewModel.startRecording()
+
+        handler.postDelayed(
+            {
+                onStopBtnclicked()
+            },
+            thirtySecs
+        )
     }
 
     private fun onStopBtnclicked() {
+        handler.removeCallbacksAndMessages(null)
         btnStartRecording.visible()
         btnStopRecording.invisible()
         recordingTextView.invisible()
+        btnPlay.invisible()
+        btnSave.invisible()
         chronometer.stop()
-        recordViewModel.recordLength = (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000
+        recordViewModel.recordLength = (thirtySecs - ((chronometer.base - SystemClock.elapsedRealtime()))) / 1000
+        setChronometerToThirtySecs()
         if (!btnPlay.isVisible()) {
             btnPlay.visible()
             btnSave.visible()
@@ -125,6 +143,10 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
     private fun dismissSaveDialog() {
         saveRecordDialog.dismiss()
+    }
+
+    private fun setChronometerToThirtySecs() {
+        chronometer.base = SystemClock.elapsedRealtime() + thirtySecs
     }
 
     override fun onSaveDialogPositiveClick(recordName: String, category: String) {
