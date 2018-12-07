@@ -23,7 +23,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
     private lateinit var saveRecordDialog: SaveRecordDialog
 
-    private val thirtySecs: Long = 30010
+    private val thirtySecs: Long = 5010
 
     private val handler = Handler()
 
@@ -82,7 +82,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
         }
 
         btnStopRecording.setOnClickListener {
-            onStopBtnclicked(true)
+            onStopBtnclicked()
         }
 
         btnSave.setOnClickListener {
@@ -111,14 +111,13 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
         handler.postDelayed(
             {
-                onStopBtnclicked(false)
-                recordViewModel.stopRecording()
+                onStopBtnclicked()
             },
             thirtySecs
         )
     }
 
-    private fun onStopBtnclicked(click: Boolean) {
+    private fun onStopBtnclicked() {
         handler.removeCallbacksAndMessages(null)
         btnStartRecording.visible()
         btnStopRecording.invisible()
@@ -130,9 +129,8 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
             btnPlay.visible()
             btnSave.visible()
         }
-        if(click) {
             recordViewModel.stopRecording()
-        }
+
 
     }
 
