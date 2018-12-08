@@ -156,7 +156,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
             null,
             recordName,
             category,
-            SoundType.SOUNDSCAPE.description,
+            SoundType.EFFECTS.description,
             recordViewModel.fileUrl!!,
             recordViewModel.recordLength!!,
             false,

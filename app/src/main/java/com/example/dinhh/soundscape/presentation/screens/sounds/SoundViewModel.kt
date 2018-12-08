@@ -11,6 +11,7 @@ import com.example.dinhh.soundscape.domain.library.PlaySoundUseCase
 import com.example.dinhh.soundscape.domain.library.StopSoundUseCase
 import com.example.dinhh.soundscape.domain.record.DeleteRecordUseCase
 import com.example.dinhh.soundscape.domain.record.GetRecordsUseCase
+import com.example.dinhh.soundscape.domain.record.UploadRecordUseCase
 import com.example.dinhh.soundscape.domain.soundscape.AddSoundScapeUseCase
 import io.reactivex.disposables.CompositeDisposable
 
@@ -20,7 +21,8 @@ class SoundViewModel(
     private val playSoundUseCase: PlaySoundUseCase,
     private val stopSoundUseCase: StopSoundUseCase,
     private val addSoundScapeUseCase: AddSoundScapeUseCase,
-    private val deleteRecordUseCase: DeleteRecordUseCase
+    private val deleteRecordUseCase: DeleteRecordUseCase,
+    private val uploadRecordUseCase: UploadRecordUseCase
 ): ViewModel() {
     private val disposables = CompositeDisposable()
     private val _viewState = MutableLiveData<SoundViewState>()
@@ -39,6 +41,18 @@ class SoundViewModel(
                 }, {
                     _viewState.value =
                             SoundViewState.Failure(it)
+                })
+        )
+    }
+
+    fun uploadSound(localRecord: LocalRecord) {
+        _viewState.value = SoundViewState.Loading
+        disposables.add(
+            uploadRecordUseCase.execute(localRecord)
+                .subscribe({
+                    _viewState.value = SoundViewState.Success("Uploaded")
+                }, {
+                    _viewState.value = SoundViewState.Failure(it)
                 })
         )
     }
@@ -74,7 +88,7 @@ class SoundViewModel(
             stopSoundUseCase.execute()
                 .subscribe({
                     _viewState.value =
-                            SoundViewState.Sucess
+                            SoundViewState.Success()
                 }, {
                     _viewState.value = SoundViewState.Failure(it)
                 })
@@ -108,9 +122,10 @@ class SoundViewModel(
 sealed class SoundViewState {
 
     object Loading: SoundViewState()
-    object Sucess: SoundViewState()
+    data class Success(val message: String = ""): SoundViewState()
+    data class Failure(val throwable: Throwable) : SoundViewState()
+
     object PlayFinish: SoundViewState()
     data class GetRemoteSoundSuccess(val listRemoteSound: List<List<RemoteSound>>) : SoundViewState()
     data class GetRecordsSuccess(val localRecords: List<LocalRecord>) : SoundViewState()
-    data class Failure(val throwable: Throwable) : SoundViewState()
 }

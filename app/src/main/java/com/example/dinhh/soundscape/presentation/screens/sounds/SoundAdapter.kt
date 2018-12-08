@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import com.example.dinhh.soundscape.R
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.item_sound.view.*
 interface SoundAdapterViewHolderClicks {
 
     fun onPlayPauseToggle(layoutPosition: Int)
+
+    fun uploadSound(layoutPosition: Int)
 }
 
 class SoundAdapter(
@@ -69,6 +72,7 @@ class SoundAdapter(
 
         val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.itemSoundPlayBtn)
         val itemSoundStopBtn: ImageButton = view.findViewById(R.id.itemSoundStopBtn)
+        val btnUpload: Button = view.findViewById(R.id.btnUpload)
         val titleTextView: TextView = view.findViewById(R.id.titleTextView)
         val lengthTextView: TextView = view.findViewById(R.id.lengthTextView)
 
@@ -79,6 +83,10 @@ class SoundAdapter(
 
             itemSoundStopBtn.setOnClickListener {
                 mListener.onPlayPauseToggle(this.layoutPosition)
+            }
+
+            btnUpload.setOnClickListener {
+                mListener.uploadSound(this.layoutPosition)
             }
         }
 

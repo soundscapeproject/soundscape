@@ -35,7 +35,7 @@ val dataModule = module {
     }
 
     factory<RecordRepository> {
-        RecordRepositoryImpl(get())
+        RecordRepositoryImpl(get(), get(), get())
 
     }
 

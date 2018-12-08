@@ -29,7 +29,7 @@ val presentationModule = module {
     }
 
     viewModel {
-        SoundViewModel(get(), get(), get(), get(), get(), get())
+        SoundViewModel(get(), get(), get(), get(), get(), get(), get())
     }
 
     viewModel {

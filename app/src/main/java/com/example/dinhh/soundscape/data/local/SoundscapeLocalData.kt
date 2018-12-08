@@ -9,6 +9,8 @@ interface SoundscapeLocalData {
 
     fun saveLocalRecord(localRecord: LocalRecord): Completable
 
+    fun updateLocalRecord(localRecord: LocalRecord): Completable
+
     fun getAllLocalRecords(): Single<List<LocalRecord>>
 
     fun deleteRecord(id: Long): Completable
@@ -22,10 +24,12 @@ class SoundscapeLocalDataImpl(
     private val soundscapeDao: SoundscapeDao,
     private val recordDao: RecordDao): SoundscapeLocalData {
 
+    override fun updateLocalRecord(localRecord: LocalRecord): Completable {
+        return recordDao.update(localRecord)
+    }
+
     override fun saveLocalSoundscapes(localSoundscape: LocalSoundscape): Completable {
-        return Completable.fromAction {
-            soundscapeDao.insert(localSoundscape)
-        }
+        return soundscapeDao.insert(localSoundscape)
     }
 
     override fun getAllLocalSoundscapes(): Single<List<LocalSoundscape>> {
@@ -33,9 +37,7 @@ class SoundscapeLocalDataImpl(
     }
 
     override fun saveLocalRecord(localRecord: LocalRecord): Completable {
-        return Completable.fromAction {
-            recordDao.insert(localRecord)
-        }
+        return recordDao.insert(localRecord)
     }
 
     override fun getAllLocalRecords(): Single<List<LocalRecord>> {
@@ -43,9 +45,7 @@ class SoundscapeLocalDataImpl(
     }
 
     override fun deleteRecord(id: Long): Completable {
-        return Completable.fromAction {
-            recordDao.delete(id)
-        }
+        return recordDao.delete(id)
     }
 
 

@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
+import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
 import com.example.dinhh.soundscape.presentation.helper.SwipeToDeleteCallback
@@ -115,6 +116,12 @@ class SoundActivity : AppCompatActivity(),
         }
     }
 
+    override fun uploadSound(layoutPosition: Int) {
+        val sound = adapter.getData()[layoutPosition]
+
+        soundViewModel.uploadSound(LocalRecord.displaySoundToLocalRecord(sound))
+    }
+
     private fun goToRecordActivity() {
         startActivity(Intent(this, RecordActivity::class.java))
     }
@@ -207,7 +214,13 @@ class SoundActivity : AppCompatActivity(),
             Toast.makeText(this, "Error: ${viewState.throwable.message}", Toast.LENGTH_SHORT).show()
         }
 
-        SoundViewState.Sucess -> {
+        is SoundViewState.Success -> {
+
+            val message = viewState.message
+
+            if (!message.isNullOrEmpty()) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
             soundProgressBar.gone()
         }
 

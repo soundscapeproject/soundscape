@@ -54,6 +54,10 @@ val useCaseModule = module {
         DeleteRecordUseCase(get(), get())
     }
 
+    factory {
+        UploadRecordUseCase(get(), get())
+    }
+
     //Library
 
     factory {
