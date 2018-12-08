@@ -50,7 +50,7 @@ class SoundViewModel(
         disposables.add(
             uploadRecordUseCase.execute(localRecord)
                 .subscribe({
-                    _viewState.value = SoundViewState.Success("Uploaded")
+                    _viewState.value = SoundViewState.UploadSuccess
                 }, {
                     _viewState.value = SoundViewState.Failure(it)
                 })
@@ -88,7 +88,7 @@ class SoundViewModel(
             stopSoundUseCase.execute()
                 .subscribe({
                     _viewState.value =
-                            SoundViewState.Success()
+                            SoundViewState.Success
                 }, {
                     _viewState.value = SoundViewState.Failure(it)
                 })
@@ -122,10 +122,12 @@ class SoundViewModel(
 sealed class SoundViewState {
 
     object Loading: SoundViewState()
-    data class Success(val message: String = ""): SoundViewState()
+    object Success: SoundViewState()
     data class Failure(val throwable: Throwable) : SoundViewState()
 
     object PlayFinish: SoundViewState()
     data class GetRemoteSoundSuccess(val listRemoteSound: List<List<RemoteSound>>) : SoundViewState()
     data class GetRecordsSuccess(val localRecords: List<LocalRecord>) : SoundViewState()
+
+    object UploadSuccess: SoundViewState()
 }

@@ -12,11 +12,11 @@ import io.reactivex.Single
 interface SoundscapeDao {
 
     @Insert
-    fun insert(localSoundscape: LocalSoundscape): Completable
+    fun insert(localSoundscape: LocalSoundscape)
 
     @Query("SELECT * from ${DatabaseConfig.SOUNDSCAPE_TABLE_NAME}")
     fun getAll() : Single<List<LocalSoundscape>>
 
     @Delete
-    fun delete(localSoundscape: LocalSoundscape): Completable
+    fun delete(localSoundscape: LocalSoundscape)
 }

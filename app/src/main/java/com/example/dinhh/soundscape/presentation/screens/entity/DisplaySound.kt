@@ -39,7 +39,7 @@ data class DisplaySound(
                 localRecord.url,
                 localRecord.length_sec.toString(),
                 localRecord.createdAt,
-                false
+                localRecord.isUploaded
             )
         }
     }

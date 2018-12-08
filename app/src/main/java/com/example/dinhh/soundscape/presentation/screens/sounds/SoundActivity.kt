@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.device.SoundscapeItem
@@ -215,13 +216,12 @@ class SoundActivity : AppCompatActivity(),
         }
 
         is SoundViewState.Success -> {
-
-            val message = viewState.message
-
-            if (!message.isNullOrEmpty()) {
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-            }
             soundProgressBar.gone()
+        }
+
+        SoundViewState.UploadSuccess -> {
+            soundViewModel.getRecords()
+            Toast.makeText(this, "Uploaded", Toast.LENGTH_SHORT).show()
         }
 
         // View state behaviors for playing the selected sound

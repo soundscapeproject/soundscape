@@ -9,14 +9,14 @@ import io.reactivex.Single
 interface RecordDao {
 
     @Insert
-    fun insert(localRecord: LocalRecord): Completable
+    fun insert(localRecord: LocalRecord)
 
     @Update
-    fun update(localRecord: LocalRecord): Completable
+    fun update(localRecord: LocalRecord)
 
     @Query("SELECT * from ${DatabaseConfig.RECORD_TABLE_NAME} order by createdAt Desc")
     fun getAll() : Single<List<LocalRecord>>
 
     @Query("DELETE from ${DatabaseConfig.RECORD_TABLE_NAME} WHERE sound_id = :id")
-    fun delete(id: Long): Completable
+    fun delete(id: Long)
 }

@@ -12,7 +12,7 @@ data class LocalRecord(
     @ColumnInfo(name = "sound_id")
     val soundId: Long?,
     @ColumnInfo(name = "title")
-    val title: String,
+    var title: String,
     @ColumnInfo(name = "category")
     val category: String,
     @ColumnInfo(name = "type")

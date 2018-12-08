@@ -1,5 +1,6 @@
 package com.example.dinhh.soundscape.data.repository
 
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.data.local.SoundscapeLocalData
 import com.example.dinhh.soundscape.data.pref.SharedPref
@@ -43,6 +44,7 @@ class RecordRepositoryImpl(
     }
 
     override fun uploadLocalRecord(localRecord: LocalRecord): Completable {
-        return soundscapeRemoteData.uploadRecord(sharedPref.getToken().blockingGet(), localRecord)
+        return Completable.complete()
+//        return soundscapeRemoteData.uploadRecord(sharedPref.getToken().blockingGet(), localRecord)
     }
 }

@@ -50,6 +50,10 @@ class SoundAdapter(
         if (!sound.length.isNullOrEmpty()) {
             vh.itemView.lengthTextView.text = "${sound.length} sec"
         }
+
+        if (sound.isUploaded) {
+            vh.itemView.btnUpload.gone()
+        }
     }
 
     fun removeAt(position: Int) {
@@ -72,7 +76,7 @@ class SoundAdapter(
 
         val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.itemSoundPlayBtn)
         val itemSoundStopBtn: ImageButton = view.findViewById(R.id.itemSoundStopBtn)
-        val btnUpload: Button = view.findViewById(R.id.btnUpload)
+        val btnUpload: ImageButton = view.findViewById(R.id.btnUpload)
         val titleTextView: TextView = view.findViewById(R.id.titleTextView)
         val lengthTextView: TextView = view.findViewById(R.id.lengthTextView)
 

@@ -14,7 +14,7 @@ class UploadRecordUseCase(
         localRecord.isUploaded = true
 
         return recordRepository.uploadLocalRecord(localRecord)
-            .andThen(recordRepository.uploadLocalRecord(localRecord))
+            .andThen(recordRepository.updateRecord(localRecord))
             .subscribeOn(schedulerProvider.getIOScheduler())
             .observeOn(schedulerProvider.getUIScheduler())
     }
