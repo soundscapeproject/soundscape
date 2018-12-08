@@ -13,7 +13,7 @@ interface RecordDao {
     @Insert
     fun insert(localRecord: LocalRecord)
 
-    @Query("SELECT * from ${DatabaseConfig.RECORD_TABLE_NAME}")
+    @Query("SELECT * from ${DatabaseConfig.RECORD_TABLE_NAME} order by createdAt Desc")
     fun getAll() : Single<List<LocalRecord>>
 
     @Delete

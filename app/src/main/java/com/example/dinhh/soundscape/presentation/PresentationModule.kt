@@ -33,7 +33,7 @@ val presentationModule = module {
     }
 
     viewModel {
-        MixerViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get())
+        MixerViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
     }
 
     viewModel {

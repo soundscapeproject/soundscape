@@ -7,7 +7,7 @@ import java.io.IOException
 
 interface Player {
 
-    fun playSound(selectedSound: String): Completable
+    fun playSound(soundUrl: String): Completable
 
     fun stopSound(): Completable
 
@@ -16,7 +16,7 @@ interface Player {
     fun loopSound(looping: Boolean)
 }
 
-class PlayerImpl: Player {
+class PlayerImpl : Player {
 
     private var mediaPlayer: MediaPlayer
 
@@ -43,17 +43,17 @@ class PlayerImpl: Player {
         }.andThen(onPlayComplete())
     }
 
-    override fun loopSound(looping: Boolean){
+    override fun loopSound(looping: Boolean) {
         isLooping = looping
     }
 
     override fun onPlayComplete(): Completable {
 
-        return Completable.create {complete ->
+        return Completable.create { complete ->
             mediaPlayer.setOnCompletionListener {
                 if (!isLooping) {
                     complete.onComplete()
-                }else{
+                } else {
                     mediaPlayer.seekTo(0)
                     mediaPlayer.start()
                 }
@@ -63,15 +63,13 @@ class PlayerImpl: Player {
 
     override fun stopSound(): Completable {
         return Completable.create {
-            if (mediaPlayer != null) {
-                try {
-                    if(mediaPlayer.isPlaying) {
-                        mediaPlayer.pause()
-                    }
-                    it.onComplete()
-                } catch (e: IOException) {
-                    it.onError(e)
+            try {
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.pause()
                 }
+                it.onComplete()
+            } catch (e: IOException) {
+                it.onError(e)
             }
         }
     }

@@ -21,7 +21,9 @@ data class LocalRecord(
     @ColumnInfo(name = "length_sec")
     val length_sec: Long,
     @ColumnInfo(name = "uploaded")
-    val isUploaded: Boolean,
+    val isUploaded: Boolean = false,
     @ColumnInfo(name = "favorited")
-    val isFavorited: Boolean
+    val isFavorited: Boolean = false,
+    @ColumnInfo(name = "createdAt")
+    val createdAt: Long = System.currentTimeMillis()
 )
