@@ -5,10 +5,16 @@ import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.data.repository.RecordRepository
 import io.reactivex.Completable
 
-class DeleteRecordUseCase(private val recordRepository: RecordRepository, private val schedulerProvider: SchedulerProvider) {
+class UploadRecordUseCase(
+    private val recordRepository: RecordRepository,
+    private val schedulerProvider: SchedulerProvider) {
 
-    fun execute(id: Long): Completable {
-        return recordRepository.deleteLocalRecord(id)
+    fun execute(localRecord: LocalRecord): Completable {
+
+        localRecord.isUploaded = true
+
+        return recordRepository.uploadLocalRecord(localRecord)
+            .andThen(recordRepository.updateRecord(localRecord))
             .subscribeOn(schedulerProvider.getIOScheduler())
             .observeOn(schedulerProvider.getUIScheduler())
     }
