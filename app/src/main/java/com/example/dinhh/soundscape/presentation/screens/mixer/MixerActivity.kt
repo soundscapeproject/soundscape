@@ -16,8 +16,6 @@ import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.data.entity.SoundScape
 import com.example.dinhh.soundscape.device.SoundscapeItem
-import com.example.dinhh.soundscape.presentation.adapter.MixerAdapter
-import com.example.dinhh.soundscape.presentation.adapter.MixerAdapterViewHolderClicks
 import com.example.dinhh.soundscape.presentation.dialog.SaveSoundscapeDialog
 import com.example.dinhh.soundscape.presentation.screens.sounds.MixerViewModel
 import com.example.dinhh.soundscape.presentation.screens.sounds.MixerViewState

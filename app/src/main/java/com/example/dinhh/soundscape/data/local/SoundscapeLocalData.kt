@@ -11,7 +11,7 @@ interface SoundscapeLocalData {
 
     fun getAllLocalRecords(): Single<List<LocalRecord>>
 
-    fun deleteRecord(localRecord: LocalRecord): Completable
+    fun deleteRecord(id: Long): Completable
 
     fun saveLocalSoundscapes(localSoundscape: LocalSoundscape): Completable
 
@@ -42,9 +42,9 @@ class SoundscapeLocalDataImpl(
         return recordDao.getAll()
     }
 
-    override fun deleteRecord(localRecord: LocalRecord): Completable {
+    override fun deleteRecord(id: Long): Completable {
         return Completable.fromAction {
-            recordDao.delete(localRecord)
+            recordDao.delete(id)
         }
     }
 

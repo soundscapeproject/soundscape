@@ -4,6 +4,7 @@ import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.data.entity.RemoteSound
 
 data class DisplaySound(
+    val id: Long,
     val title: String,
     val category: String,
     val downloadLink: String,
@@ -18,6 +19,7 @@ data class DisplaySound(
         fun remoteSoundToDisplaySound(remoteSound: RemoteSound): DisplaySound {
 
             return DisplaySound(
+                0,
                 remoteSound.title,
                 remoteSound.category,
                 remoteSound.downloadLink,
@@ -29,6 +31,7 @@ data class DisplaySound(
         fun localRecordToDisplaySound(localRecord: LocalRecord): DisplaySound {
 
             return DisplaySound(
+                localRecord.soundId!!,
                 localRecord.title,
                 localRecord.category,
                 localRecord.url,

@@ -50,6 +50,9 @@ val useCaseModule = module {
         DeleteTempRecordUseCase(get(), get())
     }
 
+    factory {
+        DeleteRecordUseCase(get(), get())
+    }
 
     //Library
 

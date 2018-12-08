@@ -1,4 +1,4 @@
-package com.example.dinhh.soundscape.presentation.adapter
+package com.example.dinhh.soundscape.presentation.screens.library
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView

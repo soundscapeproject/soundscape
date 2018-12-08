@@ -7,8 +7,8 @@ import io.reactivex.Completable
 
 class DeleteRecordUseCase(private val recordRepository: RecordRepository, private val schedulerProvider: SchedulerProvider) {
 
-    fun execute(localRecord: LocalRecord): Completable {
-        return recordRepository.deleteLocalRecord(localRecord)
+    fun execute(id: Long): Completable {
+        return recordRepository.deleteLocalRecord(id)
             .subscribeOn(schedulerProvider.getIOScheduler())
             .observeOn(schedulerProvider.getUIScheduler())
     }

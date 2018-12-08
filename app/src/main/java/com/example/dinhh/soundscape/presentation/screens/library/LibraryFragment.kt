@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.presentation.adapter.LibararyAdapter
 import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundActivity

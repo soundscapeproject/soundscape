@@ -16,6 +16,6 @@ interface RecordDao {
     @Query("SELECT * from ${DatabaseConfig.RECORD_TABLE_NAME} order by createdAt Desc")
     fun getAll() : Single<List<LocalRecord>>
 
-    @Delete
-    fun delete(localRecord: LocalRecord)
+    @Query("DELETE from ${DatabaseConfig.RECORD_TABLE_NAME} WHERE sound_id = :id")
+    fun delete(id: Long)
 }

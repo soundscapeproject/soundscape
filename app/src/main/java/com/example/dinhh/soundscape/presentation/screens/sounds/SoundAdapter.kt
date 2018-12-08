@@ -1,4 +1,4 @@
-package com.example.dinhh.soundscape.presentation.adapter
+package com.example.dinhh.soundscape.presentation.screens.sounds
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -53,6 +53,11 @@ class SoundAdapter(
         }
     }
 
+    fun removeAt(position: Int) {
+        displaySounds.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     fun replaceData(displaySounds: List<DisplaySound>) {
         this.displaySounds.clear()
         this.displaySounds.addAll(displaySounds)
@@ -62,7 +67,6 @@ class SoundAdapter(
     fun getData(): List<DisplaySound> {
         return this.displaySounds
     }
-
 
     class ViewHolder(view: View, mListener: SoundAdapterViewHolderClicks) :
         RecyclerView.ViewHolder(view) {

@@ -5,15 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.device.SoundscapeItem
-import com.example.dinhh.soundscape.presentation.adapter.SoundAdapter
-import com.example.dinhh.soundscape.presentation.adapter.SoundAdapterViewHolderClicks
+import com.example.dinhh.soundscape.presentation.helper.SwipeToDeleteCallback
 import com.example.dinhh.soundscape.presentation.screens.entity.DisplaySound
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
 import com.example.dinhh.soundscape.presentation.screens.record.RecordActivity
@@ -21,7 +23,8 @@ import kotlinx.android.synthetic.main.activity_sound.*
 import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
+class SoundActivity : AppCompatActivity(),
+    SoundAdapterViewHolderClicks {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
@@ -135,6 +138,12 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         toggleViewHolderIcon(layoutPosition, false)
     }
 
+    private fun remoteSound(layoutPosition: Int) {
+        val sound = adapter.getData()[layoutPosition]
+        soundViewModel.deleteRecord(sound.id)
+        adapter.removeAt(layoutPosition)
+    }
+
     override fun addSoundToSoundscape(layoutPosition: Int) {
         val sound = adapter.getData()[layoutPosition]
         val soundscapeItem =
@@ -197,6 +206,10 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
             Toast.makeText(this, "Error: ${viewState.throwable.message}", Toast.LENGTH_SHORT).show()
         }
 
+        SoundViewState.Sucess -> {
+            soundProgressBar.gone()
+        }
+
         // View state behaviors for playing the selected sound
         SoundViewState.PlayFinish -> {
             toggleViewHolderIcon(soundViewModel.playingIndex, false)
@@ -217,5 +230,17 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         adapter = SoundAdapter(ArrayList(), this)
         soundList.layoutManager = LinearLayoutManager(this)
         soundList.adapter = adapter
+
+        if (cameFromSavedSound) {
+            val swipeHandler = object : SwipeToDeleteCallback(this) {
+
+                override fun onSwiped(p0: RecyclerView.ViewHolder, p1: Int) {
+                    val position = p0.layoutPosition
+                    remoteSound(position)
+                }
+            }
+            val itemTouchHelper = ItemTouchHelper(swipeHandler)
+            itemTouchHelper.attachToRecyclerView(soundList)
+        }
     }
 }

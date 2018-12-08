@@ -1,4 +1,4 @@
-package com.example.dinhh.soundscape.presentation.adapter
+package com.example.dinhh.soundscape.presentation.screens.mixer
 
 import android.os.Handler
 import android.support.constraint.ConstraintLayout
