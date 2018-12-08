@@ -75,7 +75,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
-                android:src="@android:drawable/ic_menu_delete"
+                android:src="@drawable/ic_delete_ic"
                 android:background="@drawable/mix_btn_bg"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

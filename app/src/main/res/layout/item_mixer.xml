@@ -10,7 +10,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginStart="16dp"
-android:layout_marginEnd="16dp">
+        android:layout_marginEnd="16dp">
     <android.support.constraint.ConstraintLayout
             android:id="@+id/layout_btn_play_mixer"
             android:layout_width="40dp"
@@ -82,56 +82,62 @@ android:layout_marginEnd="16dp">
             app:layout_constraintEnd_toStartOf="@+id/removeSoundBtn"/>
 
     <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:id="@+id/removeSoundBtn"
-            android:src="@android:drawable/ic_menu_delete"
+            android:src="@drawable/ic_delete_ic"
             android:layout_gravity="center"
             android:background="@null"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-    <Button
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_btn_loop"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:id="@+id/loopBtnToggleOn"
-            android:layout_weight="1"
-            android:background="@android:drawable/ic_menu_rotate"
-            android:backgroundTint="@color/slightlyTransparent"
+            app:layout_constraintStart_toEndOf="@id/layout_btn_play_mixer"
+            app:layout_constraintTop_toBottomOf="@+id/guideline"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"/>
+            android:layout_marginStart="16dp">
 
-    <Button
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:id="@+id/loopBtnToggleOff"
-            android:layout_weight="1"
-            android:background="@android:drawable/ic_menu_rotate"
-            android:backgroundTint="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            android:visibility="gone"/>
+        <Button
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:id="@+id/loopBtnToggleOn"
+                android:layout_weight="1"
+                android:background="@drawable/ic_loop_ic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-    <android.support.constraint.Guideline
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/guideline2" app:layout_constraintGuide_end="221dp"/>
+        <Button
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:id="@+id/loopBtnToggleOff"
+                android:layout_weight="1"
+                android:background="@drawable/ic_loop_ic"
+                android:backgroundTint="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"/>
+    </android.support.constraint.ConstraintLayout>
+
+
 
 
     <android.support.v7.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_lock_silent_mode_off"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_volume_ic"
             app:layout_constraintTop_toTopOf="@+id/guideline"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/guideline2"
-            android:id="@+id/appCompatImageView"/>
+            app:layout_constraintStart_toEndOf="@+id/layout_btn_loop"
+            android:id="@+id/appCompatImageView"
+            android:layout_marginStart="16dp"/>
 
     <android.support.v7.widget.AppCompatSeekBar
             android:layout_width="0dp"
@@ -141,11 +147,8 @@ android:layout_marginEnd="16dp">
             app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
             app:layout_constraintTop_toTopOf="@+id/guideline"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    <android.support.constraint.Guideline
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/guideline4" app:layout_constraintGuide_end="287dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"/>
 
 
 </android.support.constraint.ConstraintLayout>
