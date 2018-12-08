@@ -44,7 +44,6 @@ class RecordRepositoryImpl(
     }
 
     override fun uploadLocalRecord(localRecord: LocalRecord): Completable {
-        return Completable.complete()
-//        return soundscapeRemoteData.uploadRecord(sharedPref.getToken().blockingGet(), localRecord)
+        return soundscapeRemoteData.uploadRecord(sharedPref.getToken().blockingGet(), localRecord)
     }
 }
