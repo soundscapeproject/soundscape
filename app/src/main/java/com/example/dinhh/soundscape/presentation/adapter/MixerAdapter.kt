@@ -52,7 +52,7 @@ class MixerAdapter(
 
     private fun setupMixerItem(holder: ViewHolder, position: Int){
         //Set the default values for each sound item
-        val maxVolume = 100.0
+//        val maxVolume = 100.0
         val mixerItem = holder.itemView
         val currentSound = items[position]
 

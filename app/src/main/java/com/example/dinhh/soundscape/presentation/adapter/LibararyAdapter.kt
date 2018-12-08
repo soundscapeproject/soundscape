@@ -25,11 +25,11 @@ class LibararyAdapter(val myLibraryTitle: List<String>): BaseRecyclerViewAdapter
         return myLibraryTitle.size
     }
 
-    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        super.onBindViewHolder(viewHolder, position)
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
+        super.onBindViewHolder(viewHolder, i)
 
         val vh = viewHolder as LibraryViewHolder
-        val title = myLibraryTitle[position]
+        val title = myLibraryTitle[i]
 
         vh.txtLibraryTitle.text = title
     }
