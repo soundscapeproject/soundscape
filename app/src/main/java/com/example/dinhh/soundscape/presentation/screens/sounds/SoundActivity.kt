@@ -9,12 +9,13 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.device.SoundscapeItem
+import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
 import com.example.dinhh.soundscape.presentation.helper.SwipeToDeleteCallback
 import com.example.dinhh.soundscape.presentation.screens.entity.DisplaySound
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
@@ -144,7 +145,7 @@ class SoundActivity : AppCompatActivity(),
         adapter.removeAt(layoutPosition)
     }
 
-    override fun addSoundToSoundscape(layoutPosition: Int) {
+    private fun addSoundToSoundscape(layoutPosition: Int) {
         val sound = adapter.getData()[layoutPosition]
         val soundscapeItem =
             SoundscapeItem(sound.title, sound.length ?: "" , sound.category, sound.downloadLink)
@@ -228,6 +229,13 @@ class SoundActivity : AppCompatActivity(),
     // Sets up the list of the sounds
     private fun setupListView() {
         adapter = SoundAdapter(ArrayList(), this)
+
+        adapter.setOnItemClickListener(object : RecyclerViewListener.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                addSoundToSoundscape(position)
+            }
+        })
+
         soundList.layoutManager = LinearLayoutManager(this)
         soundList.adapter = adapter
 
