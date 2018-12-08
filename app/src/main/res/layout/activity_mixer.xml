@@ -75,11 +75,11 @@
             app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
-                android:src="@drawable/ic_mic_ic"
+                android:src="@android:drawable/ic_menu_delete"
                 android:background="@drawable/mix_btn_bg"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/micBtn"
+                android:id="@+id/clearBtn"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/playAllBtn"
                 app:layout_constraintStart_toStartOf="parent"

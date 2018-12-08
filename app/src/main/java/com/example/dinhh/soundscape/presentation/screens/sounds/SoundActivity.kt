@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
@@ -15,6 +16,7 @@ import com.example.dinhh.soundscape.presentation.adapter.SoundAdapter
 import com.example.dinhh.soundscape.presentation.adapter.SoundAdapterViewHolderClicks
 import com.example.dinhh.soundscape.presentation.screens.entity.DisplaySound
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
+import com.example.dinhh.soundscape.presentation.screens.record.RecordActivity
 import kotlinx.android.synthetic.main.activity_sound.*
 import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -23,12 +25,12 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
 
     private val soundViewModel: SoundViewModel by viewModel()
     private lateinit var adapter: SoundAdapter
-    private var cameFromPopup: Boolean = false
+    private var cameFromMixer: Boolean = false
     private var cameFromSavedSound: Boolean = false
 
     companion object {
         val KEY_CAME_FROM_SAVED_SOUND = "cameFromSavedSound"
-        val KEY_CAME_FROM_POP_UP = "cameFromPopup"
+        val KEY_CAME_FROM_MIXER = "cameFromMixer"
         val KEY_CATEGORY = "category"
     }
 
@@ -44,7 +46,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         })
 
         val category = intent.getStringExtra(KEY_CATEGORY)
-        cameFromPopup = intent.getBooleanExtra(KEY_CAME_FROM_POP_UP, false)
+        cameFromMixer = intent.getBooleanExtra(KEY_CAME_FROM_MIXER, false)
         cameFromSavedSound = intent.getBooleanExtra(KEY_CAME_FROM_SAVED_SOUND, false)
 
         if (cameFromSavedSound) {
@@ -58,8 +60,19 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
         setupListView()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        if (cameFromSavedSound) {
+            menuInflater.inflate(R.menu.menu_record, menu)
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
+            R.id.menuRecord -> {
+                goToRecordActivity()
+            }
             android.R.id.home -> {
                 onBackPressed()
                 return true
@@ -70,8 +83,16 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
 
     override fun onPause() {
         super.onPause()
-        cameFromPopup = false
+        cameFromMixer = false
         soundViewModel.stopSound()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (cameFromSavedSound) {
+            soundViewModel.getRecords()
+        }
     }
 
     override fun onPlayPauseToggle(layoutPosition: Int) {
@@ -88,6 +109,10 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
             stopSound(soundViewModel.playingIndex)
             playSound(layoutPosition)
         }
+    }
+
+    private fun goToRecordActivity() {
+        startActivity(Intent(this, RecordActivity::class.java))
     }
 
     private fun playSound(layoutPosition: Int) {
@@ -182,7 +207,7 @@ class SoundActivity : AppCompatActivity(), SoundAdapterViewHolderClicks {
     private fun goToMixer() {
         finish()
         val intent = Intent(this, MixerActivity::class.java)
-        if(!cameFromPopup) {
+        if(!cameFromMixer) {
             startActivity(intent)
         }
     }

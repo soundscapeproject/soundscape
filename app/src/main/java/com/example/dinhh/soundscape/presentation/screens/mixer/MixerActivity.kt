@@ -13,14 +13,16 @@ import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.Model
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
+import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.data.entity.SoundScape
 import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.presentation.adapter.MixerAdapter
 import com.example.dinhh.soundscape.presentation.adapter.MixerAdapterViewHolderClicks
 import com.example.dinhh.soundscape.presentation.dialog.SaveSoundscapeDialog
-import com.example.dinhh.soundscape.presentation.screens.record.RecordActivity
-import com.example.dinhh.soundscape.presentation.screens.sounds.*
-import kotlinx.android.synthetic.main.fragment_mixer.*
+import com.example.dinhh.soundscape.presentation.screens.sounds.MixerViewModel
+import com.example.dinhh.soundscape.presentation.screens.sounds.MixerViewState
+import com.example.dinhh.soundscape.presentation.screens.sounds.SoundActivity
+import kotlinx.android.synthetic.main.activity_mixer.*
 import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -73,8 +75,9 @@ class MixerActivity : AppCompatActivity(),
             showSaveDialog()
         }
 
-        micBtn.setOnClickListener {
-            startActivity(Intent(this, RecordActivity::class.java))
+        clearBtn.setOnClickListener {
+            mixerViewModel.clearSoundScapes()
+            mixerViewModel.getSoundScapes()
         }
 
         btnGetLocal.setOnClickListener {
@@ -91,16 +94,19 @@ class MixerActivity : AppCompatActivity(),
         //SoundActivity.cameFromPopup = true
         when (item?.itemId){
             R.id.menuNature -> {
-                getSoundsFromSelectedCategory(item.title.toString())
+                getSoundsFromSelectedCategory(SoundCategory.NATURE.description)
             }
             R.id.menuHuman -> {
-                getSoundsFromSelectedCategory(item.title.toString())
+                getSoundsFromSelectedCategory(SoundCategory.HUMAN.description)
             }
             R.id.menuMachine -> {
-                getSoundsFromSelectedCategory(item.title.toString())
+                getSoundsFromSelectedCategory(SoundCategory.MACHINE.description)
             }
             R.id.menuRecord -> {
                 getSoundsFromRecordCategory(item.title.toString())
+            }
+            R.id.menuStory -> {
+                getSoundsFromRecordCategory(SoundCategory.STORY.description)
             }
             android.R.id.home -> {
                 onBackPressed()
@@ -228,7 +234,7 @@ class MixerActivity : AppCompatActivity(),
     private fun getSoundsFromSelectedCategory(category: String){
         val intent = Intent(this, SoundActivity::class.java)
         intent.putExtra(SoundActivity.KEY_CATEGORY, category)
-        intent.putExtra(SoundActivity.KEY_CAME_FROM_POP_UP, true)
+        intent.putExtra(SoundActivity.KEY_CAME_FROM_MIXER, true)
         startActivity(intent)
     }
 

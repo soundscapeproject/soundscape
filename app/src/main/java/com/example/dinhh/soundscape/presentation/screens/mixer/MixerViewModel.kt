@@ -17,7 +17,8 @@ class MixerViewModel(
     private val removeSingleSoundScapeUseCase: RemoveSingleSoundScapeUseCase,
     private val saveSoundScapesUseCase: SaveSoundScapesUseCase,
     private val getLocalSoundscapesUseCase: GetLocalSoundscapesUseCase,
-    private val setLoopingUseCase: SetLoopingUseCase
+    private val setLoopingUseCase: SetLoopingUseCase,
+    private val clearSoundScapesUseCase: ClearSoundScapesUseCase
 
 ): ViewModel() {
     private val disposables = CompositeDisposable()
@@ -122,6 +123,20 @@ class MixerViewModel(
         )
     }
 
+    fun clearSoundScapes() {
+        _viewState.value =
+                MixerViewState.Loading
+        disposables.add(
+            clearSoundScapesUseCase.execute()
+                .subscribe({
+                    _viewState.value = MixerViewState.Success
+                }, {
+                    _viewState.value =
+                            MixerViewState.Failure(it)
+                })
+        )
+    }
+
     fun getLocalSounds() {
         _viewState.value =
                 MixerViewState.SaveSoundScapeLoading
@@ -139,7 +154,14 @@ class MixerViewModel(
     fun loopSingleSound(index: Int, isLooping: Boolean){
         _viewState.value =
                 MixerViewState.Loading
-            setLoopingUseCase.execute(index, isLooping)
+        disposables.add(
+            setLoopingUseCase.execute(index, isLooping).subscribe({
+                _viewState.value = MixerViewState.Success
+            }, {
+                _viewState.value =
+                        MixerViewState.Failure(it)
+            })
+        )
     }
 
     override fun onCleared() {

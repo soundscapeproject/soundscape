@@ -69,6 +69,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
             saveRecordDialog.hideLoading()
             dismissSaveDialog()
             Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
+            finish()
         }
 
         is RecordViewState.SaveRecordFailure -> {

@@ -18,6 +18,9 @@
             <item android:id="@+id/menuMachine"
                   android:title="Machine"
                   app:showAsAction="never"/>
+            <item android:id="@+id/menuStory"
+                  android:title="Story"
+                  app:showAsAction="never"/>
             <item android:id="@+id/menuRecord"
                   android:title="Record"
                   app:showAsAction="never"/>
