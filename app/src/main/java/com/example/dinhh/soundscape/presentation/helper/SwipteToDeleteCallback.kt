@@ -71,8 +71,8 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
         val deleteIconBottom = deleteIconTop + intrinsicHeight
 
         // Draw the delete icon
-        deleteIcon!!.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
-        deleteIcon!!.draw(c)
+        deleteIcon?.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
+        deleteIcon?.draw(c)
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }

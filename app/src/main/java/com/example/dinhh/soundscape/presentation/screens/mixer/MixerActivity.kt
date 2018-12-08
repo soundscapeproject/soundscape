@@ -11,7 +11,6 @@ import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
-import com.example.dinhh.soundscape.data.Model
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.data.entity.SoundScape
@@ -224,11 +223,6 @@ class MixerActivity : AppCompatActivity(),
     override fun onSaveDialogNegativeClick(recordDialog: SaveSoundscapeDialog) {
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Model.selectedSounds.clear()
-    }
-
     private fun getSoundsFromSelectedCategory(category: String){
         val intent = Intent(this, SoundActivity::class.java)
         intent.putExtra(SoundActivity.KEY_CATEGORY, category)
@@ -245,7 +239,7 @@ class MixerActivity : AppCompatActivity(),
 
     private fun setupMixerView() {
         mixerList.layoutManager = LinearLayoutManager(this)
-        mixerAdapter = MixerAdapter(Model.selectedSounds, this)
+        mixerAdapter = MixerAdapter(soundScapesList, this)
         mixerList.adapter = mixerAdapter
     }
 
