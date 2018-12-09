@@ -1,5 +1,6 @@
 package com.example.dinhh.soundscape.data.repository
 
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.data.entity.RemoteSound
 import com.example.dinhh.soundscape.data.local.SoundscapeLocalData
@@ -23,9 +24,7 @@ class SoundscapeRepositoryImpl(
     private val sharedPref: SharedPref): SoundscapeRepository {
 
     override fun saveLocalSoundScapes(localSoundscape: LocalSoundscape): Completable {
-        return Completable.fromAction {
-            soundscapeLocalData.saveLocalSoundscapes(localSoundscape)
-        }
+       return soundscapeLocalData.saveLocalSoundscapes(localSoundscape)
     }
 
     override fun getAllLocalSoundScapes(): Single<List<LocalSoundscape>> {

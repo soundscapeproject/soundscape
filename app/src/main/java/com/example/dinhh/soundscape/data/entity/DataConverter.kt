@@ -12,8 +12,8 @@ class DataConverter {
         fun fromSoundscapeList(soundScapeList: List<SoundScape>): String {
 
             val gson = Gson()
-            val type = object : TypeToken<List<SoundScape>>() {}.type
-            val json = gson.toJson(soundScapeList, type)
+//            val type = object : TypeToken<List<SoundScape>>() {}.type
+            val json = gson.toJson(soundScapeList)
             return json
         }
 
