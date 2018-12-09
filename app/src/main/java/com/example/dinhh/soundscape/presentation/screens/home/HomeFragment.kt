@@ -1,47 +1,58 @@
 package com.example.dinhh.soundscape.presentation.screens.home
 
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.*
+import android.support.v7.widget.GridLayoutManager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
-import com.example.dinhh.soundscape.presentation.screens.sounds.SoundActivity
+import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.show
+import com.example.dinhh.soundscape.common.visible
+import com.example.dinhh.soundscape.data.entity.LocalSoundscape
+import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
+import kotlinx.android.synthetic.main.fragment_home_2.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
+
+    private val homeViewModel: HomeViewModel by viewModel()
+    private lateinit var adapter: HomeAdapter
 
 
-
-    private lateinit var adapter: LibararyAdapter
-    private lateinit var rvLibrary: RecyclerView
-
-    private lateinit var myLibraryTitle: List<String>
-
-
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        homeViewModel.viewState.observe(this, Observer {
+            it?.run(this@HomeFragment::handleView)
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_library, container, false)
-        rvLibrary = view.findViewById(R.id.rvLibrary) as RecyclerView
+        val view = inflater.inflate(R.layout.fragment_home_2, container, false)
 
-        myLibraryTitle = listOf(
-            getString(R.string.save_soundscapes),
-            getString(R.string.recorded_tracks),
-            getString(R.string.favorite_sounds)
-        )
-
-        setupViews()
-
+        homeViewModel.getLocalSoundscapes()
 
         return view
+    }
 
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.getLocalSoundscapes()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupButtons()
+        setupViews()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -49,32 +60,64 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    private fun setupViews() {
-        adapter = LibararyAdapter(myLibraryTitle)
-        adapter.setOnItemClickListener(object : RecyclerViewListener.OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-                when (position) {
-                    1 -> {
-                        goToSoundActivity("Records")
-                    }
-                }
-            }
-        })
-        val layoutManager = LinearLayoutManager(context!!)
-        rvLibrary.layoutManager = layoutManager
-        rvLibrary.adapter = adapter
+    private fun setupButtons() {
+        btnCreateSoundScape.setOnClickListener {
+            goToMixerActivity()
+        }
     }
 
-    private fun goToSoundActivity(category: String) {
-        val intent = Intent(activity, SoundActivity::class.java)
-        intent.putExtra(SoundActivity.KEY_CAME_FROM_SAVED_SOUND, true)
-        intent.putExtra(SoundActivity.KEY_CATEGORY, category)
+    private fun setupViews() {
+        adapter = HomeAdapter(mutableListOf(), this)
+        val layoutManager = GridLayoutManager(activity, 2)
+        rvSoundScapes.layoutManager = layoutManager
+        rvSoundScapes.adapter = adapter
+    }
+
+    private fun handleView(viewState: HomeViewState) {
+        when (viewState) {
+            HomeViewState.Loading -> {
+                progressBar.visible()
+            }
+
+            is HomeViewState.GetSoundScapeSuccess -> {
+                progressBar.gone()
+                handleViewBasedOnSoundScapeList(viewState.list)
+                adapter.replaceData(viewState.list)
+            }
+
+            is HomeViewState.Failure -> {
+                progressBar.gone()
+                Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun handleViewBasedOnSoundScapeList(soundScapeList: List<LocalSoundscape>) {
+
+        val numberOfSoundscape = soundScapeList.size
+
+        when(numberOfSoundscape) {
+
+            0 -> {
+                rvSoundScapes.gone()
+                noSoundScapeContainer.show()
+            }
+
+            else -> {
+                rvSoundScapes.show()
+                noSoundScapeContainer.gone()
+            }
+        }
+    }
+
+    private fun goToMixerActivity() {
+        val intent = Intent(activity, MixerActivity::class.java)
         startActivity(intent)
     }
 
-
-
-
+    override fun uploadSound(layoutPosition: Int) {
+        //DO UPLOAD
+    }
 
     companion object {
         @JvmStatic

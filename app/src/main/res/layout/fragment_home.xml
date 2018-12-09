@@ -205,7 +205,7 @@
         <TextView
                 android:fontFamily="@font/roboto_black"
                 android:textColor="@color/colorWhite"
-                android:id="@+id/soundscapeCreatorButton"
+                android:id="@+id/btnCreateSoundScape"
                 android:textSize="20sp"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"

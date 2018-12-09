@@ -74,14 +74,8 @@ class MixerActivity : AppCompatActivity(),
         }
 
         clearBtn.setOnClickListener {
-//            mixerViewModel.clearSoundScapes()
-//            mixerViewModel.getSoundScapes()
-            logD("CLEAR BUTTON CLICKED")
-            mixerViewModel.getLocalSounds()
-        }
-
-        btnGetLocal.setOnClickListener {
-            mixerViewModel.getLocalSounds()
+            mixerViewModel.clearSoundScapes()
+            mixerViewModel.getSoundScapes()
         }
     }
 
@@ -159,11 +153,6 @@ class MixerActivity : AppCompatActivity(),
 //                progressBar.gone()
                 soundScapesList = viewState.soundScapeItems
                 mixerAdapter.replaceData(viewState.soundScapeItems)
-            }
-
-            //Local RemoteSound State
-            is MixerViewState.GetLocalSoundScapesSuccess -> {
-                logD("GET LOCAL SOUND SUCCESS: ${viewState.list}")
             }
 
             MixerViewState.SaveSoundScapeLoading -> {
