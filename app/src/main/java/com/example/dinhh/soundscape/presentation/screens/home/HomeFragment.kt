@@ -96,6 +96,11 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
                 Toast.makeText(activity, "Uploaded", Toast.LENGTH_SHORT).show()
             }
 
+            is HomeViewState.DeleteSuccess -> {
+                progressBar.gone()
+                homeViewModel.getLocalSoundscapes()
+            }
+
             is HomeViewState.GetSoundScapeSuccess -> {
                 progressBar.gone()
                 handleViewBasedOnSoundScapeList(viewState.list)
@@ -140,6 +145,12 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         val localSoundscape = adapter.getData()[layoutPosition]
 
         homeViewModel.uploadSoundScape(localSoundscape)
+    }
+
+    override fun deleteSound(layoutPosition: Int) {
+        val localSoundscape = adapter.getData()[layoutPosition]
+
+        homeViewModel.deleteSoundScape(localSoundscape)
     }
 
     companion object {

@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.item_soundscapes.view.*
 interface HomeAdapterViewHolderClicks {
 
     fun uploadSound(layoutPosition: Int)
+
+    fun deleteSound(layoutPosition: Int)
 }
 
 class HomeAdapter(
@@ -60,10 +62,15 @@ class HomeAdapter(
 
         val txtName: TextView = view.findViewById(R.id.txtName)
         val btnUpload: ImageButton = view.findViewById(R.id.btnUpload)
+        val btnDelete: ImageButton = view.findViewById(R.id.btnDelete)
 
         init {
             btnUpload.setOnClickListener {
                 mListener.uploadSound(this.layoutPosition)
+            }
+
+            btnDelete.setOnClickListener {
+                mListener.deleteSound(this.layoutPosition)
             }
         }
     }
