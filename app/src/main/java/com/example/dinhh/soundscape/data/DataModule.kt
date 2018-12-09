@@ -41,7 +41,7 @@ val dataModule = module {
 
     //Remote
     factory<SoundscapeRemoteData> {
-        SoundscapeRemoteDataImpl(get())
+        SoundscapeRemoteDataImpl(get(), get())
     }
 
     factory<SoundscapeApi> {

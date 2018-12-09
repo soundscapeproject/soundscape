@@ -42,6 +42,6 @@ val presentationModule = module {
     }
 
     viewModel {
-        HomeViewModel(get())
+        HomeViewModel(get(), get())
     }
 }

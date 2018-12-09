@@ -83,16 +83,23 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
                 progressBar.visible()
             }
 
+            is HomeViewState.Failure -> {
+                progressBar.gone()
+                Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+
+            is HomeViewState.UploadSuccess -> {
+                progressBar.gone()
+                Toast.makeText(activity, "Uploaded", Toast.LENGTH_SHORT).show()
+            }
+
             is HomeViewState.GetSoundScapeSuccess -> {
                 progressBar.gone()
                 handleViewBasedOnSoundScapeList(viewState.list)
                 adapter.replaceData(viewState.list)
             }
 
-            is HomeViewState.Failure -> {
-                progressBar.gone()
-                Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
-            }
+
         }
     }
 
@@ -129,7 +136,9 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
     }
 
     override fun uploadSound(layoutPosition: Int) {
-        //DO UPLOAD
+        val localSoundscape = adapter.getData()[layoutPosition]
+
+        homeViewModel.uploadSoundScape(localSoundscape)
     }
 
     companion object {
