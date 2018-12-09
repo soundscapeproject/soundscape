@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         btnMixer.setOnClickListener {
-            toolbar_title.text = "Soundscapes"
             gotoMixerActivity()
         }
     }

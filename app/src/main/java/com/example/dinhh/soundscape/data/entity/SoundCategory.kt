@@ -14,7 +14,10 @@ enum class SoundCategory(val description: String) {
     MACHINE("Machine"),
 
     @SerializedName("story")
-    STORY("Story");
+    STORY("Story"),
+
+    @SerializedName("record")
+    RECORD("Record");
 
     companion object {
         fun getCategoryByName(name: String) = valueOf(name.toUpperCase())

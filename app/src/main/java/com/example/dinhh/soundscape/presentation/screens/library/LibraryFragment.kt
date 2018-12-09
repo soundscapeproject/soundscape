@@ -54,8 +54,15 @@ class LibraryFragment : Fragment() {
             goToSoundsActivity(SoundCategory.MACHINE.description)
         }
         storyBtn.setOnClickListener {
-            goToSoundsActivity(SoundCategory.STORY.description)
+            goToSavedRecordActivity(SoundCategory.RECORD.description)
         }
+    }
+
+    private fun goToSavedRecordActivity(category: String) {
+        val intent = Intent(activity, SoundActivity::class.java)
+        intent.putExtra(SoundActivity.KEY_CATEGORY, category)
+        intent.putExtra(SoundActivity.KEY_CAME_FROM_SAVED_SOUND, true)
+        startActivity(intent)
     }
 
     private fun goToSoundsActivity(category: String) {
