@@ -11,68 +11,124 @@ interface Player {
 
     fun stopSound(): Completable
 
-    fun onPlayComplete(): Completable
-
     fun loopSound(looping: Boolean)
+
+    fun releaseSound(): Completable
 }
 
 class PlayerImpl : Player {
 
-    private var mediaPlayer: MediaPlayer
+    private var mMediaPlayer: MediaPlayer? = null
+    private var isLooping: Boolean = false
 
-    private var isLooping = false
+    private fun initializeMediaPlayer(): Completable {
 
-    constructor() {
-        mediaPlayer = MediaPlayer()
+        return Completable.fromAction {
+            if (mMediaPlayer == null) {
+                mMediaPlayer = MediaPlayer()
+            }
+        }
     }
 
-    override fun playSound(soundUrl: String): Completable {
-        return Completable.create {
+    private fun loadMedia(source: String): Completable {
 
-            mediaPlayer = MediaPlayer()
+        return initializeMediaPlayer().andThen {
 
             try {
-                mediaPlayer.reset()
-                mediaPlayer.setDataSource(soundUrl)
-                mediaPlayer.prepare()
-                mediaPlayer.start()
+                mMediaPlayer?.setDataSource(source)
+                mMediaPlayer?.prepare()
+
                 it.onComplete()
             } catch (e: IOException) {
                 it.onError(e)
             }
-        }.andThen(onPlayComplete())
+        }
     }
+
+    private fun release(): Completable {
+
+        return Completable.create {
+            if (mMediaPlayer != null) {
+                mMediaPlayer?.release()
+                mMediaPlayer = null
+                it.onComplete()
+            }
+        }
+    }
+
+    private fun isPlaying(): Boolean {
+
+        if (mMediaPlayer != null) {
+            return mMediaPlayer?.isPlaying() ?: false
+        }
+
+        return false
+    }
+
+    private fun seekTo(position: Int): Completable {
+        return Completable.create {
+            if (mMediaPlayer != null) {
+                mMediaPlayer?.seekTo(position)
+                it.onComplete()
+            }
+        }
+    }
+
+    private fun play(): Completable {
+
+        return Completable.create { complete ->
+            if (mMediaPlayer != null && !isPlaying()) {
+                mMediaPlayer?.start()
+
+
+                mMediaPlayer?.setOnCompletionListener {
+                    if (!isLooping) {
+                        complete.onComplete()
+                    } else {
+                        mMediaPlayer?.seekTo(0)
+                        mMediaPlayer?.start()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun reset(source: String): Completable {
+
+        return Completable.fromAction {
+            mMediaPlayer?.reset()
+        }.andThen(loadMedia(source))
+    }
+
+    private fun pause(): Completable {
+
+        return Completable.create {
+            if (mMediaPlayer != null && isPlaying()) {
+                mMediaPlayer?.pause()
+            }
+
+            it.onComplete()
+        }
+
+    }
+
+    override fun playSound(soundUrl: String): Completable {
+
+        return reset(soundUrl).andThen(play())
+    }
+
+    override fun stopSound(): Completable {
+
+        return pause()
+    }
+
+    override fun releaseSound(): Completable {
+
+        return release()
+    }
+
 
     override fun loopSound(looping: Boolean) {
         isLooping = looping
     }
-
-    override fun onPlayComplete(): Completable {
-
-        return Completable.create { complete ->
-            mediaPlayer.setOnCompletionListener {
-                if (!isLooping) {
-                    complete.onComplete()
-                } else {
-                    mediaPlayer.seekTo(0)
-                    mediaPlayer.start()
-                }
-            }
-        }
-    }
-
-    override fun stopSound(): Completable {
-        return Completable.create {
-            try {
-                if (mediaPlayer.isPlaying) {
-                    mediaPlayer.pause()
-                }
-                it.onComplete()
-            } catch (e: IOException) {
-                it.onError(e)
-            }
-        }
-    }
-
-
 }
