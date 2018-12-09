@@ -242,8 +242,8 @@ class SoundActivity : AppCompatActivity(),
 
     private fun goToMixer() {
         finish()
-        val intent = Intent(this, MixerActivity::class.java)
         if(!cameFromMixer) {
+            val intent = Intent(this, MixerActivity::class.java)
             startActivity(intent)
         }
     }

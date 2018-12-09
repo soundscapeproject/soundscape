@@ -54,11 +54,10 @@ class MixerActivity : AppCompatActivity(),
         soundScapeId = intent.getLongExtra(MixerActivity.KEY_SOUNDSCAPE_ID, -1)
         soundScapeTitle = intent.getStringExtra(MixerActivity.KEY_SOUNDSCAPE_TITLE)
 
-        mixerViewModel.clearSoundScapes()
-
         if (isToEdit) {
             mixerViewModel.getOneSoundScape(soundScapeId)
             toolbar_title.text = soundScapeTitle
+            mixerViewModel.clearSoundScapes()
         } else {
             mixerViewModel.getSoundScapes()
             toolbar_title.text = "Workplace"
@@ -275,6 +274,7 @@ class MixerActivity : AppCompatActivity(),
     private fun getSoundsFromRecordCategory(category: String) {
         val intent = Intent(this, SoundActivity::class.java)
         intent.putExtra(SoundActivity.KEY_CAME_FROM_SAVED_SOUND, true)
+        intent.putExtra(SoundActivity.KEY_CAME_FROM_MIXER, true)
         intent.putExtra(SoundActivity.KEY_CATEGORY, category)
         startActivity(intent)
     }
