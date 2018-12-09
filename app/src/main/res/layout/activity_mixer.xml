@@ -23,6 +23,53 @@
                 app:contentInsetStart="0dp"/>
     </android.support.constraint.ConstraintLayout>
 
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorText"
+            app:layout_constraintBottom_toTopOf="@+id/layout_toggle_btn"
+            app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/noSoundScapeContainer"
+            android:visibility="gone">
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/txtMissingSS"
+                  android:text="Adding sounds by pressing + on top right corner"
+                  android:textColor="@color/colorPrimary"
+                  android:textSize="20sp"
+                  android:gravity="center"
+                  app:layout_constraintTop_toBottomOf="@+id/btnCreateSoundScape"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginStart="30dp"
+                  android:layout_marginEnd="30dp"
+        />
+
+
+        <TextView
+                android:id="@+id/btnCreateSoundScape"
+                android:textSize="17sp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:background="@drawable/ic_hand_ic"
+                android:backgroundTint="@color/colorPrimary"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:elevation="10dp"
+        />
+
+
+    </android.support.constraint.ConstraintLayout>
+
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -62,6 +109,8 @@
                 android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/scrollView2" android:visibility="gone"/>
     </android.support.constraint.ConstraintLayout>
+
+
 
 
     <android.support.constraint.ConstraintLayout
