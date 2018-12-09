@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
+import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
@@ -194,6 +195,7 @@ class MixerActivity : AppCompatActivity(),
             }
 
             is MixerViewState.GetSoundScapesSuccess -> {
+                handleViewBasedOnSoundScapeItems(viewState.soundScapeItems)
 //                progressBar.gone()
                 soundScapesList = viewState.soundScapeItems
                 mixerAdapter.replaceData(viewState.soundScapeItems)
@@ -235,6 +237,26 @@ class MixerActivity : AppCompatActivity(),
                 Toast.makeText(this, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun handleViewBasedOnSoundScapeItems(soundscapeItemList: List<SoundscapeItem>) {
+
+        val numberOfItem = soundscapeItemList.size
+
+        when(numberOfItem) {
+            0 -> {
+                noSoundScapeContainer.visible()
+                soundScapeListContainer.gone()
+                toggleButtonContainer.gone()
+            }
+
+            else -> {
+                noSoundScapeContainer.gone()
+                soundScapeListContainer.visible()
+                toggleButtonContainer.visible()
+            }
+        }
+
     }
 
     private fun showSaveDialog() {
