@@ -24,10 +24,11 @@ interface SoundscapeRemoteData {
 
 class SoundscapeRemoteDataImpl(
     private val jsonWriter: JsonWriter,
-    private val soundScapeApi: SoundscapeApi): SoundscapeRemoteData {
+    private val soundScapeApi: SoundscapeApi
+) : SoundscapeRemoteData {
 
     override fun login(username: String, password: String): Single<Token> {
-       return soundScapeApi.login(LoginBody(username, password))
+        return soundScapeApi.login(LoginBody(username, password))
     }
 
     override fun fetchLibrary(key: String, selectedCategory: String): Single<List<List<RemoteSound>>> {
@@ -60,10 +61,10 @@ class SoundscapeRemoteDataImpl(
 
         return jsonWriter.writeJson(stringJson)
             .flatMapCompletable { output -> uploadJson(key, output, localSoundscape) }
-            .andThen { jsonWriter.deleteJsonFile() }
+            .andThen(jsonWriter.deleteJsonFile())
     }
 
-    private fun uploadJson(key:String, output:String, localSoundscape: LocalSoundscape): Completable {
+    private fun uploadJson(key: String, output: String, localSoundscape: LocalSoundscape): Completable {
 
         val file = File(output)
 

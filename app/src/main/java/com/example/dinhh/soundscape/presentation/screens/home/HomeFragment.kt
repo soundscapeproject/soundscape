@@ -6,12 +6,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.show
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
@@ -90,6 +92,7 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
 
             is HomeViewState.UploadSuccess -> {
                 progressBar.gone()
+                homeViewModel.getLocalSoundscapes()
                 Toast.makeText(activity, "Uploaded", Toast.LENGTH_SHORT).show()
             }
 
@@ -98,8 +101,6 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
                 handleViewBasedOnSoundScapeList(viewState.list)
                 adapter.replaceData(viewState.list)
             }
-
-
         }
     }
 

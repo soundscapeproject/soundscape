@@ -9,7 +9,10 @@ class UploadSoundscapeUseCase(private val soundscapeRepository: SoundscapeReposi
 
     fun execute(localSoundscape: LocalSoundscape): Completable {
 
+        localSoundscape.isUploaded = true
+
         return soundscapeRepository.uploadSoundScape(localSoundscape)
+            .andThen(soundscapeRepository.updateLocalSoundScape(localSoundscape))
             .subscribeOn(schedulerProvider.getIOScheduler())
             .observeOn(schedulerProvider.getUIScheduler())
     }
