@@ -1,5 +1,6 @@
 package com.example.dinhh.soundscape.presentation.screens.library
 
+import android.app.AlertDialog
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -58,6 +59,8 @@ class LibraryFragment : Fragment() {
         }
     }
 
+
+
     private fun goToSoundsActivity(category: String) {
         val intent = Intent(activity, SoundActivity::class.java)
         intent.putExtra(SoundActivity.KEY_CATEGORY, category)
@@ -71,7 +74,19 @@ class LibraryFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.setting -> {
-                libraryViewModel.logout()
+                val builder = AlertDialog.Builder(activity)
+                builder.setTitle("Logout")
+                builder.setMessage("Do you want to logout from this account?")
+                builder.setPositiveButton("YES"){
+                        _, which ->
+                    Toast.makeText(context,"logout from this account",Toast.LENGTH_SHORT).show()
+                    libraryViewModel.logout()
+                }
+                builder.setNegativeButton("NO"){
+                        _, which ->
+                }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
                 return true
             }
         }
