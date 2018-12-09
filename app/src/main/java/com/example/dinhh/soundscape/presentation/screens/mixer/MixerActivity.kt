@@ -106,7 +106,7 @@ class MixerActivity : AppCompatActivity(),
                 getSoundsFromRecordCategory(item.title.toString())
             }
             R.id.menuStory -> {
-                getSoundsFromRecordCategory(SoundCategory.STORY.description)
+                getSoundsFromSelectedCategory(SoundCategory.STORY.description)
             }
             android.R.id.home -> {
                 onBackPressed()
