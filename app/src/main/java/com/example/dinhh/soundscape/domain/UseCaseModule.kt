@@ -64,7 +64,6 @@ val useCaseModule = module {
         BeginSearchUseCase(get(), get())
     }
 
-    //Play sound
     factory {
         PlaySoundUseCase(get(),get())
     }
@@ -129,5 +128,9 @@ val useCaseModule = module {
 
     factory {
         UpdateLocalSoundScapeUseCase(get(),get())
+    }
+
+    factory {
+        UploadSoundscapeUseCase(get(),get())
     }
 }

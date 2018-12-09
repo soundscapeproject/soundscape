@@ -6,12 +6,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.show
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
@@ -83,15 +85,21 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
                 progressBar.visible()
             }
 
+            is HomeViewState.Failure -> {
+                progressBar.gone()
+                Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+
+            is HomeViewState.UploadSuccess -> {
+                progressBar.gone()
+                homeViewModel.getLocalSoundscapes()
+                Toast.makeText(activity, "Uploaded", Toast.LENGTH_SHORT).show()
+            }
+
             is HomeViewState.GetSoundScapeSuccess -> {
                 progressBar.gone()
                 handleViewBasedOnSoundScapeList(viewState.list)
                 adapter.replaceData(viewState.list)
-            }
-
-            is HomeViewState.Failure -> {
-                progressBar.gone()
-                Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -129,7 +137,9 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
     }
 
     override fun uploadSound(layoutPosition: Int) {
-        //DO UPLOAD
+        val localSoundscape = adapter.getData()[layoutPosition]
+
+        homeViewModel.uploadSoundScape(localSoundscape)
     }
 
     companion object {

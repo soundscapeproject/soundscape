@@ -15,5 +15,9 @@ val deviceModule = module {
     single<SoundScape> {
         SoundScapeImpl()
     }
-}
 
+    single<JsonWriter> {
+        JsonWriterImpl()
+    }
+
+}
