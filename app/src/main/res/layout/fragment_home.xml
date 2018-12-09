@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".presentation.screens.home.HomeFragment">
+        tools:context=".presentation.screens.library.LibraryFragment">
 
     <android.support.constraint.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"

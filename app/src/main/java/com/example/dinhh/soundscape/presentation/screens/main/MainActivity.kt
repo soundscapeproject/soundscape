@@ -12,8 +12,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.presentation.screens.home.HomeFragment
 import com.example.dinhh.soundscape.presentation.screens.library.LibraryFragment
+import com.example.dinhh.soundscape.presentation.screens.home.HomeFragment
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -53,8 +53,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupFragments() {
-        homeFragment = HomeFragment.newInstance()
-        libraryFragment = LibraryFragment.newInstance()
+        homeFragment = LibraryFragment.newInstance()
+        libraryFragment = HomeFragment.newInstance()
     }
 
     private fun setupButtomNavigation() {
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     toolbar_title.text = "Home"
-                    openFragment(homeFragment)
+                    openFragment(libraryFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_record -> {
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_library -> {
                     toolbar_title.text = "Library"
-                    openFragment(libraryFragment)
+                    openFragment(homeFragment)
                     return@OnNavigationItemSelectedListener true
                 }
             }
