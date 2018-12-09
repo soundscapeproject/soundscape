@@ -34,7 +34,7 @@ class MixerActivity : AppCompatActivity(),
 
     private var isToEdit: Boolean = false
     private var soundScapeId: Long = -1
-    private var soundScapeTitle: String = "Workplace"
+    private var soundScapeTitle: String? = "Workplace"
 
     companion object {
         val KEY_IS_TO_EDIT = "isToEdit"
@@ -100,7 +100,7 @@ class MixerActivity : AppCompatActivity(),
                     it.volume
                 )
                 }
-                val localSoundscape = LocalSoundscape(soundScapeId, soundScapeTitle, soundScapeList)
+                val localSoundscape = LocalSoundscape(soundScapeId, soundScapeTitle!!, soundScapeList)
                 mixerViewModel.updateSoundScape(localSoundscape)
             } else {
                 showSaveDialog()
