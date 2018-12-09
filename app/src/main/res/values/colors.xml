@@ -8,4 +8,5 @@
     <color name="colorTextDark">#000000</color>
     <color name="transparent">#00ffffff</color>
     <color name="slightlyTransparent">#46000000</color>
+    <color name="transparent_black">#F02E2D35</color>
 </resources>
