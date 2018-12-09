@@ -74,8 +74,10 @@ class MixerActivity : AppCompatActivity(),
         }
 
         clearBtn.setOnClickListener {
-            mixerViewModel.clearSoundScapes()
-            mixerViewModel.getSoundScapes()
+//            mixerViewModel.clearSoundScapes()
+//            mixerViewModel.getSoundScapes()
+            logD("CLEAR BUTTON CLICKED")
+            mixerViewModel.getLocalSounds()
         }
 
         btnGetLocal.setOnClickListener {
@@ -161,6 +163,7 @@ class MixerActivity : AppCompatActivity(),
 
             //Local RemoteSound State
             is MixerViewState.GetLocalSoundScapesSuccess -> {
+                logD("GET LOCAL SOUND SUCCESS: ${viewState.list}")
             }
 
             MixerViewState.SaveSoundScapeLoading -> {
@@ -175,7 +178,7 @@ class MixerActivity : AppCompatActivity(),
 
             is MixerViewState.SaveSoundScapeFailure -> {
                 saveSoundscapeDialog.hideLoading()
-                Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -222,6 +225,7 @@ class MixerActivity : AppCompatActivity(),
     }
 
     override fun onSaveDialogNegativeClick(recordDialog: SaveSoundscapeDialog) {
+        // Do nothing
     }
 
     private fun getSoundsFromSelectedCategory(category: String){
