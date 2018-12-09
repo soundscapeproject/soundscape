@@ -20,12 +20,18 @@ interface SoundscapeRepository {
     fun updateLocalSoundScape(localSoundscape: LocalSoundscape): Completable
 
     fun uploadSoundScape(localSoundscape: LocalSoundscape): Completable
+
+    fun deleteLocalSoundScape(localSoundscape: LocalSoundscape): Completable
 }
 
 class SoundscapeRepositoryImpl(
     private val soundscapeLocalData: SoundscapeLocalData,
     private val soundscapeRemoteData: SoundscapeRemoteData,
     private val sharedPref: SharedPref): SoundscapeRepository {
+
+    override fun deleteLocalSoundScape(localSoundscape: LocalSoundscape): Completable {
+        return soundscapeLocalData.deleteLocalSoundScape(localSoundscape)
+    }
 
     override fun uploadSoundScape(localSoundscape: LocalSoundscape): Completable {
         return soundscapeRemoteData.uploadSoundScape(sharedPref.getToken().blockingGet(), localSoundscape)
