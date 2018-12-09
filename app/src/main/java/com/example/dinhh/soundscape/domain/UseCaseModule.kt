@@ -126,4 +126,8 @@ val useCaseModule = module {
     factory {
         AddAllSoundscapesUseCase(get(),get())
     }
+
+    factory {
+        UpdateLocalSoundScapeUseCase(get(),get())
+    }
 }

@@ -10,7 +10,7 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundActivity
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_library.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -30,7 +30,7 @@ class LibraryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_library_2, container, false)
+        val view =  inflater.inflate(R.layout.fragment_library, container, false)
 
         setHasOptionsMenu(true)
 

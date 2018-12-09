@@ -17,7 +17,7 @@ import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
-import kotlinx.android.synthetic.main.fragment_home_2.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
@@ -38,7 +38,7 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home_2, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         homeViewModel.getLocalSoundscapes()
 

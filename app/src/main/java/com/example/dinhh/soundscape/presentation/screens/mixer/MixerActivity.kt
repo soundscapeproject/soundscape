@@ -90,7 +90,21 @@ class MixerActivity : AppCompatActivity(),
         }
 
         saveMixBtn.setOnClickListener {
-            showSaveDialog()
+
+            if (isToEdit) {
+                val soundScapeList = soundScapesList.map { it -> SoundScape(
+                    it.title,
+                    it.length,
+                    it.category,
+                    it.source,
+                    it.volume
+                )
+                }
+                val localSoundscape = LocalSoundscape(soundScapeId, soundScapeTitle, soundScapeList)
+                mixerViewModel.updateSoundScape(localSoundscape)
+            } else {
+                showSaveDialog()
+            }
         }
 
         clearBtn.setOnClickListener {
@@ -183,6 +197,12 @@ class MixerActivity : AppCompatActivity(),
                     element.source,
                     element.volume) }
                 mixerViewModel.addAllSoundScapes(soundScapeItems)
+            }
+
+            //Update sound scape
+
+            MixerViewState.UpdateSoundScapeSuccess -> {
+                Toast.makeText(this, getString(R.string.updated), Toast.LENGTH_SHORT).show()
             }
 
             //Save sound scape

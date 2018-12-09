@@ -20,6 +20,7 @@
     <string name="done">Done</string>
     <string name="close">Close</string>
     <string name="saved">Saved</string>
+    <string name="updated">Updated</string>
     <string name="title_activity_record">RecordActivity</string>
     <string name="title_save_record_dialog">Save Record</string>
     <string name="title_save_soundscape_dialog">Save Soundscape</string>

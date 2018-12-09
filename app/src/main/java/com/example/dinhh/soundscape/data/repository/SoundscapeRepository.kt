@@ -16,12 +16,18 @@ interface SoundscapeRepository {
     fun getAllLocalSoundScapes(): Single<List<LocalSoundscape>>
 
     fun getOneLocalSoundScape(id: Long): Single<LocalSoundscape>
+
+    fun updateLocalSoundScape(localSoundscape: LocalSoundscape): Completable
 }
 
 class SoundscapeRepositoryImpl(
     private val soundscapeLocalData: SoundscapeLocalData,
     private val soundscapeRemoteData: SoundscapeRemoteData,
     private val sharedPref: SharedPref): SoundscapeRepository {
+
+    override fun updateLocalSoundScape(localSoundscape: LocalSoundscape): Completable {
+        return soundscapeLocalData.updateLocalSoundScape(localSoundscape)
+    }
 
     override fun getOneLocalSoundScape(id: Long): Single<LocalSoundscape> {
         return soundscapeLocalData.getOneLocalSoundscape(id)
