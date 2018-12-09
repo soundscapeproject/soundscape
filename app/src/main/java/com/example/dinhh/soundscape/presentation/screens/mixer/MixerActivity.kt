@@ -1,5 +1,6 @@
 package com.example.dinhh.soundscape.presentation.screens.mixer
 
+import android.app.AlertDialog
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -108,7 +109,20 @@ class MixerActivity : AppCompatActivity(),
         }
 
         clearBtn.setOnClickListener {
-            mixerViewModel.clearSoundScapes()
+            val builder = AlertDialog.Builder(this@MixerActivity)
+            builder.setTitle("Clear All")
+            builder.setMessage("Do you want to clear all sounds from this workplace?")
+            builder.setPositiveButton("YES"){
+                    _, _ ->
+                Toast.makeText(applicationContext,"Cleared all sounds",Toast.LENGTH_SHORT).show()
+                mixerViewModel.clearSoundScapes()
+                mixerViewModel.getSoundScapes()
+            }
+            builder.setNegativeButton("NO"){
+                    _, _ ->
+            }
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
     }
 
