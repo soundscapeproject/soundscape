@@ -33,6 +33,10 @@ class MixerActivity : AppCompatActivity(),
     private val mixerViewModel: MixerViewModel by viewModel()
     private var soundScapesList: MutableList<SoundscapeItem> = mutableListOf()
 
+    companion object {
+        val KEY_CAME_FROM_HOME = "cameFromHome"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mixer)

@@ -23,15 +23,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
-    private lateinit var homeFragment: Fragment
-    private lateinit var libraryFragment: Fragment
     private val RECORD_AUDIO_REQUEST_CODE = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        setupFragments()
 
         setupButtomNavigation()
 
@@ -52,11 +48,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupFragments() {
-        homeFragment = LibraryFragment.newInstance()
-        libraryFragment = HomeFragment.newInstance()
-    }
-
     private fun setupButtomNavigation() {
         val bottomNavigation: BottomNavigationView = findViewById(R.id.navigationView)
 
@@ -65,7 +56,8 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     toolbar_title.text = "Home"
-                    openFragment(libraryFragment)
+                    val homeFragment = HomeFragment.newInstance()
+                    openFragment(homeFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_record -> {
@@ -73,7 +65,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_library -> {
                     toolbar_title.text = "Library"
-                    openFragment(homeFragment)
+                    val libraryFragment = LibraryFragment.newInstance()
+                    openFragment(libraryFragment)
                     return@OnNavigationItemSelectedListener true
                 }
             }

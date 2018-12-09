@@ -3,6 +3,7 @@ package com.example.dinhh.soundscape.presentation.screens.home
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.domain.soundscape.GetLocalSoundscapesUseCase
 import io.reactivex.disposables.CompositeDisposable
@@ -15,6 +16,7 @@ class HomeViewModel (
     val viewState : LiveData<HomeViewState> = _viewState
 
     fun getLocalSoundscapes() {
+        logD("GET LOCAL SOUND HOME VIEW MODEL")
         disposibles.add(
             getLocalSoundscapesUseCase.execute()
                 .doOnSubscribe {
