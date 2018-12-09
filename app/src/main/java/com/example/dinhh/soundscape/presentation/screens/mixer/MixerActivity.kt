@@ -11,7 +11,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.data.entity.SoundCategory
@@ -34,8 +33,14 @@ class MixerActivity : AppCompatActivity(),
     private val mixerViewModel: MixerViewModel by viewModel()
     private var soundScapesList: MutableList<SoundscapeItem> = mutableListOf()
 
+    private var isToEdit: Boolean = false
+    private var soundScapeId: Long = -1
+    private var soundScapeTitle: String? = "Workplace"
+
     companion object {
-        val KEY_CAME_FROM_HOME = "cameFromHome"
+        val KEY_IS_TO_EDIT = "isToEdit"
+        val KEY_SOUNDSCAPE_TITLE = "soundScapeTitle"
+        val KEY_SOUNDSCAPE_ID = "soundScapeId"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +51,18 @@ class MixerActivity : AppCompatActivity(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        mixerViewModel.getSoundScapes()
+        isToEdit = intent.getBooleanExtra(MixerActivity.KEY_IS_TO_EDIT, false)
+        soundScapeId = intent.getLongExtra(MixerActivity.KEY_SOUNDSCAPE_ID, -1)
+        soundScapeTitle = intent.getStringExtra(MixerActivity.KEY_SOUNDSCAPE_TITLE)
+
+        if (isToEdit) {
+            mixerViewModel.getOneSoundScape(soundScapeId)
+            toolbar_title.text = soundScapeTitle
+            mixerViewModel.clearSoundScapes()
+        } else {
+            mixerViewModel.getSoundScapes()
+            toolbar_title.text = "Workplace"
+        }
 
         mixerViewModel.viewState.observe(this, Observer {
             it?.run(this@MixerActivity::handleView)
@@ -55,7 +71,6 @@ class MixerActivity : AppCompatActivity(),
         setupMixerView()
 
         saveSoundscapeDialog = SaveSoundscapeDialog.newInstance(getString(R.string.title_save_soundscape_dialog))
-        toolbar_title.text = "Workplace"
 
 
         //Play created soundscape
@@ -75,7 +90,22 @@ class MixerActivity : AppCompatActivity(),
         }
 
         saveMixBtn.setOnClickListener {
-            showSaveDialog()
+
+            if (isToEdit) {
+                val soundScapeList = soundScapesList.map {
+                    SoundScape(
+                        it.title,
+                        it.length,
+                        it.category,
+                        it.source,
+                        it.volume
+                    )
+                }
+                val localSoundscape = LocalSoundscape(soundScapeId, soundScapeTitle!!, soundScapeList)
+                mixerViewModel.updateSoundScape(localSoundscape)
+            } else {
+                showSaveDialog()
+            }
         }
 
         clearBtn.setOnClickListener {
@@ -83,13 +113,13 @@ class MixerActivity : AppCompatActivity(),
             builder.setTitle("Clear All")
             builder.setMessage("Do you want to clear all sounds from this workplace?")
             builder.setPositiveButton("YES"){
-                    _, which ->
+                    _, _ ->
                 Toast.makeText(applicationContext,"Cleared all sounds",Toast.LENGTH_SHORT).show()
                 mixerViewModel.clearSoundScapes()
                 mixerViewModel.getSoundScapes()
             }
             builder.setNegativeButton("NO"){
-                    _, which ->
+                    _, _ ->
             }
             val dialog: AlertDialog = builder.create()
             dialog.show()
@@ -97,13 +127,13 @@ class MixerActivity : AppCompatActivity(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.mix_screen,menu)
+        menuInflater.inflate(R.menu.mix_screen, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         //SoundActivity.cameFromPopup = true
-        when (item?.itemId){
+        when (item?.itemId) {
             R.id.menuNature -> {
                 getSoundsFromSelectedCategory(SoundCategory.NATURE.description)
             }
@@ -115,9 +145,6 @@ class MixerActivity : AppCompatActivity(),
             }
             R.id.menuRecord -> {
                 getSoundsFromRecordCategory(item.title.toString())
-            }
-            R.id.menuStory -> {
-                getSoundsFromSelectedCategory(SoundCategory.STORY.description)
             }
             android.R.id.home -> {
                 onBackPressed()
@@ -145,7 +172,7 @@ class MixerActivity : AppCompatActivity(),
             }
 
             MixerViewState.Success -> {
-//                progressBar.gone()
+                mixerViewModel.getSoundScapes()
             }
 
             MixerViewState.PlaySoundScapeFinish -> {
@@ -172,6 +199,27 @@ class MixerActivity : AppCompatActivity(),
                 mixerAdapter.replaceData(viewState.soundScapeItems)
             }
 
+            is MixerViewState.GetOneLocalSoundScapeSuccess -> {
+                val soundScapeList = viewState.localSoundscape.soundScapeList
+                val soundScapeItems = soundScapeList.map { element ->
+                    SoundscapeItem(
+                        element.title,
+                        element.length,
+                        element.category,
+                        element.source,
+                        element.volume
+                    )
+                }
+                mixerViewModel.addAllSoundScapes(soundScapeItems)
+            }
+
+            //Update sound scape
+
+            MixerViewState.UpdateSoundScapeSuccess -> {
+                Toast.makeText(this, getString(R.string.updated), Toast.LENGTH_SHORT).show()
+            }
+
+            //Save sound scape
             MixerViewState.SaveSoundScapeLoading -> {
                 saveSoundscapeDialog.showLoading()
             }
@@ -218,13 +266,14 @@ class MixerActivity : AppCompatActivity(),
     }
 
     override fun onSaveDialogPositiveClick(soundScapeName: String) {
-        val soundScapeList = soundScapesList.map { it -> SoundScape(
-            it.title,
-            it.length,
-            it.category,
-            it.source,
-            it.volume
-        )
+        val soundScapeList = soundScapesList.map { it ->
+            SoundScape(
+                it.title,
+                it.length,
+                it.category,
+                it.source,
+                it.volume
+            )
         }
         val localSoundscape = LocalSoundscape(null, soundScapeName, soundScapeList)
         mixerViewModel.saveSoundScape(localSoundscape)
@@ -234,7 +283,7 @@ class MixerActivity : AppCompatActivity(),
         // Do nothing
     }
 
-    private fun getSoundsFromSelectedCategory(category: String){
+    private fun getSoundsFromSelectedCategory(category: String) {
         val intent = Intent(this, SoundActivity::class.java)
         intent.putExtra(SoundActivity.KEY_CATEGORY, category)
         intent.putExtra(SoundActivity.KEY_CAME_FROM_MIXER, true)
@@ -244,6 +293,7 @@ class MixerActivity : AppCompatActivity(),
     private fun getSoundsFromRecordCategory(category: String) {
         val intent = Intent(this, SoundActivity::class.java)
         intent.putExtra(SoundActivity.KEY_CAME_FROM_SAVED_SOUND, true)
+        intent.putExtra(SoundActivity.KEY_CAME_FROM_MIXER, true)
         intent.putExtra(SoundActivity.KEY_CATEGORY, category)
         startActivity(intent)
     }

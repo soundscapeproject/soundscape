@@ -17,8 +17,10 @@ class MixerViewModel(
     private val removeSingleSoundScapeUseCase: RemoveSingleSoundScapeUseCase,
     private val saveSoundScapesUseCase: SaveSoundScapesUseCase,
     private val setLoopingUseCase: SetLoopingUseCase,
-    private val clearSoundScapesUseCase: ClearSoundScapesUseCase
-
+    private val clearSoundScapesUseCase: ClearSoundScapesUseCase,
+    private val addAllSoundscapesUseCase: AddAllSoundscapesUseCase,
+    private val getOneLocalSoundscapeUseCase: GetOneLocalSoundscapeUseCase,
+    private val updateLocalSoundScapeUseCase: UpdateLocalSoundScapeUseCase
 ): ViewModel() {
     private val disposables = CompositeDisposable()
     private val _viewState = MutableLiveData<MixerViewState>()
@@ -80,6 +82,32 @@ class MixerViewModel(
         )
     }
 
+    fun getOneSoundScape(id: Long) {
+        _viewState.value =
+                MixerViewState.Loading
+        disposables.add(
+            getOneLocalSoundscapeUseCase.execute(id)
+                .subscribe({
+                    _viewState.value = MixerViewState.GetOneLocalSoundScapeSuccess(it)
+                }, {
+                })
+        )
+    }
+
+    fun updateSoundScape(localSoundscape: LocalSoundscape) {
+        _viewState.value =
+                MixerViewState.Loading
+        disposables.add(
+            updateLocalSoundScapeUseCase.execute(localSoundscape)
+                .subscribe({
+                    _viewState.value = MixerViewState.UpdateSoundScapeSuccess
+                }, {
+                    _viewState.value =
+                            MixerViewState.Failure(it)
+                })
+        )
+    }
+
     fun stopSingleSoundScape(index: Int) {
         _viewState.value =
                 MixerViewState.Loading
@@ -136,6 +164,20 @@ class MixerViewModel(
         )
     }
 
+    fun addAllSoundScapes(list: List<SoundscapeItem>) {
+        _viewState.value =
+                MixerViewState.Loading
+        disposables.add(
+            addAllSoundscapesUseCase.execute(list)
+                .subscribe({
+                    _viewState.value = MixerViewState.Success
+                }, {
+                    _viewState.value =
+                            MixerViewState.Failure(it)
+                })
+        )
+    }
+
     fun loopSingleSound(index: Int, isLooping: Boolean){
         _viewState.value =
                 MixerViewState.Loading
@@ -163,6 +205,11 @@ sealed class MixerViewState {
 
     data class GetSoundScapesSuccess(val soundScapeItems: MutableList<SoundscapeItem>): MixerViewState()
     object RemoveSoundScapeSuccess : MixerViewState()
+
+    data class GetOneLocalSoundScapeSuccess(val localSoundscape: LocalSoundscape): MixerViewState()
+
+    //Update
+    object UpdateSoundScapeSuccess : MixerViewState()
 
     //Save
     object SaveSoundScapeLoading : MixerViewState()

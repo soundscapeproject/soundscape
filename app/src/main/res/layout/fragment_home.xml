@@ -1,226 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+<android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".presentation.screens.library.LibraryFragment">
+        tools:context=".presentation.screens.home.HomeFragment">
 
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="3dp" android:id="@+id/rvSoundScapes" android:visibility="visible">
+    </android.support.v7.widget.RecyclerView>
     <android.support.constraint.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_gradient">
+            android:layout_height="0dp"
+            android:background="@drawable/background_gradient"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/noSoundScapeContainer" android:visibility="gone">
 
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:inputType="textPersonName"
-                android:hint="@string/search_txt"
-                android:ems="10"
-                android:id="@+id/editText"
-                android:padding="10dp"
-                android:drawableStart="@drawable/ic_search_ic"
-                android:drawablePadding="10dp"
-                android:background="@drawable/edittext"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="16dp"/>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/txtMissingSS"
+                  android:text="Try to create a new soundscape"
+                  android:textColor="@color/colorText"
+                  android:textSize="20sp"
+                  android:gravity="center"
+                  app:layout_constraintTop_toBottomOf="@+id/btnCreateSoundScape"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  android:layout_marginTop="16dp"
 
-        <TextView
-                android:text="Library's categories"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:id="@+id/textViewCategories"
-                android:fontFamily="@font/roboto_medium"
-                android:textSize="20sp"
-                android:textColor="@color/colorWhite"
-                tools:layout_editor_absoluteY="81dp"
-                app:layout_constraintTop_toBottomOf="@+id/editText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="16dp"
-                />
-
-
-        <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/constraintLayout"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCategories"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp">
-
-            <android.support.constraint.Guideline
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/guideline" app:layout_constraintGuide_percent="0.5"/>
-
-
-            <LinearLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/category_background_nature"
-                    android:id="@+id/natureBtn"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintEnd_toStartOf="@id/guideline"
-                    android:layout_marginEnd="5dp">
-                <TextView
-                        android:fontFamily="@font/roboto_black"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="NATURE"
-                        android:layout_gravity="end"
-                        android:padding="8dp"/>
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_category_ic_white"
-                        android:layout_gravity="end"/>
-            </LinearLayout>
-
-            <LinearLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/category_background_human"
-                    android:id="@+id/humanBtn"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintStart_toEndOf="@id/guideline"
-                    android:layout_marginStart="5dp"
-            >
-                <TextView
-                        android:fontFamily="@font/roboto_black"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="HUMAN"
-                        android:layout_gravity="end"
-                        android:padding="8dp"/>
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_category_ic_white"
-                        android:layout_gravity="end"/>
-            </LinearLayout>
-
-            <LinearLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/category_background_machine"
-                    android:id="@+id/machineBtn"
-                    app:layout_constraintTop_toBottomOf="@+id/natureBtn"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="5dp"
-                    app:layout_constraintEnd_toStartOf="@id/guideline">
-                <TextView
-                        android:fontFamily="@font/roboto_black"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="MACHINE"
-                        android:layout_gravity="end"
-                        android:padding="8dp"/>
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_category_ic_white"
-                        android:layout_gravity="end"/>
-            </LinearLayout>
-
-            <LinearLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/category_background_story"
-                    android:id="@+id/storyBtn"
-                    app:layout_constraintTop_toBottomOf="@id/humanBtn"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/guideline"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-            >
-                <TextView
-                        android:fontFamily="@font/roboto_black"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="RECORDED"
-                        android:layout_gravity="end"
-                        android:padding="8dp"/>
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_category_ic_white"
-                        android:layout_gravity="end"/>
-            </LinearLayout>
-
-        </android.support.constraint.ConstraintLayout>
-
-        <TextView
-                android:text="Create a soundscape"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewYourChoice"
-                app:layout_constraintTop_toBottomOf="@id/constraintLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/roboto_medium"
-                android:textSize="20sp"
-                android:textColor="@color/colorWhite"/>
+        />
 
 
         <TextView
-                android:fontFamily="@font/roboto_black"
-                android:textColor="@color/colorWhite"
                 android:id="@+id/btnCreateSoundScape"
-                android:textSize="20sp"
-                android:layout_width="match_parent"
+                android:textSize="17sp"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:gravity="center"
-                android:text="SOUNDSCAPE CREATOR"
-                android:background="@drawable/background_random"
-                app:layout_constraintTop_toBottomOf="@id/textViewYourChoice"
+                android:background="@drawable/ic_round_add_ic"
+                android:backgroundTint="@color/colorWhite"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="16dp"
-                />
-
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:elevation="10dp"
+        />
 
 
     </android.support.constraint.ConstraintLayout>
-</ScrollView>
+    <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:visibility="gone"/>
+</android.support.constraint.ConstraintLayout>

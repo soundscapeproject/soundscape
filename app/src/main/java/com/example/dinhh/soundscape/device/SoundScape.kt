@@ -7,6 +7,8 @@ interface SoundScape {
 
     fun addSound(soundScape: SoundscapeItem): Completable
 
+    fun addSounds(soundScapleList: List<SoundscapeItem>): Completable
+
     fun playSingleSoundScapes(index: Int): Single<Int>
 
     fun stopSingleSoundScapes(index: Int): Completable
@@ -48,6 +50,13 @@ class SoundScapeImpl: SoundScape{
 
         return Completable.fromAction{
             soundsScapes.add(soundScape)
+        }
+    }
+
+    override fun addSounds(soundScapleList: List<SoundscapeItem>): Completable {
+
+        return Completable.fromAction{
+            soundsScapes.addAll(soundScapleList)
         }
     }
 

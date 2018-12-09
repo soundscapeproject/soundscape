@@ -14,7 +14,7 @@ data class LocalSoundscape(
     val title: String,
     @ColumnInfo(name = "soundscapes")
     val soundScapeList: List<SoundScape>,
-    val isUploaded: Boolean = false,
+    var isUploaded: Boolean = false,
     @ColumnInfo(name = "favorited")
     val isFavorited: Boolean = false
 )

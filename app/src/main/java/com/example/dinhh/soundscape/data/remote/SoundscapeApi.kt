@@ -35,6 +35,18 @@ interface SoundscapeApi {
         @Query("field79") length: Int,
         @Part file: MultipartBody.Part
     ): Completable
+
+    @Multipart
+    @POST("api_upload/")
+    fun uploadSoundScape(
+        @Query("key") key: String,
+        @Query("resourcetype") resourcetype: Int,
+        @Query("collection") collectionId: Int,
+        @Query("field8") title: String,
+        @Query("field75") category: String,
+        @Query("field76") soundType: String,
+        @Part file: MultipartBody.Part
+    ): Completable
 }
 
 data class LoginBody(val username: String, val password: String)

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import com.example.dinhh.soundscape.R
+import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.presentation.base.BaseRecyclerViewAdapter
 import kotlinx.android.synthetic.main.item_soundscapes.view.*
@@ -14,6 +15,8 @@ import kotlinx.android.synthetic.main.item_soundscapes.view.*
 interface HomeAdapterViewHolderClicks {
 
     fun uploadSound(layoutPosition: Int)
+
+    fun deleteSound(layoutPosition: Int)
 }
 
 class HomeAdapter(
@@ -38,11 +41,10 @@ class HomeAdapter(
 
         val localSoundscape = localSoundscapes[i]
         vh.itemView.txtName.text = localSoundscape.title
-    }
 
-    fun removeAt(position: Int) {
-        localSoundscapes.removeAt(position)
-        notifyItemRemoved(position)
+        if (localSoundscape.isUploaded) {
+            vh.itemView.btnUpload.gone()
+        }
     }
 
     fun replaceData(localSoundscapes: List<LocalSoundscape>) {
@@ -59,5 +61,17 @@ class HomeAdapter(
         RecyclerView.ViewHolder(view) {
 
         val txtName: TextView = view.findViewById(R.id.txtName)
+        val btnUpload: ImageButton = view.findViewById(R.id.btnUpload)
+        val btnDelete: ImageButton = view.findViewById(R.id.btnDelete)
+
+        init {
+            btnUpload.setOnClickListener {
+                mListener.uploadSound(this.layoutPosition)
+            }
+
+            btnDelete.setOnClickListener {
+                mListener.deleteSound(this.layoutPosition)
+            }
+        }
     }
 }

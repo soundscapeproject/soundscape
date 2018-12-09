@@ -4,8 +4,6 @@ package com.example.dinhh.soundscape.domain
 import com.example.dinhh.soundscape.domain.library.BeginSearchUseCase
 import com.example.dinhh.soundscape.domain.library.PlaySoundUseCase
 import com.example.dinhh.soundscape.domain.library.StopSoundUseCase
-import com.example.dinhh.soundscape.domain.record.StartRecordUseCase
-import com.example.dinhh.soundscape.domain.record.StopRecordUseCase
 import com.example.dinhh.soundscape.domain.record.*
 import com.example.dinhh.soundscape.domain.soundscape.*
 import com.example.dinhh.soundscape.domain.user.GetTokenUseCase
@@ -64,7 +62,6 @@ val useCaseModule = module {
         BeginSearchUseCase(get(), get())
     }
 
-    //Play sound
     factory {
         PlaySoundUseCase(get(),get())
     }
@@ -117,5 +114,25 @@ val useCaseModule = module {
 
     factory {
         GetLocalSoundscapesUseCase(get(),get())
+    }
+
+    factory {
+        GetOneLocalSoundscapeUseCase(get(),get())
+    }
+
+    factory {
+        AddAllSoundscapesUseCase(get(),get())
+    }
+
+    factory {
+        UpdateLocalSoundScapeUseCase(get(),get())
+    }
+
+    factory {
+        UploadSoundscapeUseCase(get(),get())
+    }
+
+    factory {
+        DeleteSingleSoundScape(get(),get())
     }
 }

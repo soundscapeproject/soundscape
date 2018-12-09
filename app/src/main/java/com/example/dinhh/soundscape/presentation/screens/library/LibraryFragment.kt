@@ -11,7 +11,7 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
 import com.example.dinhh.soundscape.presentation.screens.sounds.SoundActivity
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_library.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -31,7 +31,7 @@ class LibraryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_library_2, container, false)
+        val view =  inflater.inflate(R.layout.fragment_library, container, false)
 
         setHasOptionsMenu(true)
 
@@ -55,11 +55,16 @@ class LibraryFragment : Fragment() {
             goToSoundsActivity(SoundCategory.MACHINE.description)
         }
         storyBtn.setOnClickListener {
-            goToSoundsActivity(SoundCategory.STORY.description)
+            goToSavedRecordActivity(SoundCategory.RECORD.description)
         }
     }
 
-
+    private fun goToSavedRecordActivity(category: String) {
+        val intent = Intent(activity, SoundActivity::class.java)
+        intent.putExtra(SoundActivity.KEY_CATEGORY, category)
+        intent.putExtra(SoundActivity.KEY_CAME_FROM_SAVED_SOUND, true)
+        startActivity(intent)
+    }
 
     private fun goToSoundsActivity(category: String) {
         val intent = Intent(activity, SoundActivity::class.java)

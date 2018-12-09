@@ -19,7 +19,7 @@ import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
-import kotlinx.android.synthetic.main.fragment_home_2.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
@@ -40,7 +40,7 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home_2, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         homeViewModel.getLocalSoundscapes()
 
@@ -60,7 +60,7 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
 
     private fun setupButtons() {
         btnCreateSoundScape.setOnClickListener {
-            goToMixerActivity()
+            goToMixerActivity(null)
         }
     }
 
@@ -70,6 +70,9 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         rvSoundScapes.layoutManager = layoutManager
         adapter.setOnItemClickListener(object : RecyclerViewListener.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
+                val localSoundscape = adapter.getData()[position]
+
+                goToMixerActivity(localSoundscape)
             }
         })
 
@@ -80,20 +83,28 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         when (viewState) {
             HomeViewState.Loading -> {
                 progressBar.visible()
-                logD("LOADINNG")
-            }
-
-            is HomeViewState.GetSoundScapeSuccess -> {
-                progressBar.gone()
-//                handleViewBasedOnSoundScapeList(viewState.list)
-                adapter.replaceData(viewState.list)
-                logD("REPLEACET DATA DATA TDATA")
             }
 
             is HomeViewState.Failure -> {
                 progressBar.gone()
-                logD("ERROR: ${viewState.throwable.localizedMessage}")
                 Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+
+            is HomeViewState.UploadSuccess -> {
+                progressBar.gone()
+                homeViewModel.getLocalSoundscapes()
+                Toast.makeText(activity, "Uploaded", Toast.LENGTH_SHORT).show()
+            }
+
+            is HomeViewState.DeleteSuccess -> {
+                progressBar.gone()
+                homeViewModel.getLocalSoundscapes()
+            }
+
+            is HomeViewState.GetSoundScapeSuccess -> {
+                progressBar.gone()
+                handleViewBasedOnSoundScapeList(viewState.list)
+                adapter.replaceData(viewState.list)
             }
         }
     }
@@ -116,13 +127,30 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         }
     }
 
-    private fun goToMixerActivity() {
+    private fun goToMixerActivity(localSoundscape: LocalSoundscape?) {
         val intent = Intent(activity, MixerActivity::class.java)
+
+        if (localSoundscape == null) {
+            intent.putExtra(MixerActivity.KEY_IS_TO_EDIT, false)
+        } else {
+            intent.putExtra(MixerActivity.KEY_IS_TO_EDIT, true)
+            intent.putExtra(MixerActivity.KEY_SOUNDSCAPE_ID, localSoundscape.soundId)
+            intent.putExtra(MixerActivity.KEY_SOUNDSCAPE_TITLE,localSoundscape.title)
+        }
+
         startActivity(intent)
     }
 
     override fun uploadSound(layoutPosition: Int) {
-        //DO UPLOAD
+        val localSoundscape = adapter.getData()[layoutPosition]
+
+        homeViewModel.uploadSoundScape(localSoundscape)
+    }
+
+    override fun deleteSound(layoutPosition: Int) {
+        val localSoundscape = adapter.getData()[layoutPosition]
+
+        homeViewModel.deleteSoundScape(localSoundscape)
     }
 
     companion object {
