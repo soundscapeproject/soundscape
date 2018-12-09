@@ -12,7 +12,7 @@ class DataConverter {
         fun fromSoundscapeList(soundScapeList: List<SoundScape>): String {
 
             val gson = Gson()
-//            val type = object : TypeToken<List<SoundScape>>() {}.type
+//            val type = object : TypeToken<List<background_cardview>>() {}.type
             val json = gson.toJson(soundScapeList)
             return json
         }

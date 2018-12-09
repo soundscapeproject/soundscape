@@ -8,6 +8,7 @@ import io.reactivex.Single
 class GetLocalSoundscapesUseCase(private val soundscapeRepository: SoundscapeRepository, private val schedulerProvider: SchedulerProvider) {
 
     fun execute(): Single<List<LocalSoundscape>> {
+
         return soundscapeRepository.getAllLocalSoundScapes()
             .subscribeOn(schedulerProvider.getIOScheduler())
             .observeOn(schedulerProvider.getUIScheduler())

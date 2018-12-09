@@ -19,11 +19,25 @@ interface SoundscapeLocalData {
     fun saveLocalSoundscapes(localSoundscape: LocalSoundscape): Completable
 
     fun getAllLocalSoundscapes(): Single<List<LocalSoundscape>>
+
+    fun getOneLocalSoundscape(id: Long): Single<LocalSoundscape>
+
+    fun updateLocalSoundScape(localSoundscape: LocalSoundscape): Completable
 }
 
 class SoundscapeLocalDataImpl(
     private val soundscapeDao: SoundscapeDao,
     private val recordDao: RecordDao): SoundscapeLocalData {
+
+    override fun updateLocalSoundScape(localSoundscape: LocalSoundscape): Completable {
+        return Completable.fromAction {
+            soundscapeDao.update(localSoundscape)
+        }
+    }
+
+    override fun getOneLocalSoundscape(id: Long): Single<LocalSoundscape> {
+        return soundscapeDao.getOne(id)
+    }
 
     override fun saveLocalSoundscapes(localSoundscape: LocalSoundscape): Completable {
         return Completable.fromAction {
@@ -32,7 +46,6 @@ class SoundscapeLocalDataImpl(
     }
 
     override fun getAllLocalSoundscapes(): Single<List<LocalSoundscape>> {
-        logD("GET ALL LOCAL SOUNDSCAOES")
         return soundscapeDao.getAll()
     }
 

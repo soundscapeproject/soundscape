@@ -12,8 +12,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.presentation.screens.home.HomeFragment
 import com.example.dinhh.soundscape.presentation.screens.library.LibraryFragment
+import com.example.dinhh.soundscape.presentation.screens.home.HomeFragment
 import com.example.dinhh.soundscape.presentation.screens.login.LoginActivity
 import com.example.dinhh.soundscape.presentation.screens.mixer.MixerActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,15 +23,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
-    private lateinit var homeFragment: Fragment
-    private lateinit var libraryFragment: Fragment
     private val RECORD_AUDIO_REQUEST_CODE = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        setupFragments()
 
         setupButtomNavigation()
 
@@ -47,14 +43,8 @@ class MainActivity : AppCompatActivity() {
         })
 
         btnMixer.setOnClickListener {
-            toolbar_title.text = "Soundscapes"
             gotoMixerActivity()
         }
-    }
-
-    private fun setupFragments() {
-        homeFragment = HomeFragment.newInstance()
-        libraryFragment = LibraryFragment.newInstance()
     }
 
     private fun setupButtomNavigation() {
@@ -65,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     toolbar_title.text = "Home"
+                    val homeFragment = HomeFragment.newInstance()
                     openFragment(homeFragment)
                     return@OnNavigationItemSelectedListener true
                 }
@@ -73,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_library -> {
                     toolbar_title.text = "Library"
+                    val libraryFragment = LibraryFragment.newInstance()
                     openFragment(libraryFragment)
                     return@OnNavigationItemSelectedListener true
                 }

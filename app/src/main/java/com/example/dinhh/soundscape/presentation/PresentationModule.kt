@@ -1,5 +1,6 @@
 package com.example.dinhh.soundscape.presentation
 
+import com.example.dinhh.soundscape.presentation.screens.home.HomeViewModel
 import com.example.dinhh.soundscape.presentation.screens.library.LibraryViewModel
 import com.example.dinhh.soundscape.presentation.screens.login.LoginViewModel
 import com.example.dinhh.soundscape.presentation.screens.main.MainViewModel
@@ -33,10 +34,14 @@ val presentationModule = module {
     }
 
     viewModel {
-        MixerViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
+        MixerViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
     }
 
     viewModel {
         LibraryViewModel(get())
+    }
+
+    viewModel {
+        HomeViewModel(get())
     }
 }

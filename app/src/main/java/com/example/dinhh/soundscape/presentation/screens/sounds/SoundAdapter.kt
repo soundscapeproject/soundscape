@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import com.example.dinhh.soundscape.R
@@ -13,7 +12,6 @@ import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.presentation.base.BaseRecyclerViewAdapter
 import com.example.dinhh.soundscape.presentation.screens.entity.DisplaySound
-import com.example.dinhh.soundscape.presentation.screens.library.LibararyAdapter
 import kotlinx.android.synthetic.main.item_sound.view.*
 
 interface SoundAdapterViewHolderClicks {

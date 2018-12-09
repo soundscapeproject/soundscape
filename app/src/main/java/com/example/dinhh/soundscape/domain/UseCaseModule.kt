@@ -73,7 +73,7 @@ val useCaseModule = module {
         StopSoundUseCase(get(),get())
     }
 
-    //SoundScape
+    //background_cardview
 
     factory {
         AddSoundScapeUseCase(get(),get())
@@ -117,5 +117,17 @@ val useCaseModule = module {
 
     factory {
         GetLocalSoundscapesUseCase(get(),get())
+    }
+
+    factory {
+        GetOneLocalSoundscapeUseCase(get(),get())
+    }
+
+    factory {
+        AddAllSoundscapesUseCase(get(),get())
+    }
+
+    factory {
+        UpdateLocalSoundScapeUseCase(get(),get())
     }
 }
