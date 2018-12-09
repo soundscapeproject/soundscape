@@ -1,6 +1,5 @@
 package com.example.dinhh.soundscape.data.repository
 
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.data.entity.RemoteSound
 import com.example.dinhh.soundscape.data.local.SoundscapeLocalData
@@ -16,12 +15,17 @@ interface SoundscapeRepository {
 
     fun getAllLocalSoundScapes(): Single<List<LocalSoundscape>>
 
+    fun getOneLocalSoundScape(id: Long): Single<LocalSoundscape>
 }
 
 class SoundscapeRepositoryImpl(
     private val soundscapeLocalData: SoundscapeLocalData,
     private val soundscapeRemoteData: SoundscapeRemoteData,
     private val sharedPref: SharedPref): SoundscapeRepository {
+
+    override fun getOneLocalSoundScape(id: Long): Single<LocalSoundscape> {
+        return soundscapeLocalData.getOneLocalSoundscape(id)
+    }
 
     override fun saveLocalSoundScapes(localSoundscape: LocalSoundscape): Completable {
        return soundscapeLocalData.saveLocalSoundscapes(localSoundscape)

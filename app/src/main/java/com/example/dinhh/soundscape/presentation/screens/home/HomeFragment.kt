@@ -6,14 +6,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.show
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
@@ -60,7 +58,7 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
 
     private fun setupButtons() {
         btnCreateSoundScape.setOnClickListener {
-            goToMixerActivity()
+            goToMixerActivity(null)
         }
     }
 
@@ -70,6 +68,9 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         rvSoundScapes.layoutManager = layoutManager
         adapter.setOnItemClickListener(object : RecyclerViewListener.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
+                val localSoundscape = adapter.getData()[position]
+
+                goToMixerActivity(localSoundscape)
             }
         })
 
@@ -80,19 +81,16 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         when (viewState) {
             HomeViewState.Loading -> {
                 progressBar.visible()
-                logD("LOADINNG")
             }
 
             is HomeViewState.GetSoundScapeSuccess -> {
                 progressBar.gone()
-//                handleViewBasedOnSoundScapeList(viewState.list)
+                handleViewBasedOnSoundScapeList(viewState.list)
                 adapter.replaceData(viewState.list)
-                logD("REPLEACET DATA DATA TDATA")
             }
 
             is HomeViewState.Failure -> {
                 progressBar.gone()
-                logD("ERROR: ${viewState.throwable.localizedMessage}")
                 Toast.makeText(activity, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
@@ -116,8 +114,17 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         }
     }
 
-    private fun goToMixerActivity() {
+    private fun goToMixerActivity(localSoundscape: LocalSoundscape?) {
         val intent = Intent(activity, MixerActivity::class.java)
+
+        if (localSoundscape == null) {
+            intent.putExtra(MixerActivity.KEY_IS_TO_EDIT, false)
+        } else {
+            intent.putExtra(MixerActivity.KEY_IS_TO_EDIT, true)
+            intent.putExtra(MixerActivity.KEY_SOUNDSCAPE_ID, localSoundscape.soundId)
+            intent.putExtra(MixerActivity.KEY_SOUNDSCAPE_TITLE,localSoundscape.title)
+        }
+
         startActivity(intent)
     }
 

@@ -118,4 +118,12 @@ val useCaseModule = module {
     factory {
         GetLocalSoundscapesUseCase(get(),get())
     }
+
+    factory {
+        GetOneLocalSoundscapeUseCase(get(),get())
+    }
+
+    factory {
+        AddAllSoundscapesUseCase(get(),get())
+    }
 }

@@ -5,11 +5,11 @@ import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.data.repository.SoundscapeRepository
 import io.reactivex.Single
 
-class GetLocalSoundscapesUseCase(private val soundscapeRepository: SoundscapeRepository, private val schedulerProvider: SchedulerProvider) {
+class GetOneLocalSoundscapeUseCase(private val soundscapeRepository: SoundscapeRepository, private val schedulerProvider: SchedulerProvider) {
 
-    fun execute(): Single<List<LocalSoundscape>> {
+    fun execute(id: Long): Single<LocalSoundscape> {
 
-        return soundscapeRepository.getAllLocalSoundScapes()
+        return soundscapeRepository.getOneLocalSoundScape(id)
             .subscribeOn(schedulerProvider.getIOScheduler())
             .observeOn(schedulerProvider.getUIScheduler())
     }
