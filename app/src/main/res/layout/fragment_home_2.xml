@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:context=".presentation.screens.home.HomeFragment">
+
+    <android.support.constraint.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_gradient">
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:inputType="textPersonName"
+                android:hint="@string/search_txt"
+                android:ems="10"
+                android:id="@+id/editText"
+                android:padding="10dp"
+                android:drawableStart="@drawable/ic_search_ic"
+                android:drawablePadding="10dp"
+                android:background="@drawable/edittext"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="16dp"/>
+
+
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/txtMissingSS"
+                  android:text="Try to create a new soundscape"
+                  android:textColor="@color/colorText"
+                  android:textSize="20sp"
+                  android:gravity="center"
+                  app:layout_constraintTop_toBottomOf="@+id/soundscapeCreatorButton"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  android:layout_marginTop="16dp"
+
+        />
+
+
+        <TextView
+                android:id="@+id/soundscapeCreatorButton"
+                android:textSize="17sp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:background="@drawable/ic_round_add_ic"
+                android:backgroundTint="@color/colorWhite"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:elevation="10dp"
+        />
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
