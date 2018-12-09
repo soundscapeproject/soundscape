@@ -22,7 +22,7 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:background="@android:color/black"
-                android:src="@drawable/background_cardview"
+                android:src="@drawable/bg_cardview"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
