@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.device.SoundscapeItem
@@ -166,16 +165,26 @@ class SoundActivity : AppCompatActivity(),
         viewHolder.setPlayingState(playing)
     }
 
-    private fun changeTitleBar(soundList: List<DisplaySound>) {
+    private fun handleUIBasedOnSoundList(displaySoundList: List<DisplaySound>) {
 
-        val numberOfSounds = soundList.count()
+        val numberOfSounds = displaySoundList.count()
 
         when(numberOfSounds) {
+
+            0 -> {
+                txtNoSounds.visible()
+                soundList.gone()
+            }
+
             1 -> {
+                txtNoSounds.gone()
+                soundList.visible()
                 txt_Category_Name.text = "${numberOfSounds} Sound"
             }
 
             else -> {
+                txtNoSounds.gone()
+                soundList.visible()
                 txt_Category_Name.text = "${numberOfSounds} Sounds"
             }
         }
@@ -195,7 +204,7 @@ class SoundActivity : AppCompatActivity(),
                 DisplaySound.remoteSoundToDisplaySound(element[0])
             }
 
-            changeTitleBar(displaySoundList)
+            handleUIBasedOnSoundList(displaySoundList)
             adapter.replaceData(displaySoundList)
         }
 
@@ -206,7 +215,7 @@ class SoundActivity : AppCompatActivity(),
                 DisplaySound.localRecordToDisplaySound(element)
             }
 
-            changeTitleBar(displaySoundList)
+            handleUIBasedOnSoundList(displaySoundList)
             adapter.replaceData(displaySoundList)
         }
 

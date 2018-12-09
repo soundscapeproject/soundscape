@@ -42,4 +42,5 @@
     <string name="sounds">Sounds</string>
     <string name="soundscape_name">Soundscape name</string>
     <string name="app_slogan">where remoteSounds become masterpiece</string>
+    <string name="no_sounds">No sounds</string>
 </resources>
