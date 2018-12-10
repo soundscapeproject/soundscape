@@ -277,6 +277,10 @@ class MixerActivity : AppCompatActivity(),
         mixerViewModel.loopSingleSound(layoutPosition, isLooping)
     }
 
+    override fun onChangeVolume(layoutPosition: Int, progress: Int) {
+        mixerViewModel.changeVolume(layoutPosition, progress)
+    }
+
 
     override fun onStopSingleSoundScape(layoutPosition: Int) {
         mixerViewModel.stopSingleSoundScape(layoutPosition)

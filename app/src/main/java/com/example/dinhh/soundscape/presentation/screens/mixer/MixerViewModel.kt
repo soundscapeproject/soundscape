@@ -20,7 +20,8 @@ class MixerViewModel(
     private val clearSoundScapesUseCase: ClearSoundScapesUseCase,
     private val addAllSoundscapesUseCase: AddAllSoundscapesUseCase,
     private val getOneLocalSoundscapeUseCase: GetOneLocalSoundscapeUseCase,
-    private val updateLocalSoundScapeUseCase: UpdateLocalSoundScapeUseCase
+    private val updateLocalSoundScapeUseCase: UpdateLocalSoundScapeUseCase,
+    private val changeVolumeUseCase: ChangeVolumeUseCase
 ): ViewModel() {
     private val disposables = CompositeDisposable()
     private val _viewState = MutableLiveData<MixerViewState>()
@@ -183,6 +184,19 @@ class MixerViewModel(
                 MixerViewState.Loading
         disposables.add(
             setLoopingUseCase.execute(index, isLooping).subscribe({
+                _viewState.value = MixerViewState.Success
+            }, {
+                _viewState.value =
+                        MixerViewState.Failure(it)
+            })
+        )
+    }
+
+    fun changeVolume(index: Int, progress: Int){
+        _viewState.value =
+                MixerViewState.Loading
+        disposables.add(
+            changeVolumeUseCase.execute(index, progress).subscribe({
                 _viewState.value = MixerViewState.Success
             }, {
                 _viewState.value =

@@ -14,6 +14,8 @@ interface Player {
     fun loopSound(looping: Boolean)
 
     fun releaseSound(): Completable
+
+    fun changeVolume(progress: Int)
 }
 
 class PlayerImpl : Player {
@@ -22,7 +24,6 @@ class PlayerImpl : Player {
     private var isLooping: Boolean = false
 
     private fun initializeMediaPlayer(): Completable {
-
         return Completable.fromAction {
             if (mMediaPlayer == null) {
                 mMediaPlayer = MediaPlayer()
@@ -74,8 +75,13 @@ class PlayerImpl : Player {
         }
     }
 
-    private fun play(): Completable {
+    override fun changeVolume(progress: Int) {
+        val maxVolume = 100.0
+        val log1 = (Math.log(maxVolume - progress) / Math.log(maxVolume)).toFloat()
+        mMediaPlayer?.setVolume(1-log1,1-log1)
+    }
 
+    private fun play(): Completable {
         return Completable.create { complete ->
             if (mMediaPlayer != null && !isPlaying()) {
                 mMediaPlayer?.start()
