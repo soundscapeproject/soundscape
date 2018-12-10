@@ -1,6 +1,7 @@
 package com.example.dinhh.soundscape.presentation.screens.home
 
 
+import android.app.AlertDialog
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -91,14 +92,40 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
             }
 
             is HomeViewState.UploadSuccess -> {
-                progressBar.gone()
-                homeViewModel.getLocalSoundscapes()
-                Toast.makeText(activity, "Uploaded", Toast.LENGTH_SHORT).show()
+
+                val builder = AlertDialog.Builder(activity)
+                builder.setTitle("Uploading")
+                builder.setMessage("Do you want to upload this soundscape ?")
+                builder.setPositiveButton("YES"){
+                        _, _ ->
+                    progressBar.gone()
+                    homeViewModel.getLocalSoundscapes()
+                    Toast.makeText(activity, "Uploaded", Toast.LENGTH_SHORT).show()
+                }
+                builder.setNegativeButton("NO"){
+                        _, _ ->
+                    progressBar.gone()
+                }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
             }
 
             is HomeViewState.DeleteSuccess -> {
-                progressBar.gone()
-                homeViewModel.getLocalSoundscapes()
+                val builder = AlertDialog.Builder(activity)
+                builder.setTitle("Deleting")
+                builder.setMessage("Do you want to delete this soundscape ?")
+                builder.setPositiveButton("YES"){
+                        _, _ ->
+                    progressBar.gone()
+                    homeViewModel.getLocalSoundscapes()
+                    Toast.makeText(activity, "Deleted", Toast.LENGTH_SHORT).show()
+                }
+                builder.setNegativeButton("NO"){
+                        _, _ ->
+                    progressBar.gone()
+                }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
             }
 
             is HomeViewState.GetSoundScapeSuccess -> {
