@@ -76,9 +76,8 @@ class PlayerImpl : Player {
     }
 
     override fun changeVolume(progress: Int) {
-        val maxVolume = 100.0
-        val log1 = (Math.log(maxVolume - progress) / Math.log(maxVolume)).toFloat()
-        mMediaPlayer?.setVolume(1-log1,1-log1)
+        val volumne = progress / 100f
+        mMediaPlayer?.setVolume(volumne,volumne)
     }
 
     private fun play(): Completable {
