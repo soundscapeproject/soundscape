@@ -135,4 +135,8 @@ val useCaseModule = module {
     factory {
         DeleteSingleSoundScape(get(),get())
     }
+
+    factory {
+        ChangeVolumeUseCase(get(),get())
+    }
 }

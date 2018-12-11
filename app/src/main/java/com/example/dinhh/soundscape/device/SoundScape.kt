@@ -24,6 +24,8 @@ interface SoundScape {
     fun getSoundScapes(): Single<MutableList<SoundscapeItem>>
 
     fun loopSingleSound(index: Int, isLooping: Boolean): Completable
+
+    fun changeVolume(index: Int, progress: Int): Completable
 }
 
 data class SoundscapeItem(
@@ -31,7 +33,7 @@ data class SoundscapeItem(
     val length: String,
     val category: String,
     var source: String,
-    var volume: Int = 50,
+    var volume: Int = 100,
     var isPlaying: Boolean = false,
     val player: Player = PlayerImpl()
 )
@@ -83,6 +85,14 @@ class SoundScapeImpl: SoundScape{
         return Completable.fromAction {
             val soundScape = soundsScapes[index]
             soundScape.player.loopSound(isLooping)
+        }
+    }
+
+    override fun changeVolume(index: Int, progress: Int): Completable {
+        return Completable.fromAction {
+            val soundScape = soundsScapes[index]
+            soundScape.volume = progress
+            soundScape.player.changeVolume(progress)
         }
     }
 

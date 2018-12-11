@@ -1,5 +1,7 @@
 package com.example.dinhh.soundscape.presentation.screens.mixer
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Handler
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
@@ -7,15 +9,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.device.SoundscapeItem
+import com.example.dinhh.soundscape.presentation.screens.main.MainActivity
 import kotlinx.android.synthetic.main.item_mixer.view.*
 
 interface MixerAdapterViewHolderClicks {
@@ -28,13 +29,14 @@ interface MixerAdapterViewHolderClicks {
 
     fun onLoopSingleSound(layoutPosition: Int, isLooping: Boolean)
 
+    fun onChangeVolume(layoutPosition: Int, progress: Int)
+
 }
 
 class MixerAdapter(
     private val items: MutableList<SoundscapeItem>,
     private val mListener: MixerAdapterViewHolderClicks
 ): RecyclerView.Adapter<MixerAdapter.ViewHolder>(){
-    private val handler = Handler()
 
     override fun getItemCount(): Int {
         return items.size
@@ -51,32 +53,13 @@ class MixerAdapter(
     }
 
     private fun setupMixerItem(holder: ViewHolder, position: Int){
-        //Set the default values for each sound item
-//        val maxVolume = 100.0
         val mixerItem = holder.itemView
         val currentSound = items[position]
 
         setColor(holder,position)
         setPlayPauseButton(holder, position)
-//        currentSound.sound.setVolume(currentSound.volume.toFloat(), currentSound.volume.toFloat())
-//        mixerItem.volumeSeekBar.progress = currentSound.volume
         mixerItem.titleTextView.text = currentSound.title
         mixerItem.lengthTextView.text = "${currentSound.length} sec"
-
-        //Volume slider for individual sound
-//        holder.itemView.volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-//            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-//                // Display the current progress of SeekBar
-//                val log1 = (Math.log(maxVolume - i) / Math.log(maxVolume)).toFloat()
-//                currentSound.sound.setVolume(1-log1,1-log1)
-//            }
-//            override fun onStartTrackingTouch(seekBar: SeekBar) {
-//                // Do something
-//            }
-//            override fun onStopTrackingTouch(seekBar: SeekBar) {
-//                currentSound.volume = seekBar.progress
-//            }
-//        })
     }
 
     fun setPlayPauseButton(holder: ViewHolder, position: Int) {
@@ -114,20 +97,6 @@ class MixerAdapter(
         }
     }
 
-//    // Changes play button to stop button for the duration of the sound
-//    private fun showStop(holder: ViewHolder, length: Long){
-//        holder.itemView.itemSoundPlayBtn.invisible()
-//        holder.itemView.itemSoundStopBtn.visible()
-//        handler.postDelayed({ showPlay(holder) },length * 1000)
-//    }
-//
-//    // Changes stop button to play button and clears the possible remaining time from the handler
-//    private fun showPlay(holder: ViewHolder){
-//        holder.itemView.itemSoundPlayBtn.visible()
-//        holder.itemView.itemSoundStopBtn.invisible()
-//        handler.removeCallbacksAndMessages(null)
-//    }
-
     class ViewHolder (view: View,  mListener: MixerAdapterViewHolderClicks) : RecyclerView.ViewHolder(view) {
         val titleTextView: TextView = view.findViewById(R.id.titleTextView)
         val lengthTextView: TextView = view.findViewById(R.id.lengthTextView)
@@ -137,6 +106,7 @@ class MixerAdapter(
         val mixerItem: ConstraintLayout = view.findViewById(R.id.mixerItem)
         val toggleLoopOn: Button = view.findViewById(R.id.loopBtnToggleOn)
         val toggleLoopOff: Button = view.findViewById(R.id.loopBtnToggleOff)
+        val volumeSeekBar: SeekBar = view.findViewById(R.id.volumeSeekBar)
 
         init {
             itemSoundPlayBtn.setOnClickListener {
@@ -162,6 +132,29 @@ class MixerAdapter(
                 toggleLoopOff.invisible()
                 mListener.onLoopSingleSound(this.layoutPosition, false)
             }
+
+            volumeSeekBar.progress = 100
+            volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                var seekBarProgress: Int = 0
+                var mToast: Toast? = null
+                @SuppressLint("ShowToast")
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    seekBarProgress = progress
+                    if (mToast == null) {
+                        mToast = Toast.makeText(view.context, progress.toString(), Toast.LENGTH_LONG)
+                    }
+                    mToast?.setText("Set volume to: " + seekBarProgress++ + "%")
+                    mToast?.show()
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    mListener.onChangeVolume(layoutPosition, seekBarProgress)
+                }
+
+            })
         }
 
         fun setPlayingState(playing: Boolean) {
