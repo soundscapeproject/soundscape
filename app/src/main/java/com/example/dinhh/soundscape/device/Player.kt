@@ -15,7 +15,7 @@ interface Player {
 
     fun releaseSound(): Completable
 
-    fun changeVolume(progress: Int)
+    fun changeVolume(progress: Int): Completable
 }
 
 class PlayerImpl : Player {
@@ -75,9 +75,12 @@ class PlayerImpl : Player {
         }
     }
 
-    override fun changeVolume(progress: Int) {
-        val volumne = progress / 100f
-        mMediaPlayer?.setVolume(volumne,volumne)
+    override fun changeVolume(progress: Int): Completable {
+
+        return Completable.fromAction{
+            val volumne = progress / 100f
+            mMediaPlayer?.setVolume(volumne,volumne)
+        }
     }
 
     private fun play(): Completable {
