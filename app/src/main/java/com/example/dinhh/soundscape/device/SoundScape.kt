@@ -89,11 +89,9 @@ class SoundScapeImpl: SoundScape{
     }
 
     override fun changeVolume(index: Int, progress: Int): Completable {
-        return Completable.fromAction {
-            val soundScape = soundsScapes[index]
-            soundScape.volume = progress
-            soundScape.player.changeVolume(progress)
-        }
+        val soundScape = soundsScapes[index]
+        soundScape.volume = progress
+        return soundScape.player.changeVolume(progress)
     }
 
     override fun playSoundScapes(): Completable {
