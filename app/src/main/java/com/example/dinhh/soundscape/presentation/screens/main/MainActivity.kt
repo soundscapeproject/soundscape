@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         // Initial tab
-        bottomNavigation.setSelectedItemId(R.id.navigation_home)
+        bottomNavigation.selectedItemId = R.id.navigation_home
         toolbar_title.text = "Home"
     }
 

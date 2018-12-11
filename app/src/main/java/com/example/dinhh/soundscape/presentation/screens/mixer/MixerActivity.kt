@@ -64,7 +64,7 @@ class MixerActivity : AppCompatActivity(),
             mixerViewModel.clearSoundScapes()
         } else {
             mixerViewModel.getSoundScapes()
-            toolbar_title.text = "Workplace"
+            toolbar_title.text = "Soundscape Mixer"
         }
 
         mixerViewModel.viewState.observe(this, Observer {

@@ -30,9 +30,15 @@
 
         <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" app:srcCompat="@drawable/ic_clear_24dp"
-                android:id="@+id/btnDelete" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_height="wrap_content"
+                android:background="@color/transparent_black"
+                app:srcCompat="@drawable/ic_clear_24dp"
+                android:id="@+id/btnDelete"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="5dp"/>
+
         <android.support.constraint.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="50dp"
