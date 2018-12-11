@@ -72,12 +72,14 @@ class SoundScapeImpl: SoundScape{
     override fun playSingleSoundScapes(index: Int): Single<Int> {
         val soundScape = soundsScapes[index]
         soundScape.isPlaying = true
+
         return soundScape.player.playSound(soundScape.source).toSingleDefault(index)
     }
 
     override fun stopSingleSoundScapes(index: Int): Completable {
         val soundScape = soundsScapes[index]
         soundScape.isPlaying = false
+
         return soundScape.player.stopSound()
     }
 
