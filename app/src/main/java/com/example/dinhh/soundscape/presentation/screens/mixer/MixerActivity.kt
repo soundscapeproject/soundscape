@@ -1,20 +1,16 @@
 package com.example.dinhh.soundscape.presentation.screens.mixer
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
-import com.example.dinhh.soundscape.common.invisible
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.data.entity.SoundCategory
@@ -78,22 +74,22 @@ class MixerActivity : AppCompatActivity(),
 
 
         //Play created soundscape
-        playAllBtn.setOnClickListener {
-            playAllBtn.invisible()
-            stopAllBtn.visible()
+        btnPlayAll.setOnClickListener {
+            btnPlayAll.invisible()
+            btnStopAll.visible()
             mixerViewModel.playSoundScapes()
             mixerAdapter.notifyDataSetChanged()
         }
 
         //Stop created soundscape
-        stopAllBtn.setOnClickListener {
-            playAllBtn.visible()
-            stopAllBtn.invisible()
+        btnStopAll.setOnClickListener {
+            btnPlayAll.visible()
+            btnStopAll.invisible()
             mixerViewModel.stopSoundScapes()
             mixerAdapter.notifyDataSetChanged()
         }
 
-        saveMixBtn.setOnClickListener {
+        btnSaveMix.setOnClickListener {
 
             if (isToEdit) {
                 val soundScapeList = soundScapesList.map {
@@ -113,7 +109,7 @@ class MixerActivity : AppCompatActivity(),
             }
         }
 
-        clearBtn.setOnClickListener {
+        btnClear.setOnClickListener {
             val builder = AlertDialog.Builder(this@MixerActivity)
             builder.setTitle(getString(R.string.clear_all))
             builder.setMessage(getString(R.string.do_you_want_to_clear_all))
@@ -180,8 +176,8 @@ class MixerActivity : AppCompatActivity(),
             }
 
             MixerViewState.PlaySoundScapeFinish -> {
-                playAllBtn.visible()
-                stopAllBtn.invisible()
+                btnPlayAll.visible()
+                btnStopAll.invisible()
                 mixerViewModel.stopSoundScapes()
             }
 
@@ -246,11 +242,11 @@ class MixerActivity : AppCompatActivity(),
     private fun handlePlayAllButton(soundScapeItems: List<SoundscapeItem>) {
         
         if (soundScapeItems.filter { it.isPlaying }.size == soundScapeItems.size) {
-            playAllBtn.invisible()
-            stopAllBtn.visible()
+            btnPlayAll.invisible()
+            btnStopAll.visible()
         } else if (soundScapeItems.filter { !it.isPlaying }.size == soundScapeItems.size) {
-            playAllBtn.visible()
-            stopAllBtn.invisible()
+            btnPlayAll.visible()
+            btnStopAll.invisible()
         }
     }
 

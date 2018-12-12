@@ -47,7 +47,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
         chronometer.isCountDown = true
         btnStopRecording.invisible()
         btnPlay.invisible()
-        recordingTextView.invisible()
+        txtRecording.invisible()
         btnSave.invisible()
 
         saveRecordDialog = SaveRecordDialog.newInstance(getString(R.string.title_save_record_dialog))
@@ -109,7 +109,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
         btnSave.invisible()
         btnStartRecording.invisible()
         btnStopRecording.visible()
-        recordingTextView.visible()
+        txtRecording.visible()
         chronometer.start()
         recordViewModel.startRecording()
 
@@ -125,7 +125,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
         handler.removeCallbacksAndMessages(null)
         btnStartRecording.visible()
         btnStopRecording.invisible()
-        recordingTextView.invisible()
+        txtRecording.invisible()
         btnPlay.invisible()
         btnSave.invisible()
         chronometer.stop()

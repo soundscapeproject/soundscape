@@ -82,4 +82,7 @@
     <string name="do_you_want_to_clear_all">Do you want to clear all sounds from this workplace?</string>
     <string name="all_sounds_cleared">All sounds cleared</string>
     <string name="name_cannot_be_empty">Name cannot be left empty</string>
+    <string name="logout">Logout</string>
+    <string name="do_you_want_to_log_out">Do you want to logout from this account?</string>
+    <string name="logged_out">Logged out</string>
 </resources>

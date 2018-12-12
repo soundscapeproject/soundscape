@@ -194,13 +194,13 @@ class SoundActivity : AppCompatActivity(),
             1 -> {
                 txtNoSounds.gone()
                 soundList.visible()
-                txt_Category_Name.text = "${numberOfSounds} $soundsString"
+                txtCategoryName.text = "${numberOfSounds} $soundsString"
             }
 
             else -> {
                 txtNoSounds.gone()
                 soundList.visible()
-                txt_Category_Name.text = "${numberOfSounds} $soundsString"
+                txtCategoryName.text = "${numberOfSounds} $soundsString"
             }
         }
     }

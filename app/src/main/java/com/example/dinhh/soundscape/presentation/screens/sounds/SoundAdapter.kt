@@ -42,11 +42,11 @@ class SoundAdapter(
         val vh = viewHolder as SoundAdapter.ViewHolder
 
         val sound = displaySounds[i]
-        vh.itemView.itemSoundStopBtn.invisible()
-        vh.itemView.titleTextView.text = sound.title
+        vh.itemView.btnItemSoundStop.invisible()
+        vh.itemView.txtTitle.text = sound.title
 
         if (!sound.length.isNullOrEmpty()) {
-            vh.itemView.lengthTextView.text = "${sound.length} sec"
+            vh.itemView.txtLength.text = "${sound.length} sec"
         }
 
         if (sound.isUploaded) {
@@ -72,11 +72,11 @@ class SoundAdapter(
     class ViewHolder(view: View, mListener: SoundAdapterViewHolderClicks) :
         RecyclerView.ViewHolder(view) {
 
-        val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.itemSoundPlayBtn)
-        val itemSoundStopBtn: ImageButton = view.findViewById(R.id.itemSoundStopBtn)
+        val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.btnItemSoundPlay)
+        val itemSoundStopBtn: ImageButton = view.findViewById(R.id.btnItemSoundStop)
         val btnUpload: ImageButton = view.findViewById(R.id.btnUpload)
-        val titleTextView: TextView = view.findViewById(R.id.titleTextView)
-        val lengthTextView: TextView = view.findViewById(R.id.lengthTextView)
+        val titleTextView: TextView = view.findViewById(R.id.txtTitle)
+        val lengthTextView: TextView = view.findViewById(R.id.txtLength)
 
         init {
             itemSoundPlayBtn.setOnClickListener {

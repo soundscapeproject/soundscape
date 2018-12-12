@@ -1,8 +1,6 @@
 package com.example.dinhh.soundscape.presentation.screens.mixer
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.os.Handler
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -16,7 +14,6 @@ import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.device.SoundscapeItem
-import com.example.dinhh.soundscape.presentation.screens.main.MainActivity
 import kotlinx.android.synthetic.main.item_mixer.view.*
 
 interface MixerAdapterViewHolderClicks {
@@ -58,8 +55,8 @@ class MixerAdapter(
 
         setColor(holder,position)
         setPlayPauseButton(holder, position)
-        mixerItem.titleTextView.text = currentSound.title
-        mixerItem.lengthTextView.text = "${currentSound.length} sec"
+        mixerItem.txtTitle.text = currentSound.title
+        mixerItem.txtLength.text = "${currentSound.length} sec"
 
         mixerItem.volumeSeekBar.progress = currentSound.volume
     }
@@ -100,14 +97,14 @@ class MixerAdapter(
     }
 
     class ViewHolder (view: View,  mListener: MixerAdapterViewHolderClicks) : RecyclerView.ViewHolder(view) {
-        val titleTextView: TextView = view.findViewById(R.id.titleTextView)
-        val lengthTextView: TextView = view.findViewById(R.id.lengthTextView)
-        val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.itemSoundPlayBtn)
-        val removeSoundBtn: ImageButton = view.findViewById(R.id.removeSoundBtn)
-        val itemSoundStopBtn: ImageButton = view.findViewById(R.id.itemSoundStopBtn)
+        val titleTextView: TextView = view.findViewById(R.id.txtTitle)
+        val lengthTextView: TextView = view.findViewById(R.id.txtLength)
+        val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.btnItemSoundPlay)
+        val removeSoundBtn: ImageButton = view.findViewById(R.id.btnRemoveSound)
+        val itemSoundStopBtn: ImageButton = view.findViewById(R.id.btnItemSoundStop)
         val mixerItem: ConstraintLayout = view.findViewById(R.id.mixerItem)
-        val toggleLoopOn: Button = view.findViewById(R.id.loopBtnToggleOn)
-        val toggleLoopOff: Button = view.findViewById(R.id.loopBtnToggleOff)
+        val toggleLoopOn: Button = view.findViewById(R.id.btnLoopToggleOn)
+        val toggleLoopOff: Button = view.findViewById(R.id.btnLoopToggleOff)
         val volumeSeekBar: SeekBar = view.findViewById(R.id.volumeSeekBar)
 
         init {
