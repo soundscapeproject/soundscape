@@ -3,7 +3,6 @@
 <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -13,216 +12,171 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_gradient">
-
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:inputType="textPersonName"
-                android:hint="@string/search_txt"
-                android:ems="10"
-                android:id="@+id/editText"
-                android:padding="10dp"
-                android:drawableStart="@drawable/ic_search_ic"
-                android:drawablePadding="10dp"
-                android:background="@drawable/edittext"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="16dp"/>
-
-        <TextView
-                android:text="Library's categories"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:id="@+id/textViewCategories"
-                android:fontFamily="@font/roboto_medium"
-                android:textSize="20sp"
-                android:textColor="@color/colorWhite"
-                tools:layout_editor_absoluteY="81dp"
-                app:layout_constraintTop_toBottomOf="@+id/editText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
-        />
+            android:background="@color/colorTextDark">
 
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/constraintLayout"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCategories"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="10dp">
 
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/category_background_nature"
+                    android:layout_height="150dp"
+                    android:background="@drawable/nature_bg"
                     android:id="@+id/natureBtn"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginStart="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="30dp">
+                    android:layout_marginEnd="10dp"
+            >
+
                 <android.support.v7.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="start">
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="10dp">
+                    <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:src="@drawable/ic_nature_ic"/>
                     <TextView
                             android:fontFamily="@font/roboto_black"
                             android:textColor="@color/colorWhite"
-                            android:textSize="18sp"
-                            android:layout_width="wrap_content"
+                            android:textSize="20sp"
+                            android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:text="NATURE"
-                            android:layout_gravity="end"
-                            android:padding="8dp"/>
-                    <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_category_ic_white"
-                            android:layout_gravity="end"/>
-                </android.support.v7.widget.LinearLayoutCompat>
-                <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_nature_ic"
-                        android:layout_weight="1"/>
-            </LinearLayout>
+                            android:text="Nature"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="10dp"/>
 
-            <LinearLayout
+                </android.support.v7.widget.LinearLayoutCompat>
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/category_background_human"
+                    android:layout_height="150dp"
+                    android:background="@drawable/human_bg"
                     android:id="@+id/humanBtn"
                     app:layout_constraintTop_toBottomOf="@id/natureBtn"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginEnd="10dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="10dp"
-            >
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp">
                 <android.support.v7.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="start">
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="10dp">
+                    <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:src="@drawable/ic_human_ic"/>
                     <TextView
                             android:fontFamily="@font/roboto_black"
                             android:textColor="@color/colorWhite"
-                            android:textSize="18sp"
-                            android:layout_width="wrap_content"
+                            android:textSize="20sp"
+                            android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:text="HUMAN"
-                            android:layout_gravity="end"
-                            android:padding="8dp"/>
-                    <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_category_ic_white"
-                            android:layout_gravity="end"/>
+                            android:text="Human"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="10dp"/>
+
                 </android.support.v7.widget.LinearLayoutCompat>
+            </android.support.constraint.ConstraintLayout>
 
-                <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_human_ic"
-                        android:layout_weight="1"/>
-            </LinearLayout>
-
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/category_background_machine"
+                    android:layout_height="150dp"
+                    android:background="@drawable/machine_bg"
                     android:id="@+id/machineBtn"
                     app:layout_constraintTop_toBottomOf="@+id/humanBtn"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginEnd="10dp"
                     app:layout_constraintEnd_toEndOf="parent">
                 <android.support.v7.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="start">
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="10dp">
+                    <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:src="@drawable/ic_machine_ic"/>
                     <TextView
                             android:fontFamily="@font/roboto_black"
                             android:textColor="@color/colorWhite"
-                            android:textSize="18sp"
-                            android:layout_width="wrap_content"
+                            android:textSize="20sp"
+                            android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:text="MACHINE"
-                            android:layout_gravity="end"
-                            android:padding="8dp"/>
-                    <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_category_ic_white"
-                            android:layout_gravity="end"/>
-                </android.support.v7.widget.LinearLayoutCompat>
-                <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_machine_ic"
-                        android:layout_weight="1"/>
-            </LinearLayout>
+                            android:text="Machine"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="10dp"/>
 
-            <LinearLayout
+                </android.support.v7.widget.LinearLayoutCompat>
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/category_background_story"
+                    android:layout_height="150dp"
+                    android:background="@drawable/mic_bg"
                     android:id="@+id/storyBtn"
                     app:layout_constraintTop_toBottomOf="@id/machineBtn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="30dp">
+                    android:layout_marginEnd="10dp">
                 <android.support.v7.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="start">
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="10dp">
+                    <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:src="@drawable/ic_record_ic"/>
                     <TextView
                             android:fontFamily="@font/roboto_black"
                             android:textColor="@color/colorWhite"
-                            android:textSize="18sp"
-                            android:layout_width="wrap_content"
+                            android:textSize="20sp"
+                            android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:text="RECORDED"
-                            android:layout_gravity="end"
-                            android:padding="8dp"/>
-                    <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_category_ic_white"
-                            android:layout_gravity="end"/>
-                </android.support.v7.widget.LinearLayoutCompat>
-                <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_record_ic"
-                        android:layout_weight="1"/>
+                            android:text="Records"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="10dp"/>
 
-            </LinearLayout>
+                </android.support.v7.widget.LinearLayoutCompat>
+
+            </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
 

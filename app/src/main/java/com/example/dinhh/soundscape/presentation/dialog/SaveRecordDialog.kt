@@ -23,7 +23,7 @@ private val categoryList = listOf(
     SoundCategory.STORY.description
 )
 
-class SaveRecordDialog: AppCompatDialogFragment() {
+class SaveRecordDialog : AppCompatDialogFragment() {
 
     private var title: String? = null
     private var listener: SaveDialogListener? = null
@@ -37,20 +37,22 @@ class SaveRecordDialog: AppCompatDialogFragment() {
             val builder = AlertDialog.Builder(it)
             val view = it.layoutInflater.inflate(R.layout.dialog_save_record, null)
 
+            val negativeBtn = view?.findViewById<Button>(R.id.btnCancel)
+            val positiveBtn = view?.findViewById<Button>(R.id.btnSave)
+
+            positiveBtn?.setOnClickListener {
+                listener?.onSaveDialogPositiveClick(view.recordName.text.toString(), category)
+            }
+
+            negativeBtn?.setOnClickListener {
+                listener?.onSaveDialogNegativeClick(this)
+            }
             setupCategorySpinner(view)
             progressBar = view.progressBar
 
             builder
                 .setView(view)
                 .setTitle(title)
-                .setPositiveButton(getString(R.string.save),
-                    DialogInterface.OnClickListener { _, _ ->
-                        listener?.onSaveDialogPositiveClick(view.recordName.text.toString(), category)
-                    })
-                .setNegativeButton(getString(R.string.cancel),
-                    DialogInterface.OnClickListener { _, _ ->
-                        listener?.onSaveDialogNegativeClick(this)
-                    })
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
