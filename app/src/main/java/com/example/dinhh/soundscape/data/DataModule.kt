@@ -1,15 +1,14 @@
 package com.example.dinhh.soundscape.data
 
 import android.arch.persistence.room.Room
+import android.net.ConnectivityManager
 import com.example.dinhh.soundscape.data.local.Database
 import com.example.dinhh.soundscape.data.local.DatabaseConfig
 import com.example.dinhh.soundscape.data.local.SoundscapeLocalData
 import com.example.dinhh.soundscape.data.local.SoundscapeLocalDataImpl
 import com.example.dinhh.soundscape.data.pref.SharedPref
 import com.example.dinhh.soundscape.data.pref.SharedPrefImpl
-import com.example.dinhh.soundscape.data.remote.SoundscapeApi
-import com.example.dinhh.soundscape.data.remote.SoundscapeRemoteData
-import com.example.dinhh.soundscape.data.remote.SoundscapeRemoteDataImpl
+import com.example.dinhh.soundscape.data.remote.*
 import com.example.dinhh.soundscape.data.repository.SoundscapeRepository
 import com.example.dinhh.soundscape.data.repository.SoundscapeRepositoryImpl
 import com.example.dinhh.soundscape.data.repository.RecordRepository
@@ -41,7 +40,11 @@ val dataModule = module {
 
     //Remote
     factory<SoundscapeRemoteData> {
-        SoundscapeRemoteDataImpl(get(), get())
+        SoundscapeRemoteDataImpl(get(), get(), get())
+    }
+
+    factory<NetworkService> {
+        NetworkServiceImpl(get())
     }
 
     factory<SoundscapeApi> {
@@ -77,7 +80,7 @@ val dataModule = module {
 
     factory { get<Database>().soundscapeDao() }
 
-    single<Database> {
+    single {
         Room.databaseBuilder(
             androidContext(),
             Database::class.java,

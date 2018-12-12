@@ -35,7 +35,7 @@ class SaveSoundscapeDialog: AppCompatDialogFragment() {
             val positiveBtn = view?.findViewById<Button>(R.id.btnSave)
             val negativeBtn = view?.findViewById<Button>(R.id.btnCancel)
             positiveBtn?.setOnClickListener {
-                listener?.onSaveDialogPositiveClick(view?.soundScapleName?.text.toString())
+                listener?.onSaveDialogPositiveClick(view.soundScapleName?.text.toString())
             }
             negativeBtn?.setOnClickListener {
                 listener?.onSaveDialogNegativeClick(this)

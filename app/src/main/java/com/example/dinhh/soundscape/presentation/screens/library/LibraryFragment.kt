@@ -83,12 +83,12 @@ class LibraryFragment : Fragment() {
                 builder.setTitle(getString(R.string.logout))
                 builder.setMessage(getString(R.string.do_you_want_to_log_out))
                 builder.setPositiveButton(getString(R.string.yes)){
-                        _, which ->
+                        _, _ ->
                     Toast.makeText(context,getString(R.string.logged_out),Toast.LENGTH_SHORT).show()
                     libraryViewModel.logout()
                 }
                 builder.setNegativeButton(getString(R.string.no)){
-                        _, which ->
+                        _, _ ->
                 }
                 val dialog: AlertDialog = builder.create()
                 dialog.show()
