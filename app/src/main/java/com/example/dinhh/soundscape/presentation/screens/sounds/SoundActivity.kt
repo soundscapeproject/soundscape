@@ -16,6 +16,7 @@ import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalRecord
+import com.example.dinhh.soundscape.data.entity.SoundCategory
 import com.example.dinhh.soundscape.device.SoundscapeItem
 import com.example.dinhh.soundscape.presentation.base.RecyclerViewListener
 import com.example.dinhh.soundscape.presentation.helper.SwipeToDeleteCallback
@@ -53,7 +54,6 @@ class SoundActivity : AppCompatActivity(),
         })
 
         val category = intent.getStringExtra(KEY_CATEGORY)
-        Log.d("category: ", category)
         cameFromMixer = intent.getBooleanExtra(KEY_CAME_FROM_MIXER, false)
         cameFromSavedSound = intent.getBooleanExtra(KEY_CAME_FROM_SAVED_SOUND, false)
 
@@ -63,18 +63,7 @@ class SoundActivity : AppCompatActivity(),
             soundViewModel.beginSearch(category!!)
         }
 
-        if (category == "Nature"){
-            toolbar_title.text = getString(R.string.nature)
-        }
-        if (category == "Human"){
-            toolbar_title.text = getString(R.string.human)
-        }
-        if (category == "Machine"){
-            toolbar_title.text = getString(R.string.machine)
-        }
-        if (category == "Record"){
-            toolbar_title.text = getString(R.string.recordings)
-        }
+        setupToolBarTitle(category)
 
         setupListView()
     }
@@ -260,6 +249,16 @@ class SoundActivity : AppCompatActivity(),
         if(!cameFromMixer) {
             val intent = Intent(this, MixerActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun setupToolBarTitle(category: String) {
+
+        when(category) {
+            SoundCategory.NATURE.description ->  toolbar_title.text = getString(R.string.nature)
+            SoundCategory.HUMAN.description ->  toolbar_title.text = getString(R.string.human)
+            SoundCategory.MACHINE.description ->  toolbar_title.text = getString(R.string.machine)
+            SoundCategory.RECORD.description ->  toolbar_title.text = getString(R.string.recordings)
         }
     }
 
