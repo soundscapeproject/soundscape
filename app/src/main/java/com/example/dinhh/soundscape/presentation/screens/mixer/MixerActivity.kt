@@ -10,7 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.common.gone
+import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
@@ -241,13 +241,13 @@ class MixerActivity : AppCompatActivity(),
     }
 
     private fun handlePlayAllButton(soundScapeItems: List<SoundscapeItem>) {
-
+        
         if (soundScapeItems.filter { it.isPlaying }.size == soundScapeItems.size) {
-            playAllBtn.gone()
+            playAllBtn.invisible()
             stopAllBtn.visible()
         } else if (soundScapeItems.filter { !it.isPlaying }.size == soundScapeItems.size) {
             playAllBtn.visible()
-            stopAllBtn.gone()
+            stopAllBtn.invisible()
         }
     }
 
@@ -258,12 +258,12 @@ class MixerActivity : AppCompatActivity(),
         when(numberOfItem) {
             0 -> {
                 noSoundScapeContainer.visible()
-                soundScapeListContainer.gone()
-                toggleButtonContainer.gone()
+                soundScapeListContainer.invisible()
+                toggleButtonContainer.invisible()
             }
 
             else -> {
-                noSoundScapeContainer.gone()
+                noSoundScapeContainer.invisible()
                 soundScapeListContainer.visible()
                 toggleButtonContainer.visible()
             }
