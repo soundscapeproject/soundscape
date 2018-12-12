@@ -45,16 +45,16 @@ class LibraryFragment : Fragment() {
 
     private fun setupButtons(){
 
-        natureBtn.setOnClickListener {
+        btnNature.setOnClickListener {
             goToSoundsActivity(SoundCategory.NATURE.description)
         }
-        humanBtn.setOnClickListener {
+        btnHuman.setOnClickListener {
             goToSoundsActivity(SoundCategory.HUMAN.description)
         }
-        machineBtn.setOnClickListener {
+        btnMachine.setOnClickListener {
             goToSoundsActivity(SoundCategory.MACHINE.description)
         }
-        storyBtn.setOnClickListener {
+        btnRecords.setOnClickListener {
             goToSavedRecordActivity(SoundCategory.RECORD.description)
         }
     }
@@ -80,14 +80,14 @@ class LibraryFragment : Fragment() {
         when (item?.itemId) {
             R.id.setting -> {
                 val builder = AlertDialog.Builder(activity)
-                builder.setTitle("Logout")
-                builder.setMessage("Do you want to logout from this account?")
-                builder.setPositiveButton("YES"){
+                builder.setTitle(getString(R.string.logout))
+                builder.setMessage(getString(R.string.do_you_want_to_log_out))
+                builder.setPositiveButton(getString(R.string.yes)){
                         _, which ->
-                    Toast.makeText(context,"logout from this account",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,getString(R.string.logged_out),Toast.LENGTH_SHORT).show()
                     libraryViewModel.logout()
                 }
-                builder.setNegativeButton("NO"){
+                builder.setNegativeButton(getString(R.string.no)){
                         _, which ->
                 }
                 val dialog: AlertDialog = builder.create()

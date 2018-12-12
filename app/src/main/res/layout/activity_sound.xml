@@ -49,7 +49,7 @@
                     android:text="@string/sounds"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txt_Category_Name"
+                    android:id="@+id/txtCategoryName"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"

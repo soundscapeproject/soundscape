@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Soundscape</string>
-    <string name="welcome">Welcome Back</string>
+    <string name="welcome">Welcome!</string>
     <string name="hello">Hello there!</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -12,17 +12,15 @@
     <string name="play">play</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
-    <string name="save">Save</string>
-    <string name="cancel">Cancel</string>
     <string name="record_name">Record name</string>
     <string name="done">Done</string>
     <string name="close">Close</string>
     <string name="saved">Saved</string>
     <string name="updated">Updated</string>
     <string name="title_activity_record">RecordActivity</string>
-    <string name="title_save_record_dialog">Save Record</string>
+    <string name="title_save_record_dialog">Save Recording</string>
     <string name="title_save_soundscape_dialog">Save Soundscape</string>
     <string name="no_records">No records</string>
     <string name="name_required">Name should not be empty</string>
@@ -33,15 +31,58 @@
 
     <!-- Title Name -->
     <string name="record_screen_name">Recording</string>
-    <string name="sound_scape_recap">Your remoteSounds recap:</string>
+    <string name="sound_scape_recap" translatable="false">Your remoteSounds recap:</string>
     <string name="sound_scape_numb_txt">- Soundscapes:</string>
     <string name="record_numb_txt">- Records:</string>
-    <string name="ss_numb">3</string>
-    <string name="rc_numb">2</string>
+    <string name="ss_numb" translatable="false">3</string>
+    <string name="rc_numb" translatable="false">2</string>
     <string name="fragment_title">Name</string>
     <string name="search_txt">Names, categories or records</string>
     <string name="sounds">Sounds</string>
     <string name="soundscape_name">Soundscape name</string>
-    <string name="app_slogan">where sound become masterpiece</string>
+    <string name="app_slogan">where sounds come together</string>
+    <string name="uploaded">Uploaded</string>
+    <string name="deleted">Deleted</string>
     <string name="no_sounds">No sounds</string>
+    <string name="nature">Nature</string>
+    <string name="human">Human</string>
+    <string name="machine">Machine</string>
+    <string name="records">Records</string>
+    <string name="add_sounds_description">Add sounds to your soundscape by pressing the "plus" icon in the top right corner
+    </string>
+    <string name="play_soundscape">Play soundscape</string>
+    <string name="stop_soundscape">Stop soundscape</string>
+    <string name="save_soundscape">Save soundscape</string>
+    <string name="delete_soundscape">Delete soundscape</string>
+    <string name="create_a_soundscape">Create a soundscape</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="try_to_create_a_new_soundscape">Try to create a new soundscape</string>
+    <string name="category">Category</string>
+    <string name="play_single_sound">Play this single sound in soundscape</string>
+    <string name="stop_single_sound">Stop playing this single sound</string>
+    <string name="title">Title</string>
+    <string name="length">Length</string>
+    <string name="delete_single_sound">Delete this single sound</string>
+    <string name="upload_soundscape">upload soundscape</string>
+    <string name="add_sound">add sound</string>
+    <string name="recordings">recordings</string>
+    <string name="home">Home</string>
+    <string name="mix">Mix</string>
+    <string name="library">Library</string>
+    <string name="numberofSounds">sounds</string>
+    <string name="soundscape_mixer">Soundscape Mixer</string>
+    <string name="uploading">Uploading</string>
+    <string name="do_you_want_to_upload">Do you want to upload this soundscape?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="deleting">Deleting</string>
+    <string name="do_you_want_to_delete">Do you want to delete this soundscape?</string>
+    <string name="clear_all">Clear all</string>
+    <string name="do_you_want_to_clear_all">Do you want to clear all sounds from this workplace?</string>
+    <string name="all_sounds_cleared">All sounds cleared</string>
+    <string name="name_cannot_be_empty">Name cannot be left empty</string>
+    <string name="logout">Logout</string>
+    <string name="do_you_want_to_log_out">Do you want to logout from this account?</string>
+    <string name="logged_out">Logged out</string>
 </resources>

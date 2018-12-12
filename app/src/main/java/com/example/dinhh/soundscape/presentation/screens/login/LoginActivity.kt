@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.*
@@ -28,9 +27,9 @@ class LoginActivity : AppCompatActivity() {
             it?.run(this@LoginActivity::handleView)
         })
 
-        txt_appName.translateX(getWidth().toFloat(), 500)
-        txt_hello.translateX(getWidth().toFloat(), 500)
-        txt_welcome.translateX(getWidth().toFloat(), 800)
+        txtAppName.translateX(getWidth().toFloat(), 500)
+        txtHello.translateX(getWidth().toFloat(), 500)
+        txtWelcome.translateX(getWidth().toFloat(), 800)
         usernameEditText.translateX(getWidth().toFloat(), 800)
         passwordEditText.translateY(getHeight().toFloat(), 500)
         btnLogin.translateY(getHeight().toFloat(), 800)

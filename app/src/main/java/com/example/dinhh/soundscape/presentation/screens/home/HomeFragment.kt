@@ -100,7 +100,7 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
             is HomeViewState.UploadSuccess -> {
                 progressBar.gone()
                 homeViewModel.getLocalSoundscapes()
-                Toast.makeText(activity, "Uploaded", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.uploaded), Toast.LENGTH_SHORT).show()
 
 
             }
@@ -108,7 +108,7 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
             is HomeViewState.DeleteSuccess -> {
                 progressBar.gone()
                 homeViewModel.getLocalSoundscapes()
-                Toast.makeText(activity, "Deleted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.deleted), Toast.LENGTH_SHORT).show()
             }
 
             is HomeViewState.GetSoundScapeSuccess -> {
@@ -155,13 +155,13 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         val localSoundscape = adapter.getData()[layoutPosition]
 
         val builder = AlertDialog.Builder(activity)
-        builder.setTitle("Uploading")
-        builder.setMessage("Do you want to upload this soundscape ?")
-        builder.setPositiveButton("YES"){
+        builder.setTitle(getString(R.string.uploading))
+        builder.setMessage(getString(R.string.do_you_want_to_upload))
+        builder.setPositiveButton(getString(R.string.yes)){
                 _, _ ->
             homeViewModel.uploadSoundScape(localSoundscape)
         }
-        builder.setNegativeButton("NO"){
+        builder.setNegativeButton(getString(R.string.no)){
                 _, _ ->
         }
         val dialog: AlertDialog = builder.create()
@@ -172,13 +172,13 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
         val localSoundscape = adapter.getData()[layoutPosition]
 
         val builder = AlertDialog.Builder(activity)
-        builder.setTitle("Deleting")
-        builder.setMessage("Do you want to delete this soundscape ?")
-        builder.setPositiveButton("YES"){
+        builder.setTitle(getString(R.string.deleting))
+        builder.setMessage(getString(R.string.do_you_want_to_delete))
+        builder.setPositiveButton(getString(R.string.yes)){
                 _, _ ->
             homeViewModel.deleteSoundScape(localSoundscape)
         }
-        builder.setNegativeButton("NO"){
+        builder.setNegativeButton(getString(R.string.no)){
                 _, _ ->
         }
         val dialog: AlertDialog = builder.create()

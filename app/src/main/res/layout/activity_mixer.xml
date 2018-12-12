@@ -37,7 +37,7 @@
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:id="@+id/txtMissingSS"
-                  android:text="Adding sounds by pressing + on top right corner"
+                  android:text="@string/add_sounds_description"
                   android:textColor="@color/colorPrimary"
                   android:textSize="20sp"
                   android:gravity="center"
@@ -121,46 +121,47 @@
                 android:background="@drawable/mix_btn_bg"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/clearBtn"
+                android:id="@+id/btnClear"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/playAllBtn"
+                app:layout_constraintEnd_toStartOf="@id/btnPlayAll"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="@string/delete_soundscape"/>
 
         <ImageButton
-                android:text="Play"
                 android:background="@drawable/mix_btn_bg"
                 android:src="@drawable/ic_play_arrow_white_48dp"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:id="@+id/playAllBtn"
+                android:id="@+id/btnPlayAll"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-        />
+                android:contentDescription="@string/play_soundscape"/>
         <ImageButton
-                android:text="Stop"
                 android:background="@drawable/mix_btn_bg"
                 android:src="@drawable/ic_stop_ic"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:id="@+id/stopAllBtn"
+                android:id="@+id/btnStopAll"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:contentDescription="@string/stop_soundscape"/>
         <ImageButton
                 android:src="@drawable/ic_save_ic"
                 android:background="@drawable/mix_btn_bg"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/saveMixBtn"
+                android:id="@+id/btnSaveMix"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/playAllBtn"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toEndOf="@id/btnPlayAll"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="@string/save_soundscape"/>
 
     </android.support.constraint.ConstraintLayout>
 

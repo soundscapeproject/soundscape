@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -24,6 +25,7 @@ import com.example.dinhh.soundscape.presentation.screens.record.RecordActivity
 import kotlinx.android.synthetic.main.activity_sound.*
 import kotlinx.android.synthetic.main.topbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
 
 class SoundActivity : AppCompatActivity(),
     SoundAdapterViewHolderClicks {
@@ -51,6 +53,7 @@ class SoundActivity : AppCompatActivity(),
         })
 
         val category = intent.getStringExtra(KEY_CATEGORY)
+        Log.d("category: ", category)
         cameFromMixer = intent.getBooleanExtra(KEY_CAME_FROM_MIXER, false)
         cameFromSavedSound = intent.getBooleanExtra(KEY_CAME_FROM_SAVED_SOUND, false)
 
@@ -60,7 +63,18 @@ class SoundActivity : AppCompatActivity(),
             soundViewModel.beginSearch(category!!)
         }
 
-        toolbar_title.text = category
+        if (category == "Nature"){
+            toolbar_title.text = getString(R.string.nature)
+        }
+        if (category == "Human"){
+            toolbar_title.text = getString(R.string.human)
+        }
+        if (category == "Machine"){
+            toolbar_title.text = getString(R.string.machine)
+        }
+        if (category == "Record"){
+            toolbar_title.text = getString(R.string.recordings)
+        }
 
         setupListView()
     }
@@ -168,6 +182,7 @@ class SoundActivity : AppCompatActivity(),
     private fun handleUIBasedOnSoundList(displaySoundList: List<DisplaySound>) {
 
         val numberOfSounds = displaySoundList.count()
+        val soundsString: String = getString(R.string.numberofSounds)
 
         when(numberOfSounds) {
 
@@ -179,13 +194,13 @@ class SoundActivity : AppCompatActivity(),
             1 -> {
                 txtNoSounds.gone()
                 soundList.visible()
-                txt_Category_Name.text = "${numberOfSounds} Sound"
+                txtCategoryName.text = "${numberOfSounds} $soundsString"
             }
 
             else -> {
                 txtNoSounds.gone()
                 soundList.visible()
-                txt_Category_Name.text = "${numberOfSounds} Sounds"
+                txtCategoryName.text = "${numberOfSounds} $soundsString"
             }
         }
     }
@@ -230,7 +245,7 @@ class SoundActivity : AppCompatActivity(),
 
         SoundViewState.UploadSuccess -> {
             soundViewModel.getRecords()
-            Toast.makeText(this, "Uploaded", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getText(R.string.uploaded), Toast.LENGTH_SHORT).show()
         }
 
         // View state behaviors for playing the selected sound

@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/menuRecord"
-          android:title="Record"
+          android:title="@string/record"
           android:icon="@drawable/ic_mic_ic"
           app:showAsAction="always"/>
 </menu>

@@ -23,24 +23,25 @@
         <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/itemSoundPlayBtn"
+                android:id="@+id/btnItemSoundPlay"
                 android:background="@null"
                 android:src="@drawable/ic_play_arrow_white"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/play_single_sound"/>
 
         <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/itemSoundStopBtn"
+                android:id="@+id/btnItemSoundStop"
                 android:src="@drawable/ic_stop_white_64dp"
                 android:background="@null"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" android:contentDescription="@string/stop_single_sound"/>
 
     </android.support.constraint.ConstraintLayout>
 
@@ -53,7 +54,7 @@
             android:id="@+id/guideline"/>
 
     <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/txtTitle"
             app:layout_constrainedHeight="true"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -61,36 +62,37 @@
             android:fontFamily="@font/roboto_medium"
             android:layout_weight="1"
             android:gravity="center|start"
-            android:text="Title"
+            android:text="@string/title"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/colorText"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintStart_toEndOf="@+id/layout_btn_play_mixer"
-            app:layout_constraintEnd_toStartOf="@id/lengthTextView"
+            app:layout_constraintEnd_toStartOf="@id/txtLength"
             android:layout_marginStart="16dp"/>
 
     <TextView
-            android:id="@+id/lengthTextView"
+            android:id="@+id/txtLength"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="Length"
+            android:text="@string/length"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceSmall"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/removeSoundBtn"/>
+            app:layout_constraintEnd_toStartOf="@+id/btnRemoveSound"/>
 
     <ImageButton
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:id="@+id/removeSoundBtn"
+            android:id="@+id/btnRemoveSound"
             android:src="@drawable/ic_delete_ic"
             android:layout_gravity="center"
             android:background="@null"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/delete_single_sound"/>
 
     <android.support.constraint.ConstraintLayout
             android:id="@+id/layout_btn_loop"
@@ -104,7 +106,7 @@
         <Button
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:id="@+id/loopBtnToggleOn"
+                android:id="@+id/btnLoopToggleOn"
                 android:layout_weight="1"
                 android:background="@drawable/ic_loop_ic"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -115,7 +117,7 @@
         <Button
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:id="@+id/loopBtnToggleOff"
+                android:id="@+id/btnLoopToggleOff"
                 android:layout_weight="1"
                 android:background="@drawable/ic_loop_ic"
                 android:backgroundTint="@color/colorWhite"
