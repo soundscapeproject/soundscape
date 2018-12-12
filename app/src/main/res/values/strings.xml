@@ -48,7 +48,7 @@
     <string name="human">Human</string>
     <string name="machine">Machine</string>
     <string name="records">Records</string>
-    <string name="add_sounds_description">Add sounds to your soundscape by pressing the + icon in top right corner
+    <string name="add_sounds_description">Add sounds to your soundscape by pressing the "plus" icon in the top right corner
     </string>
     <string name="play_soundscape">Play soundscape</string>
     <string name="stop_soundscape">Stop soundscape</string>
