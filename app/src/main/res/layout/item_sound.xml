@@ -40,13 +40,13 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/roboto_medium"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Title"
+                android:text="@string/title"
                 android:gravity="center|start"
         />
 
         <TextView
                 android:id="@+id/lengthTextView"
-                android:text="Length"
+                android:text="@string/length"
                 android:layout_width="match_parent"
                 android:layout_height="12dp"
                 android:textSize="12sp"
@@ -69,7 +69,8 @@
                 android:id="@+id/itemSoundPlayBtn"
                 android:src="@drawable/ic_play_ic"
                 android:background="@color/transparent"
-                android:visibility="visible"/>
+                android:visibility="visible"
+                android:contentDescription="@string/play_single_sound"/>
 
         <ImageButton
                 android:layout_width="match_parent"
@@ -77,7 +78,8 @@
                 android:id="@+id/itemSoundStopBtn"
                 android:src="@drawable/ic_stop_with_bg"
                 android:background="@color/transparent"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:contentDescription="@string/stop_single_sound"/>
     </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.AppCompatImageButton

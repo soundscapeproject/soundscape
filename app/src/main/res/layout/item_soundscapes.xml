@@ -36,7 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="5dp"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp" android:contentDescription="@string/delete_soundscape"/>
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="0dp"
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="The Frame Monster"
+                    android:text="@string/title"
                     android:textAppearance="@style/TextAppearance.AppCompat"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"
@@ -68,7 +68,7 @@
                     android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
                     app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent" android:background="@color/transparent"
-                    android:tint="@android:color/white"/>
+                    android:tint="@android:color/white" android:contentDescription="@string/upload_soundscape"/>
 
 
         </android.support.constraint.ConstraintLayout>

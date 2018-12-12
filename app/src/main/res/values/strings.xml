@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Soundscape</string>
-    <string name="welcome">Welcome Back</string>
+    <string name="welcome">Welcome!</string>
     <string name="hello">Hello there!</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -12,17 +12,15 @@
     <string name="play">play</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
-    <string name="save">Save</string>
-    <string name="cancel">Cancel</string>
     <string name="record_name">Record name</string>
     <string name="done">Done</string>
     <string name="close">Close</string>
     <string name="saved">Saved</string>
     <string name="updated">Updated</string>
     <string name="title_activity_record">RecordActivity</string>
-    <string name="title_save_record_dialog">Save Record</string>
+    <string name="title_save_record_dialog">Save Recording</string>
     <string name="title_save_soundscape_dialog">Save Soundscape</string>
     <string name="no_records">No records</string>
     <string name="name_required">Name should not be empty</string>
@@ -33,15 +31,36 @@
 
     <!-- Title Name -->
     <string name="record_screen_name">Recording</string>
-    <string name="sound_scape_recap">Your remoteSounds recap:</string>
+    <string name="sound_scape_recap" translatable="false">Your remoteSounds recap:</string>
     <string name="sound_scape_numb_txt">- Soundscapes:</string>
     <string name="record_numb_txt">- Records:</string>
-    <string name="ss_numb">3</string>
-    <string name="rc_numb">2</string>
+    <string name="ss_numb" translatable="false">3</string>
+    <string name="rc_numb" translatable="false">2</string>
     <string name="fragment_title">Name</string>
     <string name="search_txt">Names, categories or records</string>
     <string name="sounds">Sounds</string>
     <string name="soundscape_name">Soundscape name</string>
-    <string name="app_slogan">where sound become masterpiece</string>
+    <string name="app_slogan">where sounds become masterpieces</string>
     <string name="no_sounds">No sounds</string>
+    <string name="nature">Nature</string>
+    <string name="human">Human</string>
+    <string name="machine">Machine</string>
+    <string name="records">Records</string>
+    <string name="add_sounds_description">Add sounds to your soundscape by pressing the + icon in top right corner
+    </string>
+    <string name="play_soundscape">Play soundscape</string>
+    <string name="stop_soundscape">Stop soundscape</string>
+    <string name="save_soundscape">Save soundscape</string>
+    <string name="delete_soundscape">Delete soundscape</string>
+    <string name="create_a_soundscape">Create a soundscape</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="try_to_create_a_new_soundscape">Try to create a new soundscape</string>
+    <string name="category">Category</string>
+    <string name="play_single_sound">Play this single sound in soundscape</string>
+    <string name="stop_single_sound">Stop playing this single sound</string>
+    <string name="title">Title</string>
+    <string name="length">Length</string>
+    <string name="delete_single_sound">Delete this single sound</string>
+    <string name="upload_soundscape">upload soundscape</string>
 </resources>

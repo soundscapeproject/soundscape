@@ -29,7 +29,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/play_single_sound"/>
 
         <ImageButton
                 android:layout_width="wrap_content"
@@ -40,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" android:contentDescription="@string/stop_single_sound"/>
 
     </android.support.constraint.ConstraintLayout>
 
@@ -61,7 +62,7 @@
             android:fontFamily="@font/roboto_medium"
             android:layout_weight="1"
             android:gravity="center|start"
-            android:text="Title"
+            android:text="@string/title"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/colorText"
@@ -74,7 +75,7 @@
             android:id="@+id/lengthTextView"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="Length"
+            android:text="@string/length"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceSmall"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -90,7 +91,8 @@
             android:background="@null"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/delete_single_sound"/>
 
     <android.support.constraint.ConstraintLayout
             android:id="@+id/layout_btn_loop"

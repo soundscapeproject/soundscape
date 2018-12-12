@@ -29,7 +29,7 @@
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:id="@+id/txtMissingSS"
-                  android:text="Try to create a new soundscape"
+                  android:text="@string/try_to_create_a_new_soundscape"
                   android:textColor="@color/colorText"
                   android:textSize="20sp"
                   android:gravity="center"
