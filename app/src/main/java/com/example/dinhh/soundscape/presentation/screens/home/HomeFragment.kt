@@ -98,40 +98,17 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
             }
 
             is HomeViewState.UploadSuccess -> {
+                progressBar.gone()
+                homeViewModel.getLocalSoundscapes()
+                Toast.makeText(activity, "Uploaded", Toast.LENGTH_SHORT).show()
 
-                val builder = AlertDialog.Builder(activity)
-                builder.setTitle("Uploading")
-                builder.setMessage("Do you want to upload this soundscape ?")
-                builder.setPositiveButton("YES"){
-                        _, _ ->
-                    progressBar.gone()
-                    homeViewModel.getLocalSoundscapes()
-                    Toast.makeText(activity, "Uploaded", Toast.LENGTH_SHORT).show()
-                }
-                builder.setNegativeButton("NO"){
-                        _, _ ->
-                    progressBar.gone()
-                }
-                val dialog: AlertDialog = builder.create()
-                dialog.show()
+
             }
 
             is HomeViewState.DeleteSuccess -> {
-                val builder = AlertDialog.Builder(activity)
-                builder.setTitle("Deleting")
-                builder.setMessage("Do you want to delete this soundscape ?")
-                builder.setPositiveButton("YES"){
-                        _, _ ->
-                    progressBar.gone()
-                    homeViewModel.getLocalSoundscapes()
-                    Toast.makeText(activity, "Deleted", Toast.LENGTH_SHORT).show()
-                }
-                builder.setNegativeButton("NO"){
-                        _, _ ->
-                    progressBar.gone()
-                }
-                val dialog: AlertDialog = builder.create()
-                dialog.show()
+                progressBar.gone()
+                homeViewModel.getLocalSoundscapes()
+                Toast.makeText(activity, "Deleted", Toast.LENGTH_SHORT).show()
             }
 
             is HomeViewState.GetSoundScapeSuccess -> {
@@ -177,13 +154,35 @@ class HomeFragment : Fragment(), HomeAdapterViewHolderClicks {
     override fun uploadSound(layoutPosition: Int) {
         val localSoundscape = adapter.getData()[layoutPosition]
 
-        homeViewModel.uploadSoundScape(localSoundscape)
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle("Uploading")
+        builder.setMessage("Do you want to upload this soundscape ?")
+        builder.setPositiveButton("YES"){
+                _, _ ->
+            homeViewModel.uploadSoundScape(localSoundscape)
+        }
+        builder.setNegativeButton("NO"){
+                _, _ ->
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     override fun deleteSound(layoutPosition: Int) {
         val localSoundscape = adapter.getData()[layoutPosition]
 
-        homeViewModel.deleteSoundScape(localSoundscape)
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle("Deleting")
+        builder.setMessage("Do you want to delete this soundscape ?")
+        builder.setPositiveButton("YES"){
+                _, _ ->
+            homeViewModel.deleteSoundScape(localSoundscape)
+        }
+        builder.setNegativeButton("NO"){
+                _, _ ->
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     companion object {

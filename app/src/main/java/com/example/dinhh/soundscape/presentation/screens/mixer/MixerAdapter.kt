@@ -60,6 +60,8 @@ class MixerAdapter(
         setPlayPauseButton(holder, position)
         mixerItem.titleTextView.text = currentSound.title
         mixerItem.lengthTextView.text = "${currentSound.length} sec"
+
+        mixerItem.volumeSeekBar.progress = currentSound.volume
     }
 
     fun setPlayPauseButton(holder: ViewHolder, position: Int) {
@@ -133,18 +135,11 @@ class MixerAdapter(
                 mListener.onLoopSingleSound(this.layoutPosition, false)
             }
 
-            volumeSeekBar.progress = 100
             volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 var seekBarProgress: Int = 0
-                var mToast: Toast? = null
                 @SuppressLint("ShowToast")
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     seekBarProgress = progress
-                    if (mToast == null) {
-                        mToast = Toast.makeText(view.context, progress.toString(), Toast.LENGTH_LONG)
-                    }
-                    mToast?.setText("Set volume to: " + seekBarProgress++ + "%")
-                    mToast?.show()
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {

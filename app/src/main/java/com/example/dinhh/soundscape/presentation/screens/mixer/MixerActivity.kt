@@ -12,8 +12,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
-import com.example.dinhh.soundscape.common.gone
 import com.example.dinhh.soundscape.common.invisible
+import com.example.dinhh.soundscape.common.invisible
+import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalSoundscape
 import com.example.dinhh.soundscape.data.entity.SoundCategory
@@ -172,7 +173,6 @@ class MixerActivity : AppCompatActivity(),
         when (viewState) {
 
             MixerViewState.Loading -> {
-//                progressBar.visible()
             }
 
             MixerViewState.Success -> {
@@ -182,10 +182,12 @@ class MixerActivity : AppCompatActivity(),
             MixerViewState.PlaySoundScapeFinish -> {
                 playAllBtn.visible()
                 stopAllBtn.invisible()
+                mixerViewModel.stopSoundScapes()
             }
 
             is MixerViewState.PlaySoundFinish -> {
                 toggleViewHolderIcon(viewState.index, false)
+                mixerViewModel.stopSingleSoundScape(viewState.index)
             }
 
             MixerViewState.RemoveSoundScapeSuccess -> {
@@ -193,15 +195,14 @@ class MixerActivity : AppCompatActivity(),
             }
 
             is MixerViewState.Failure -> {
-//                progressBar.gone()
                 Toast.makeText(this, "Error ${viewState.throwable.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
 
             is MixerViewState.GetSoundScapesSuccess -> {
                 handleViewBasedOnSoundScapeItems(viewState.soundScapeItems)
-//                progressBar.gone()
                 soundScapesList = viewState.soundScapeItems
                 mixerAdapter.replaceData(viewState.soundScapeItems)
+                handlePlayAllButton(viewState.soundScapeItems)
             }
 
             is MixerViewState.GetOneLocalSoundScapeSuccess -> {
@@ -242,6 +243,17 @@ class MixerActivity : AppCompatActivity(),
         }
     }
 
+    private fun handlePlayAllButton(soundScapeItems: List<SoundscapeItem>) {
+        
+        if (soundScapeItems.filter { it.isPlaying }.size == soundScapeItems.size) {
+            playAllBtn.invisible()
+            stopAllBtn.visible()
+        } else if (soundScapeItems.filter { !it.isPlaying }.size == soundScapeItems.size) {
+            playAllBtn.visible()
+            stopAllBtn.invisible()
+        }
+    }
+
     private fun handleViewBasedOnSoundScapeItems(soundscapeItemList: List<SoundscapeItem>) {
 
         val numberOfItem = soundscapeItemList.size
@@ -249,12 +261,12 @@ class MixerActivity : AppCompatActivity(),
         when(numberOfItem) {
             0 -> {
                 noSoundScapeContainer.visible()
-                soundScapeListContainer.gone()
-                toggleButtonContainer.gone()
+                soundScapeListContainer.invisible()
+                toggleButtonContainer.invisible()
             }
 
             else -> {
-                noSoundScapeContainer.gone()
+                noSoundScapeContainer.invisible()
                 soundScapeListContainer.visible()
                 toggleButtonContainer.visible()
             }
@@ -274,6 +286,7 @@ class MixerActivity : AppCompatActivity(),
     override fun onPlaySingleSoundScape(layoutPosition: Int) {
         mixerViewModel.playSingleSoundScape(layoutPosition)
         toggleViewHolderIcon(layoutPosition, true)
+        mixerViewModel.getSoundScapes()
     }
 
     override fun onLoopSingleSound(layoutPosition: Int, isLooping: Boolean) {
@@ -292,6 +305,14 @@ class MixerActivity : AppCompatActivity(),
 
     override fun onRemoveSingleSoundScape(layoutPosition: Int) {
         mixerViewModel.removeSingleSoundScape(layoutPosition)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (isToEdit) {
+            mixerViewModel.clearSoundScapes()
+        }
     }
 
     override fun onSaveDialogPositiveClick(soundScapeName: String) {
