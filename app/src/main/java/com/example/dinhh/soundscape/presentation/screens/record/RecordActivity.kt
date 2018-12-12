@@ -1,15 +1,14 @@
 package com.example.dinhh.soundscape.presentation.screens.record
 
 import android.arch.lifecycle.Observer
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.isVisible
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.data.entity.SoundType
@@ -152,8 +151,8 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
     override fun onSaveDialogPositiveClick(recordName: String, category: String) {
 
-        if (recordName.isEmpty()){
-            Toast.makeText(this,getString(R.string.name_cannot_be_empty),Toast.LENGTH_SHORT).show()
+        if (recordName.isEmpty()) {
+            Toast.makeText(this, getString(R.string.name_cannot_be_empty), Toast.LENGTH_SHORT).show()
         } else {
             val localRecord = LocalRecord(
                 null,
@@ -170,7 +169,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
     }
 
     override fun onSaveDialogNegativeClick(recordDialog: SaveRecordDialog) {
-        logD("CANCEL DIALOG")
+        // Do nothing
     }
 
     override fun onDestroy() {
