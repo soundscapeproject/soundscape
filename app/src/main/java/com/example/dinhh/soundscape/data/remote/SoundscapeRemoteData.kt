@@ -10,7 +10,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
-
 interface SoundscapeRemoteData {
 
     fun login(username: String, password: String): Single<Token>
@@ -23,16 +22,17 @@ interface SoundscapeRemoteData {
 }
 
 class SoundscapeRemoteDataImpl(
+    private val networkService: NetworkService,
     private val jsonWriter: JsonWriter,
     private val soundScapeApi: SoundscapeApi
 ) : SoundscapeRemoteData {
 
     override fun login(username: String, password: String): Single<Token> {
-        return soundScapeApi.login(LoginBody(username, password))
+        return networkService.hasNetWorkConnection().andThen(soundScapeApi.login(LoginBody(username, password)))
     }
 
     override fun fetchLibrary(key: String, selectedCategory: String): Single<List<List<RemoteSound>>> {
-        return soundScapeApi.getSounds(key, selectedCategory, true)
+        return networkService.hasNetWorkConnection().andThen(soundScapeApi.getSounds(key, selectedCategory, true))
     }
 
     override fun uploadRecord(key: String, localRecord: LocalRecord): Completable {
@@ -42,7 +42,7 @@ class SoundscapeRemoteDataImpl(
         val requestBody = RequestBody.create(MediaType.parse("audio/*"), file)
         val aFile = MultipartBody.Part.createFormData("userfile", file.name, requestBody)
 
-        return soundScapeApi.uploadSound(
+        return networkService.hasNetWorkConnection().andThen(soundScapeApi.uploadSound(
             key,
             4,
             29,
@@ -51,7 +51,7 @@ class SoundscapeRemoteDataImpl(
             SoundType.EFFECTS.description.toLowerCase(),
             localRecord.length_sec.toInt(),
             aFile
-        )
+        ))
     }
 
     override fun uploadSoundScape(key: String, localSoundscape: LocalSoundscape): Completable {
@@ -59,9 +59,9 @@ class SoundscapeRemoteDataImpl(
         val gson = Gson()
         val stringJson = gson.toJson(localSoundscape)
 
-        return jsonWriter.writeJson(stringJson)
+        return networkService.hasNetWorkConnection().andThen(jsonWriter.writeJson(stringJson)
             .flatMapCompletable { output -> uploadJson(key, output, localSoundscape) }
-            .andThen(jsonWriter.deleteJsonFile())
+            .andThen(jsonWriter.deleteJsonFile()))
     }
 
     private fun uploadJson(key: String, output: String, localSoundscape: LocalSoundscape): Completable {
@@ -71,7 +71,7 @@ class SoundscapeRemoteDataImpl(
         val requestBody = RequestBody.create(MediaType.parse(".json"), file)
         val aFile = MultipartBody.Part.createFormData("userfile", file.name, requestBody)
 
-        return soundScapeApi.uploadSoundScape(
+        return networkService.hasNetWorkConnection().andThen(soundScapeApi.uploadSoundScape(
             key,
             5,
             29,
@@ -79,6 +79,6 @@ class SoundscapeRemoteDataImpl(
             SoundCategory.STORY.description.toLowerCase(),
             SoundType.SOUNDSCAPE.description.toLowerCase(),
             aFile
-        )
+        ))
     }
 }
