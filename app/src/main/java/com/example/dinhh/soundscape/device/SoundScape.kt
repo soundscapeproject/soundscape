@@ -43,9 +43,9 @@ class SoundScapeImpl: SoundScape{
     val soundsScapes: MutableList<SoundscapeItem> = mutableListOf()
 
     override fun clearSoundScapes(): Completable {
-        return Completable.fromAction{
+        return stopSoundScapes().andThen(Completable.fromAction{
             soundsScapes.clear()
-        }
+        })
     }
 
     override fun addSound(soundScape: SoundscapeItem): Completable {
