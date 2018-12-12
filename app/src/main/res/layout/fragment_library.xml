@@ -3,7 +3,6 @@
 <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -13,7 +12,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
+            android:background="@color/colorTextDark">
 
 
         <android.support.constraint.ConstraintLayout
@@ -57,7 +56,7 @@
                             android:textSize="20sp"
                             android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:text="NATURE"
+                            android:text="Nature"
                             android:layout_gravity="bottom"
                             android:layout_marginStart="10dp"/>
 
@@ -95,7 +94,7 @@
                             android:textSize="20sp"
                             android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:text="HUMAN"
+                            android:text="Human"
                             android:layout_gravity="bottom"
                             android:layout_marginStart="10dp"/>
 
@@ -133,7 +132,7 @@
                             android:textSize="20sp"
                             android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:text="MACHINE"
+                            android:text="Machine"
                             android:layout_gravity="bottom"
                             android:layout_marginStart="10dp"/>
 
@@ -171,7 +170,7 @@
                             android:textSize="20sp"
                             android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:text="RECORDED"
+                            android:text="Records"
                             android:layout_gravity="bottom"
                             android:layout_marginStart="10dp"/>
 

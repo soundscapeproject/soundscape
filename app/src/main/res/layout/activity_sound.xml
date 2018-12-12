@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/categoryTitle"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimaryDark">
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="0dp"
