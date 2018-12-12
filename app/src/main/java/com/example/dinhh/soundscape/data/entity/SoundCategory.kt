@@ -22,4 +22,5 @@ enum class SoundCategory(val description: String) {
     companion object {
         fun getCategoryByName(name: String) = valueOf(name.toUpperCase())
     }
+
 }

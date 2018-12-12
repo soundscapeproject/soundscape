@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    toolbar_title.text = "Home"
+                    toolbar_title.text = getString(R.string.home)
                     val homeFragment = HomeFragment.newInstance()
                     openFragment(homeFragment)
                     return@OnNavigationItemSelectedListener true
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_library -> {
-                    toolbar_title.text = "Library"
+                    toolbar_title.text = getString(R.string.library)
                     val libraryFragment = LibraryFragment.newInstance()
                     openFragment(libraryFragment)
                     return@OnNavigationItemSelectedListener true
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         // Initial tab
         bottomNavigation.selectedItemId = R.id.navigation_home
-        toolbar_title.text = "Home"
+        toolbar_title.text = getString(R.string.home)
     }
 
     private fun handleView(viewState: MainViewState) {

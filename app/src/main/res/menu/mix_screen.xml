@@ -4,22 +4,22 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
             android:id="@+id/addNewMixerItem"
-            android:title="add sound"
+            android:title="@string/add_sound"
             android:icon="@drawable/ic_add_ic"
             android:visible="true"
             app:showAsAction="ifRoom">
         <menu>
             <item android:id="@+id/menuNature"
-                  android:title="Nature"
+                  android:title="@string/nature"
                   app:showAsAction="never"/>
             <item android:id="@+id/menuHuman"
-                  android:title="Human"
+                  android:title="@string/human"
                   app:showAsAction="never"/>
             <item android:id="@+id/menuMachine"
-                  android:title="Machine"
+                  android:title="@string/machine"
                   app:showAsAction="never"/>
             <item android:id="@+id/menuRecord"
-                  android:title="Record"
+                  android:title="@string/recordings"
                   app:showAsAction="never"/>
         </menu>
     </item>

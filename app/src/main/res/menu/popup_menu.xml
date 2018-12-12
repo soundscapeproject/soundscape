@@ -2,18 +2,18 @@
 
     <item
             android:id="@+id/naturePopupItem"
-            android:title="Nature"/>
+            android:title="@string/nature"/>
 
     <item
             android:id="@+id/humanPopupItem"
-            android:title="Human"/>
+            android:title="@string/human"/>
 
     <item
             android:id="@+id/machinePopupItem"
-            android:title="Machine"/>
+            android:title="@string/machine"/>
 
     <item
             android:id="@+id/recordedPopupItem"
-            android:title="Recorded remoteSounds"/>
+            android:title="@string/recorded_tracks"/>
 
 </menu>

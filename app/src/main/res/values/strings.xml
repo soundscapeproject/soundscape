@@ -40,7 +40,9 @@
     <string name="search_txt">Names, categories or records</string>
     <string name="sounds">Sounds</string>
     <string name="soundscape_name">Soundscape name</string>
-    <string name="app_slogan">where sounds become masterpieces</string>
+    <string name="app_slogan">where sounds come together</string>
+    <string name="uploaded">Uploaded</string>
+    <string name="deleted">Deleted</string>
     <string name="no_sounds">No sounds</string>
     <string name="nature">Nature</string>
     <string name="human">Human</string>
@@ -63,4 +65,21 @@
     <string name="length">Length</string>
     <string name="delete_single_sound">Delete this single sound</string>
     <string name="upload_soundscape">upload soundscape</string>
+    <string name="add_sound">add sound</string>
+    <string name="recordings">recordings</string>
+    <string name="home">Home</string>
+    <string name="mix">Mix</string>
+    <string name="library">Library</string>
+    <string name="numberofSounds">sounds</string>
+    <string name="soundscape_mixer">Soundscape Mixer</string>
+    <string name="uploading">Uploading</string>
+    <string name="do_you_want_to_upload">Do you want to upload this soundscape?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="deleting">Deleting</string>
+    <string name="do_you_want_to_delete">Do you want to delete this soundscape?</string>
+    <string name="clear_all">Clear all</string>
+    <string name="do_you_want_to_clear_all">Do you want to clear all sounds from this workplace?</string>
+    <string name="all_sounds_cleared">All sounds cleared</string>
+    <string name="name_cannot_be_empty">Name cannot be left empty</string>
 </resources>

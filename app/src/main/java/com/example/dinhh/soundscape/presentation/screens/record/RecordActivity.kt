@@ -153,7 +153,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
     override fun onSaveDialogPositiveClick(recordName: String, category: String) {
 
         if (recordName.isEmpty()){
-            Toast.makeText(this,"Name cannot be empty",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,getString(R.string.name_cannot_be_empty),Toast.LENGTH_SHORT).show()
         } else {
             val localRecord = LocalRecord(
                 null,

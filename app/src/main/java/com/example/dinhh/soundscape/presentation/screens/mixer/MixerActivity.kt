@@ -65,7 +65,7 @@ class MixerActivity : AppCompatActivity(),
             mixerViewModel.clearSoundScapes()
         } else {
             mixerViewModel.getSoundScapes()
-            toolbar_title.text = "Soundscape Mixer"
+            toolbar_title.text = getString(R.string.soundscape_mixer)
         }
 
         mixerViewModel.viewState.observe(this, Observer {
@@ -115,15 +115,15 @@ class MixerActivity : AppCompatActivity(),
 
         clearBtn.setOnClickListener {
             val builder = AlertDialog.Builder(this@MixerActivity)
-            builder.setTitle("Clear All")
-            builder.setMessage("Do you want to clear all sounds from this workplace?")
-            builder.setPositiveButton("YES"){
+            builder.setTitle(getString(R.string.clear_all))
+            builder.setMessage(getString(R.string.do_you_want_to_clear_all))
+            builder.setPositiveButton(getString(R.string.yes)){
                     _, _ ->
-                Toast.makeText(applicationContext,"Cleared all sounds",Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,getString(R.string.all_sounds_cleared),Toast.LENGTH_SHORT).show()
                 mixerViewModel.clearSoundScapes()
                 mixerViewModel.getSoundScapes()
             }
-            builder.setNegativeButton("NO"){
+            builder.setNegativeButton(getString(R.string.no)){
                     _, _ ->
             }
             val dialog: AlertDialog = builder.create()
@@ -318,7 +318,7 @@ class MixerActivity : AppCompatActivity(),
     override fun onSaveDialogPositiveClick(soundScapeName: String) {
 
         if (soundScapeName.isEmpty()){
-            Toast.makeText(this,"Name cannot be empty",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,getString(R.string.name_cannot_be_empty),Toast.LENGTH_SHORT).show()
         } else {
             val soundScapeList = soundScapesList.map { it ->
                 SoundScape(
