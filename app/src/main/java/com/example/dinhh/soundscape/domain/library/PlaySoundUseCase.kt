@@ -7,7 +7,7 @@ import io.reactivex.Completable
 class PlaySoundUseCase (private val player: Player, private val schedulerProvider: SchedulerProvider) {
 
     fun execute(selectedSound: String): Completable {
-        return player.playSound(selectedSound)
+        return player.playSound(selectedSound, 1f) //Start with 100%
             .subscribeOn(schedulerProvider.getIOScheduler())
             .observeOn(schedulerProvider.getUIScheduler())
     }

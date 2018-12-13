@@ -59,6 +59,7 @@ class MixerAdapter(
         mixerItem.txtLength.text = "${currentSound.length} sec"
 
         mixerItem.volumeSeekBar.progress = currentSound.volume
+
     }
 
     fun setPlayPauseButton(holder: ViewHolder, position: Int) {
@@ -97,8 +98,6 @@ class MixerAdapter(
     }
 
     class ViewHolder (view: View,  mListener: MixerAdapterViewHolderClicks) : RecyclerView.ViewHolder(view) {
-        val titleTextView: TextView = view.findViewById(R.id.txtTitle)
-        val lengthTextView: TextView = view.findViewById(R.id.txtLength)
         val itemSoundPlayBtn: ImageButton = view.findViewById(R.id.btnItemSoundPlay)
         val removeSoundBtn: ImageButton = view.findViewById(R.id.btnRemoveSound)
         val itemSoundStopBtn: ImageButton = view.findViewById(R.id.btnItemSoundStop)

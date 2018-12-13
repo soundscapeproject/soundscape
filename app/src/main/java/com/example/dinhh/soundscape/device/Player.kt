@@ -7,7 +7,7 @@ import java.io.IOException
 
 interface Player {
 
-    fun playSound(soundUrl: String): Completable
+    fun playSound(soundUrl: String, initialVolume: Float): Completable
 
     fun stopSound(): Completable
 
@@ -78,14 +78,15 @@ class PlayerImpl : Player {
     override fun changeVolume(progress: Int): Completable {
 
         return Completable.fromAction{
-            val volumne = progress / 100f
-            mMediaPlayer?.setVolume(volumne,volumne)
+            val volume = progress / 100f
+            mMediaPlayer?.setVolume(volume,volume)
         }
     }
 
-    private fun play(): Completable {
+    private fun play(initialVolume: Float): Completable {
         return Completable.create { complete ->
             if (mMediaPlayer != null && !isPlaying()) {
+                mMediaPlayer?.setVolume(initialVolume, initialVolume)
                 mMediaPlayer?.start()
 
 
@@ -120,9 +121,9 @@ class PlayerImpl : Player {
 
     }
 
-    override fun playSound(soundUrl: String): Completable {
+    override fun playSound(soundUrl: String, initialVolume: Float): Completable {
 
-        return reset(soundUrl).andThen(play())
+        return reset(soundUrl).andThen(play(initialVolume))
     }
 
     override fun stopSound(): Completable {
