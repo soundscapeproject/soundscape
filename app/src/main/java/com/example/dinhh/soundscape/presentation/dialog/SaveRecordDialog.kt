@@ -16,18 +16,13 @@ import kotlinx.android.synthetic.main.dialog_save_record.view.*
 
 private const val ARG_TITLE = "title"
 
-private val categoryList = listOf(
-    SoundCategory.NATURE.description,
-    SoundCategory.HUMAN.description,
-    SoundCategory.MACHINE.description,
-    SoundCategory.STORY.description
-)
-
 class SaveRecordDialog : AppCompatDialogFragment() {
+
+    private lateinit var categoryList: List<String>
+    private lateinit var category: String
 
     private var title: String? = null
     private var listener: SaveDialogListener? = null
-    private var category = categoryList[0]
 
     private lateinit var progressBar: ProgressBar
 
@@ -68,6 +63,15 @@ class SaveRecordDialog : AppCompatDialogFragment() {
         super.onAttach(context)
         if (context is SaveRecordDialog.SaveDialogListener) {
             listener = context
+
+            categoryList = listOf(
+                getString(R.string.nature),
+                getString(R.string.human),
+                getString(R.string.machine),
+                getString(R.string.recordings)
+            )
+
+            category = categoryList[0]
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }

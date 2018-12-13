@@ -22,7 +22,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
     private lateinit var saveRecordDialog: SaveRecordDialog
 
-    private val thirtySecs: Long = 30001
+    private val thirtySecs: Long = 30030
 
     private val handler = Handler()
 
@@ -175,6 +175,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
     override fun onDestroy() {
         super.onDestroy()
+        recordViewModel.stopRecording()
         recordViewModel.deleteTempRecord()
     }
 
