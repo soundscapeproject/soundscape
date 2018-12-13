@@ -1,6 +1,5 @@
 package com.example.dinhh.soundscape.data.repository
 
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.data.local.SoundscapeLocalData
 import com.example.dinhh.soundscape.data.pref.SharedPref

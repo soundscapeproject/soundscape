@@ -5,41 +5,24 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="record">record</string>
+    <string name="record">Records</string>
     <string name="recording_audio">Recording audio</string>
     <string name="stop_recording">stop recording</string>
     <string name="setting">Settings</string>
     <string name="play">play</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-
     <string name="record_name">Record name</string>
-    <string name="done">Done</string>
-    <string name="close">Close</string>
     <string name="saved">Saved</string>
     <string name="updated">Updated</string>
-    <string name="title_activity_record">RecordActivity</string>
     <string name="title_save_record_dialog">Save Recording</string>
     <string name="title_save_soundscape_dialog">Save Soundscape</string>
-    <string name="no_records">No records</string>
-    <string name="name_required">Name should not be empty</string>
 
     <string name="save_soundscapes">Saved Soundscapes</string>
-    <string name="recorded_tracks">Recorded Tracks</string>
-    <string name="favorite_sounds">Favourite Sounds</string>
 
     <!-- Title Name -->
     <string name="record_screen_name">Recording</string>
-    <string name="sound_scape_recap" translatable="false">Your remoteSounds recap:</string>
-    <string name="sound_scape_numb_txt">- Soundscapes:</string>
-    <string name="record_numb_txt">- Records:</string>
-    <string name="ss_numb" translatable="false">3</string>
-    <string name="rc_numb" translatable="false">2</string>
     <string name="fragment_title">Name</string>
-    <string name="search_txt">Names, categories or records</string>
     <string name="sounds">Sounds</string>
-    <string name="soundscape_name">Soundscape name</string>
     <string name="app_slogan">where sounds come together</string>
     <string name="uploaded">Uploaded</string>
     <string name="deleted">Deleted</string>
@@ -58,7 +41,6 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="try_to_create_a_new_soundscape">Try to create a new soundscape</string>
-    <string name="category">Category</string>
     <string name="play_single_sound">Play this single sound in soundscape</string>
     <string name="stop_single_sound">Stop playing this single sound</string>
     <string name="title">Title</string>
@@ -66,9 +48,8 @@
     <string name="delete_single_sound">Delete this single sound</string>
     <string name="upload_soundscape">upload soundscape</string>
     <string name="add_sound">add sound</string>
-    <string name="recordings">recordings</string>
+    <string name="recordings">Recordings</string>
     <string name="home">Home</string>
-    <string name="mix">Mix</string>
     <string name="library">Library</string>
     <string name="numberofSounds">sounds</string>
     <string name="soundscape_mixer">Soundscape Mixer</string>
