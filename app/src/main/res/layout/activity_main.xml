@@ -52,13 +52,17 @@
             app:menu="@menu/navigation">
     </android.support.design.widget.BottomNavigationView>
     <ImageButton
-            android:layout_width="52dp"
-            android:layout_height="52dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/ic_hand_ic"
             android:background="@drawable/mix_btn_bg"
             android:id="@+id/btnMixer"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            android:layout_marginBottom="2dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:translationZ="8dp" android:contentDescription="@string/create_a_soundscape"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:translationZ="8dp"
+            android:contentDescription="@string/create_a_soundscape"/>
 </android.support.constraint.ConstraintLayout>

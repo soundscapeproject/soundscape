@@ -11,29 +11,39 @@
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="?attr/colorPrimaryDark"
             app:title="@string/record_screen_name"
             app:titleTextColor="@color/colorText"
             android:elevation="4dp"
             android:gravity="center"
             android:theme="@style/ToolbarTheme"/>
 
-
-
-
-    <Chronometer
-            android:id="@+id/chronometer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:textColor="@color/colorPrimary"
-            android:textSize="100sp"
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_chronometer"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:background="@drawable/effect_btn_bg"
             app:layout_constraintTop_toBottomOf="@id/my_toolbar"
             app:layout_constraintBottom_toTopOf="@id/btnStartRecording"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <Chronometer
+                android:id="@+id/chronometer"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:textColor="@color/colorText"
+                android:textSize="40sp"
+                android:background="@drawable/record_btn_bg"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"/>
+    </android.support.constraint.ConstraintLayout>
+
 
     <TextView
             android:text="@string/recording_audio"
@@ -42,10 +52,10 @@
             android:id="@+id/txtRecording"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/chronometer"
+            app:layout_constraintTop_toBottomOf="@id/layout_chronometer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
     />
 
     <ImageButton
@@ -117,6 +127,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/btnStartRecording"
             app:layout_constraintBottom_toBottomOf="@id/btnStartRecording"
-            />
+            android:contentDescription="@string/saveBtnDescription"/>
 
 </android.support.constraint.ConstraintLayout>

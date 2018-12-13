@@ -9,7 +9,6 @@ import android.widget.Toast
 import com.example.dinhh.soundscape.R
 import com.example.dinhh.soundscape.common.invisible
 import com.example.dinhh.soundscape.common.isVisible
-import com.example.dinhh.soundscape.common.logD
 import com.example.dinhh.soundscape.common.visible
 import com.example.dinhh.soundscape.data.entity.LocalRecord
 import com.example.dinhh.soundscape.data.entity.SoundType
@@ -148,6 +147,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
     private fun setChronometerToThirtySecs() {
         chronometer.base = SystemClock.elapsedRealtime() + thirtySecs
+        chronometer.format = "%s"
     }
 
     override fun onSaveDialogPositiveClick(recordName: String, category: String) {
@@ -170,7 +170,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
     }
 
     override fun onSaveDialogNegativeClick(recordDialog: SaveRecordDialog) {
-        logD("CANCEL DIALOG")
+        recordDialog.dismiss()
     }
 
     override fun onDestroy() {
@@ -182,4 +182,5 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
         finish()
         return true
     }
+
 }
