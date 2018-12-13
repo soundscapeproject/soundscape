@@ -17,7 +17,7 @@
     <string name="title_save_record_dialog">Save Recording</string>
     <string name="title_save_soundscape_dialog">Save Soundscape</string>
 
-    <string name="save_soundscapes">Name of your soundscape</string>
+    <string name="save_soundscapes">Title</string>
 
     <!-- Title Name -->
     <string name="record_screen_name">Recording</string>
@@ -40,7 +40,7 @@
     <string name="create_a_soundscape">Create a soundscape</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
-    <string name="try_to_create_a_new_soundscape">Try to create a new soundscape</string>
+    <string name="try_to_create_a_new_soundscape">Create a new soundscape</string>
     <string name="play_single_sound">Play this single sound in soundscape</string>
     <string name="stop_single_sound">Stop playing this single sound</string>
     <string name="title">Title</string>
