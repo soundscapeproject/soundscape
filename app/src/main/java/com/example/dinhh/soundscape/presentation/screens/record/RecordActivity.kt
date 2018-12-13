@@ -147,6 +147,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
 
     private fun setChronometerToThirtySecs() {
         chronometer.base = SystemClock.elapsedRealtime() + thirtySecs
+        chronometer.format = "%s"
     }
 
     override fun onSaveDialogPositiveClick(recordName: String, category: String) {
@@ -169,7 +170,7 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
     }
 
     override fun onSaveDialogNegativeClick(recordDialog: SaveRecordDialog) {
-        // Do nothing
+        recordDialog.dismiss()
     }
 
     override fun onDestroy() {
@@ -181,4 +182,5 @@ class RecordActivity : AppCompatActivity(), SaveRecordDialog.SaveDialogListener 
         finish()
         return true
     }
+
 }

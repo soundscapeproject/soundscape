@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/toggleButtonContainer"
-            app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/noSoundScapeContainer"
@@ -77,7 +77,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/toggleButtonContainer"
-            android:layout_marginBottom="10dp" app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
             android:id="@+id/soundScapeListContainer">
 
         <ScrollView android:layout_width="match_parent"
@@ -106,6 +107,7 @@
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:id="@+id/toggleButtonContainer"
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"

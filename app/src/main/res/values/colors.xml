@@ -7,4 +7,9 @@
     <color name="colorTextDark">#000000</color>
     <color name="transparent">#00ffffff</color>
     <color name="transparent_black">#F02E2D35</color>
+
+    //effect
+    <color name="three">#d17200</color>
+    <color name="two">#e27c00</color>
+    <color name="one">#f38500</color>
 </resources>

@@ -66,4 +66,5 @@
     <string name="logout">Logout</string>
     <string name="do_you_want_to_log_out">Do you want to logout from this account?</string>
     <string name="logged_out">Logged out</string>
+    <string name="saveBtnDescription">save button</string>
 </resources>
