@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.screens.record.RecordActivity">
+
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimaryDark"
+            app:title="@string/record_screen_name"
+            app:titleTextColor="@color/colorText"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:theme="@style/ToolbarTheme"/>
+
+    <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="50sp"
+            app:layout_constraintBottom_toTopOf="@id/layout_chronometer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="20dp"/>
+
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_chronometer"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/effect_btn_bg"
+            app:layout_constraintTop_toBottomOf="@id/my_toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+                android:id="@+id/btnStartRecording"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/record"
+                android:src="@drawable/ic_mic_ic"
+                tools:targetApi="lollipop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/btnStopRecording"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/stop_recording"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_stop_ic"
+                tools:ignore="UnusedAttribute"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <TextView
+            android:text="@string/recording_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtRecording"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/layout_chronometer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+    />
+
+    <ImageButton
+            android:id="@+id/btnPlay"
+            android:src="@drawable/ic_play_arrow_white_48dp"
+            android:contentDescription="@string/play"
+            android:elevation="2dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/mix_btn_bg"
+            tools:targetApi="lollipop"
+            app:layout_constraintEnd_toStartOf="@id/txtRecording"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtRecording"
+            app:layout_constraintBottom_toBottomOf="@id/txtRecording"
+            android:layout_marginStart="30dp"
+            android:visibility="gone"
+
+    />
+
+    <ImageButton
+            android:id="@+id/btnStopPlaying"
+            android:src="@drawable/ic_stop_ic"
+            android:contentDescription="@string/play"
+            android:elevation="2dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/mix_btn_bg"
+            tools:targetApi="lollipop"
+            app:layout_constraintEnd_toStartOf="@id/txtRecording"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtRecording"
+            app:layout_constraintBottom_toBottomOf="@id/txtRecording"
+            android:layout_marginStart="30dp"
+            android:visibility="gone"
+    />
+    <ImageButton
+            android:id="@+id/btnSave"
+            android:src="@drawable/ic_save_ic"
+            android:elevation="2dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/mix_btn_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txtRecording"
+            app:layout_constraintTop_toTopOf="@id/txtRecording"
+            app:layout_constraintBottom_toBottomOf="@id/txtRecording"
+            android:layout_marginEnd="30dp"
+            android:contentDescription="@string/saveBtnDescription"
+            android:visibility="gone"/>
+
+</android.support.constraint.ConstraintLayout>

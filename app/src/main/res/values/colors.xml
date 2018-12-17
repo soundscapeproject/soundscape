@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#ef8200</color>
+    <color name="colorPrimaryDark">#c06900</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorText">#ffffff</color>
+    <color name="colorTextDark">#000000</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="transparent_black">#F02E2D35</color>
+
+    //effect
+    <color name="three">#d17200</color>
+    <color name="two">#e27c00</color>
+    <color name="one">#f38500</color>
 </resources>
