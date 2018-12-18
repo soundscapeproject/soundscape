@@ -14,6 +14,13 @@
 - Data layer
 - Device layer
 
+### Library used:
+- RxJava/RxAndroid
+- Retrofit
+- Koin
+- Android architecture components
+- Other libraries
+
 ### Useful resources:
 - https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54
 - https://medium.com/mindorks/using-dependency-injection-with-koin-bee0b461714a
