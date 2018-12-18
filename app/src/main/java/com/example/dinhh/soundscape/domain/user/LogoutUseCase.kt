@@ -6,6 +6,9 @@ import io.reactivex.Completable
 
 class LogoutUseCase(private val userRepository: UserRepository, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Logs the user off from the application and clears all the login data.
+     **/
     fun execute(): Completable {
         return userRepository.clearLoginData()
             .subscribeOn(schedulerProvider.getIOScheduler())

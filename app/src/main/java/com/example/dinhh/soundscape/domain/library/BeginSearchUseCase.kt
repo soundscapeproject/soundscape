@@ -7,6 +7,9 @@ import io.reactivex.Single
 
 class BeginSearchUseCase (private val soundScapeRepository: SoundscapeRepository, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+     Fetches sounds from the API based on the selected category.
+     **/
     fun execute(selectedCategory: String): Single<List<List<RemoteSound>>> {
         return soundScapeRepository.beginSearch(selectedCategory)
             .subscribeOn(schedulerProvider.getIOScheduler())

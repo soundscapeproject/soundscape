@@ -7,6 +7,9 @@ import io.reactivex.Single
 
 class GetLocalSoundscapesUseCase(private val soundscapeRepository: SoundscapeRepository, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Gets all the saved soundscapes from the local storage.
+     **/
     fun execute(): Single<List<LocalSoundscape>> {
 
         return soundscapeRepository.getAllLocalSoundScapes()

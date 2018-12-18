@@ -7,6 +7,9 @@ import io.reactivex.Completable
 
 class AddSoundScapeUseCase(private val soundScape: SoundScape, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Adds a new sound to a soundscape.
+     **/
     fun execute(soundscapeItem: SoundscapeItem): Completable {
         return soundScape.addSound(soundscapeItem)
             .subscribeOn(schedulerProvider.getIOScheduler())

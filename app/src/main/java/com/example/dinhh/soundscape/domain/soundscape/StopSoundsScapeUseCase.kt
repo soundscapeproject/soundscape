@@ -6,6 +6,9 @@ import io.reactivex.Completable
 
 class StopSoundsScapeUseCase(private val soundScape: SoundScape, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Stops all the sounds in the soundscape.
+     **/
     fun execute(): Completable {
         return soundScape.stopSoundScapes()
             .subscribeOn(schedulerProvider.getIOScheduler())

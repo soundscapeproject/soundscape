@@ -7,6 +7,10 @@ import io.reactivex.Completable
 
 class DeleteSingleSoundScape(private val soundscapeRepository: SoundscapeRepository, private val schedulerProvider: SchedulerProvider) {
 
+
+    /**
+    Deletes the selected sound from the soundscape.
+     **/
     fun execute(localSoundscape: LocalSoundscape): Completable {
 
         return soundscapeRepository.deleteLocalSoundScape(localSoundscape)

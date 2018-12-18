@@ -6,6 +6,9 @@ import io.reactivex.Completable
 
 class StopSoundUseCase (private val player: Player, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Stops mediaplayer from playing a sound in the library.
+     **/
     fun execute(): Completable {
         return player.stopSound()
             .subscribeOn(schedulerProvider.getIOScheduler())

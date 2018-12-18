@@ -12,6 +12,9 @@ class SaveRecordUseCase(
     private val schedulerProvider: SchedulerProvider
 ) {
 
+    /**
+    Saves the locally recorded sound to the local storage.
+     **/
     fun execute(localRecord: LocalRecord): Completable {
         return recordRepository.saveRecord(localRecord)
             .andThen(record.resetTempFile())

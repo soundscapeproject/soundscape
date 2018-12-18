@@ -6,6 +6,9 @@ import io.reactivex.Completable
 
 class ClearSoundScapesUseCase(private val soundScape: SoundScape, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Clears all sounds from the soundscape.
+     **/
     fun execute(): Completable {
         return soundScape.clearSoundScapes()
             .subscribeOn(schedulerProvider.getIOScheduler())

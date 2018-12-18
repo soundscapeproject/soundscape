@@ -7,6 +7,9 @@ import io.reactivex.Single
 
 class GetSoundScapeUseCase(private val soundScape: SoundScape, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Returns all the soundscapes.
+     **/
     fun execute(): Single<MutableList<SoundscapeItem>> {
         return soundScape.getSoundScapes()
             .subscribeOn(schedulerProvider.getIOScheduler())

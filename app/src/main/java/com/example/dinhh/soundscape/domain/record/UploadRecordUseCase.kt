@@ -9,6 +9,9 @@ class UploadRecordUseCase(
     private val recordRepository: RecordRepository,
     private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Uploads the locally saved recording to the server.
+     **/
     fun execute(localRecord: LocalRecord): Completable {
 
         localRecord.isUploaded = true

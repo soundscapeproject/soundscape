@@ -6,6 +6,9 @@ import io.reactivex.Single
 
 class PlaySingleSoundScapeUseCase(private val soundScape: SoundScape, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Plays a single sound in the soundscape.
+     **/
     fun execute(index: Int): Single<Int> {
         return soundScape.playSingleSoundScapes(index)
             .subscribeOn(schedulerProvider.getIOScheduler())

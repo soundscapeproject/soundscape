@@ -6,6 +6,9 @@ import io.reactivex.Completable
 
 class StartRecordUseCase(private val record: Record, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Starts recording to a temporary file.
+     **/
     fun execute(): Completable {
         return record.startRecording()
             .subscribeOn(schedulerProvider.getIOScheduler())

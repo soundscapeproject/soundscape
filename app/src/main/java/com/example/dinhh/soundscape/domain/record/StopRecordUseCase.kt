@@ -6,6 +6,9 @@ import io.reactivex.Single
 
 class StopRecordUseCase(private val record: Record, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Stops recording.
+     **/
     fun execute(): Single<String> {
         return record.stopRecording()
             .subscribeOn(schedulerProvider.getIOScheduler())

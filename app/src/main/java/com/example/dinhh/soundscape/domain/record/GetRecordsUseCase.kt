@@ -7,6 +7,9 @@ import io.reactivex.Single
 
 class GetRecordsUseCase(private val recordRepository: RecordRepository, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Gets all saved, locally recorded sounds.
+     **/
     fun execute(): Single<List<LocalRecord>> {
         return recordRepository.getLocalRecords()
             .subscribeOn(schedulerProvider.getIOScheduler())

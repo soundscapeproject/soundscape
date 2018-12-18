@@ -6,6 +6,9 @@ import io.reactivex.Completable
 
 class RemoveSingleSoundScapeUseCase(private val soundScape: SoundScape, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Removes the selected sound from the soundscape.
+     **/
     fun execute(index: Int): Completable {
         return soundScape.removeSingleSoundScapes(index)
             .subscribeOn(schedulerProvider.getIOScheduler())

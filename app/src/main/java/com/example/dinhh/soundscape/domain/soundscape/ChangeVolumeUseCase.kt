@@ -6,6 +6,9 @@ import io.reactivex.Completable
 
 class ChangeVolumeUseCase(private val soundScape: SoundScape, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Changes the selected sound's volume level in the soundscape.
+     **/
     fun execute(index: Int, progress: Int): Completable {
         return soundScape.changeVolume(index, progress)
             .subscribeOn(schedulerProvider.getIOScheduler())

@@ -7,6 +7,9 @@ import io.reactivex.Completable
 
 class SaveSoundScapesUseCase(private val soundscapeRepository: SoundscapeRepository, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Saves the soundscape to a local storage.
+     **/
     fun execute(localSoundscape: LocalSoundscape):Completable {
         return soundscapeRepository.saveLocalSoundScapes(localSoundscape)
             .subscribeOn(schedulerProvider.getIOScheduler())

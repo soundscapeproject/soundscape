@@ -7,6 +7,9 @@ import io.reactivex.Completable
 
 class UploadSoundscapeUseCase(private val soundscapeRepository: SoundscapeRepository, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Uploads the information of the selected soundscape to the server.
+     **/
     fun execute(localSoundscape: LocalSoundscape): Completable {
 
         localSoundscape.isUploaded = true

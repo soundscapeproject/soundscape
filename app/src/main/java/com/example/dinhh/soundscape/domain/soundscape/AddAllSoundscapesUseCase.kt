@@ -7,6 +7,9 @@ import io.reactivex.Completable
 
 class AddAllSoundscapesUseCase(private val soundScape: SoundScape, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Adds all saved soundscapes to the home view.
+     **/
     fun execute(soundscapeItemList: List<SoundscapeItem>): Completable {
         return soundScape.addSounds(soundscapeItemList)
             .subscribeOn(schedulerProvider.getIOScheduler())

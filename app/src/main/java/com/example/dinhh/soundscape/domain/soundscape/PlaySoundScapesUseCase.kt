@@ -6,6 +6,9 @@ import io.reactivex.Completable
 
 class PlaySoundScapesUseCase(private val soundScape: SoundScape, private val schedulerProvider: SchedulerProvider) {
 
+    /**
+    Plays all the sounds in the soundscape.
+     **/
     fun execute(): Completable {
         return soundScape.playSoundScapes()
             .subscribeOn(schedulerProvider.getIOScheduler())
